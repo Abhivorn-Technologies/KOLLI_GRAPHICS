@@ -54,7 +54,7 @@ export const FinishingSection: React.FC = () => {
   }
 
   return (
-    <section id="finishing" style={{ padding: '56px 0', backgroundColor: '#f8fafc' }}>
+    <section id="finishing" style={{ padding: '80px 0', backgroundColor: '#f8fafc' }}>
       <div className="container">
         {/* Section Header */}
         <SectionHeader

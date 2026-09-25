@@ -215,7 +215,7 @@ export const PrintingSection: React.FC = () => {
     <section
       id="printing"
       style={{
-        padding: '56px 0',
+        padding: '80px 0',
         backgroundColor: '#ffffff',
         position: 'relative',
         overflow: 'hidden',

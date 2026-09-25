@@ -268,7 +268,7 @@ export const BoxFoldingSignature: React.FC = () => {
               <div style={{ display: 'flex', gap: '8px', marginBottom: '36px' }}>
                 {STAGES.map((s) => (
                   <div
-                    key={`stage-bar-${s.name}`}
+                    key={`stage-bar-${s.label}`}
                     style={{
                       height: '5px',
                       flex: 1,

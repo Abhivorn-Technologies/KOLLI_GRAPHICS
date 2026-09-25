@@ -11,7 +11,7 @@ export const FoldingCartonSection: React.FC = () => {
   const currentCarton = CARTON_TYPES.find((c) => c.id === selectedCartonId) || CARTON_TYPES[0]
 
   return (
-    <section id="cartons" style={{ padding: '56px 0', backgroundColor: '#ffffff' }}>
+    <section id="cartons" style={{ padding: '80px 0', backgroundColor: '#ffffff' }}>
       <div className="container">
         {/* Section Header */}
         <SectionHeader
