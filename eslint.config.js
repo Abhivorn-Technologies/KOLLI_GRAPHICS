@@ -76,7 +76,7 @@ export default [
     },
     rules: {
       // ── Prettier integration ──────────────────────────────────
-      'prettier/prettier': 'warn',
+      'prettier/prettier': ['warn', { endOfLine: 'auto' }],
 
       // ── TypeScript ────────────────────────────────────────────
       '@typescript-eslint/no-explicit-any':          'warn',

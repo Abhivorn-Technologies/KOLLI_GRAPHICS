@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   Cpu,
   CheckCircle2,
@@ -13,47 +13,48 @@ import {
   Zap,
   Wind,
   Barcode,
-  SearchCheck
-} from 'lucide-react';
-import { SectionHeader } from '../common/SectionHeader';
-import { ImageWithFallback } from '../common/ImageWithFallback';
-import { CARTON_FINISHING, LABEL_FINISHING, FinishingMethod } from '../../data/processes';
+  SearchCheck,
+} from 'lucide-react'
+import { SectionHeader } from '../common/SectionHeader'
+import { ImageWithFallback } from '../common/ImageWithFallback'
+import { CARTON_FINISHING, LABEL_FINISHING } from '../../data/processes'
+import type { FinishingMethod } from '../../data/processes'
 
 export const FinishingSection: React.FC = () => {
-  const [activeFinishingId, setActiveFinishingId] = useState<string>(CARTON_FINISHING[0].id);
-  const [foilColor, setFoilColor] = useState<'gold' | 'silver' | 'bronze'>('gold');
-  const [isScanning, setIsScanning] = useState<boolean>(true);
+  const [activeFinishingId, setActiveFinishingId] = useState<string>(CARTON_FINISHING[0].id)
+  const [foilColor, setFoilColor] = useState<'gold' | 'silver' | 'bronze'>('gold')
+  const [isScanning, setIsScanning] = useState<boolean>(true)
 
   const currentFinish: FinishingMethod =
-    CARTON_FINISHING.find((f) => f.id === activeFinishingId) || CARTON_FINISHING[0];
+    CARTON_FINISHING.find((f) => f.id === activeFinishingId) || CARTON_FINISHING[0]
 
   const getFinishIcon = (id: string) => {
     switch (id) {
       case 'uv-coating':
-        return <Sun size={18} />;
+        return <Sun size={18} />
       case 'die-cutting':
-        return <Scissors size={18} />;
+        return <Scissors size={18} />
       case 'embossing':
-        return <Layers size={18} />;
+        return <Layers size={18} />
       case 'micro-embossing':
-        return <Sparkles size={18} />;
+        return <Sparkles size={18} />
       case 'foil-stamping':
-        return <Award size={18} />;
+        return <Award size={18} />
       case 'foil-embossing':
-        return <Zap size={18} />;
+        return <Zap size={18} />
       default:
-        return <Sparkles size={18} />;
+        return <Sparkles size={18} />
     }
-  };
+  }
 
   const foilGradients = {
     gold: 'linear-gradient(135deg, #d97706 0%, #fef3c7 45%, #b45309 80%, #78350f 100%)',
     silver: 'linear-gradient(135deg, #9ca3af 0%, #ffffff 45%, #6b7280 80%, #374151 100%)',
     bronze: 'linear-gradient(135deg, #a16207 0%, #fde68a 45%, #854d0e 80%, #451a03 100%)',
-  };
+  }
 
   return (
-    <section id="finishing" style={{ padding: '100px 0', backgroundColor: '#f8fafc' }}>
+    <section id="finishing" style={{ padding: '56px 0', backgroundColor: '#f8fafc' }}>
       <div className="container">
         {/* Section Header */}
         <SectionHeader
@@ -73,30 +74,41 @@ export const FinishingSection: React.FC = () => {
                 fontWeight: 800,
                 color: '#dc2626',
                 textTransform: 'uppercase',
-                letterSpacing: '0.09em'
+                letterSpacing: '0.09em',
               }}
             >
               Carton Finishing Architecture
             </span>
-            <h3 style={{ fontSize: '1.85rem', color: '#111827', fontWeight: 800, marginTop: '4px' }}>
+            <h3
+              style={{ fontSize: '1.85rem', color: '#111827', fontWeight: 800, marginTop: '4px' }}
+            >
               Sensory Surface &amp; Foil Embellishments
             </h3>
-            <p style={{ fontSize: '0.925rem', color: '#64748b', maxWidth: '620px', margin: '6px auto 0' }}>
-              Select a post-press technique below to inspect machine operations, surface physics, and document specifications.
+            <p
+              style={{
+                fontSize: '0.925rem',
+                color: '#64748b',
+                maxWidth: '620px',
+                margin: '6px auto 0',
+              }}
+            >
+              Select a post-press technique below to inspect machine operations, surface physics,
+              and document specifications.
             </p>
           </div>
 
           {/* Finish Selection Grid / Pill Tabs */}
           <div
             style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))',
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
               gap: '12px',
-              marginBottom: '36px'
+              marginBottom: '36px',
             }}
           >
             {CARTON_FINISHING.map((finish) => {
-              const isSelected = finish.id === activeFinishingId;
+              const isSelected = finish.id === activeFinishingId
               return (
                 <button
                   key={finish.id}
@@ -113,7 +125,7 @@ export const FinishingSection: React.FC = () => {
                     boxShadow: isSelected ? '0 4px 16px rgba(220, 38, 38, 0.15)' : 'none',
                     cursor: 'pointer',
                     transition: 'all 0.22s ease',
-                    textAlign: 'left'
+                    textAlign: 'left',
                   }}
                 >
                   <div
@@ -126,7 +138,7 @@ export const FinishingSection: React.FC = () => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      flexShrink: 0
+                      flexShrink: 0,
                     }}
                   >
                     {getFinishIcon(finish.id)}
@@ -140,7 +152,7 @@ export const FinishingSection: React.FC = () => {
                     </span>
                   </div>
                 </button>
-              );
+              )
             })}
           </div>
 
@@ -161,7 +173,7 @@ export const FinishingSection: React.FC = () => {
                 backgroundColor: '#ffffff',
                 border: '1px solid #e2e8f0',
                 boxShadow: '0 8px 30px rgba(0,0,0,0.04)',
-                alignItems: 'center'
+                alignItems: 'center',
               }}
             >
               {/* Left Column: Clean Light-Mode Visual Showcase Card */}
@@ -174,11 +186,19 @@ export const FinishingSection: React.FC = () => {
                   boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '16px'
+                  gap: '16px',
                 }}
               >
                 {/* Header Badge & Foil Selector */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    flexWrap: 'wrap',
+                    gap: '10px',
+                  }}
+                >
                   <span
                     style={{
                       fontSize: '0.72rem',
@@ -189,14 +209,16 @@ export const FinishingSection: React.FC = () => {
                       color: '#dc2626',
                       border: '1px solid #fecaca',
                       textTransform: 'uppercase',
-                      letterSpacing: '0.06em'
+                      letterSpacing: '0.06em',
                     }}
                   >
                     {currentFinish.name} Machine
                   </span>
 
                   {/* Foil Sheen Switcher for Foil finishes */}
-                  {(currentFinish.id === 'foil-stamping' || currentFinish.id === 'foil-embossing' || currentFinish.id === 'micro-embossing') && (
+                  {(currentFinish.id === 'foil-stamping' ||
+                    currentFinish.id === 'foil-embossing' ||
+                    currentFinish.id === 'micro-embossing') && (
                     <div
                       style={{
                         display: 'flex',
@@ -205,11 +227,13 @@ export const FinishingSection: React.FC = () => {
                         backgroundColor: '#f8fafc',
                         padding: '4px 10px',
                         borderRadius: '999px',
-                        border: '1px solid #e2e8f0'
+                        border: '1px solid #e2e8f0',
                       }}
                     >
                       <Sliders size={12} color="#64748b" />
-                      <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#475569' }}>Foil:</span>
+                      <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#475569' }}>
+                        Foil:
+                      </span>
                       {(['gold', 'silver', 'bronze'] as const).map((color) => (
                         <button
                           key={color}
@@ -222,7 +246,7 @@ export const FinishingSection: React.FC = () => {
                             border: foilColor === color ? '2px solid #dc2626' : '1px solid #cbd5e1',
                             cursor: 'pointer',
                             transform: foilColor === color ? 'scale(1.2)' : 'scale(1)',
-                            transition: 'all 0.18s ease'
+                            transition: 'all 0.18s ease',
                           }}
                           title={`${color.toUpperCase()} Foil`}
                         />
@@ -239,22 +263,23 @@ export const FinishingSection: React.FC = () => {
                     borderRadius: '16px',
                     overflow: 'hidden',
                     backgroundColor: '#f1f5f9',
-                    border: '1px solid #e2e8f0'
+                    border: '1px solid #e2e8f0',
                   }}
                 >
                   <ImageWithFallback
                     src={
                       currentFinish.id === 'die-cutting'
                         ? '/assets/images/equipment/bobst-evoline.png'
-                        : currentFinish.id === 'foil-stamping' || currentFinish.id === 'foil-embossing'
-                        ? '/assets/images/equipment/bobst-bma.png'
-                        : '/assets/images/equipment/heidelberg-cd102.png'
+                        : currentFinish.id === 'foil-stamping' ||
+                            currentFinish.id === 'foil-embossing'
+                          ? '/assets/images/equipment/bobst-bma.png'
+                          : '/assets/images/equipment/heidelberg-cd102.png'
                     }
                     alt={currentFinish.name}
                     style={{
                       width: '100%',
                       height: '100%',
-                      objectFit: 'cover'
+                      objectFit: 'cover',
                     }}
                   />
 
@@ -272,7 +297,7 @@ export const FinishingSection: React.FC = () => {
                         : 'linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.6) 50%, transparent 80%)',
                       opacity: 0.4,
                       transform: 'skewX(-25deg)',
-                      pointerEvents: 'none'
+                      pointerEvents: 'none',
                     }}
                   />
 
@@ -289,14 +314,15 @@ export const FinishingSection: React.FC = () => {
                       fontSize: '0.68rem',
                       fontWeight: 700,
                       color: '#0f172a',
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
                     }}
                   >
                     {currentFinish.id === 'die-cutting'
                       ? 'BOBST SP Evoline 102 E'
-                      : currentFinish.id === 'foil-stamping' || currentFinish.id === 'foil-embossing'
-                      ? 'BOBST 102 BMA Foil Stamper'
-                      : 'Heidelberg CD 102 5 XL'}
+                      : currentFinish.id === 'foil-stamping' ||
+                          currentFinish.id === 'foil-embossing'
+                        ? 'BOBST 102 BMA Foil Stamper'
+                        : 'Heidelberg CD 102 5 XL'}
                   </div>
                 </div>
 
@@ -309,7 +335,7 @@ export const FinishingSection: React.FC = () => {
                     border: '1px solid #e2e8f0',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '12px'
+                    gap: '12px',
                   }}
                 >
                   <div
@@ -322,16 +348,30 @@ export const FinishingSection: React.FC = () => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      flexShrink: 0
+                      flexShrink: 0,
                     }}
                   >
                     {getFinishIcon(currentFinish.id)}
                   </div>
                   <div>
-                    <span style={{ fontSize: '0.8125rem', fontWeight: 800, color: '#111827', display: 'block' }}>
+                    <span
+                      style={{
+                        fontSize: '0.8125rem',
+                        fontWeight: 800,
+                        color: '#111827',
+                        display: 'block',
+                      }}
+                    >
                       {currentFinish.name} Effect
                     </span>
-                    <span style={{ fontSize: '0.72rem', color: '#64748b', lineHeight: 1.4, display: 'block' }}>
+                    <span
+                      style={{
+                        fontSize: '0.72rem',
+                        color: '#64748b',
+                        lineHeight: 1.4,
+                        display: 'block',
+                      }}
+                    >
                       {currentFinish.effect}
                     </span>
                   </div>
@@ -354,17 +394,31 @@ export const FinishingSection: React.FC = () => {
                     fontWeight: 800,
                     textTransform: 'uppercase',
                     letterSpacing: '0.06em',
-                    marginBottom: '14px'
+                    marginBottom: '14px',
                   }}
                 >
                   {currentFinish.tagline}
                 </div>
 
-                <h3 style={{ fontSize: '1.75rem', color: '#111827', fontWeight: 800, marginBottom: '14px' }}>
+                <h3
+                  style={{
+                    fontSize: '1.75rem',
+                    color: '#111827',
+                    fontWeight: 800,
+                    marginBottom: '14px',
+                  }}
+                >
                   {currentFinish.name}
                 </h3>
 
-                <p style={{ fontSize: '0.925rem', color: '#475569', lineHeight: 1.75, marginBottom: '22px' }}>
+                <p
+                  style={{
+                    fontSize: '0.925rem',
+                    color: '#475569',
+                    lineHeight: 1.75,
+                    marginBottom: '22px',
+                  }}
+                >
                   {currentFinish.description}
                 </p>
 
@@ -375,28 +429,76 @@ export const FinishingSection: React.FC = () => {
                     borderRadius: '16px',
                     backgroundColor: '#f8fafc',
                     border: '1px solid #e2e8f0',
-                    marginBottom: '24px'
+                    marginBottom: '24px',
                   }}
                 >
-                  <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#dc2626', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '4px' }}>
+                  <div
+                    style={{
+                      fontSize: '0.72rem',
+                      fontWeight: 800,
+                      color: '#dc2626',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.08em',
+                      marginBottom: '4px',
+                    }}
+                  >
                     Visual &amp; Tactile Result:
                   </div>
-                  <div style={{ fontSize: '0.875rem', color: '#1e293b', fontWeight: 600, lineHeight: 1.6 }}>
+                  <div
+                    style={{
+                      fontSize: '0.875rem',
+                      color: '#1e293b',
+                      fontWeight: 600,
+                      lineHeight: 1.6,
+                    }}
+                  >
                     {currentFinish.effect}
                   </div>
-                  <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '6px', fontStyle: 'italic' }}>
+                  <div
+                    style={{
+                      fontSize: '0.78rem',
+                      color: '#64748b',
+                      marginTop: '6px',
+                      fontStyle: 'italic',
+                    }}
+                  >
                     <strong>Technical Execution:</strong> {currentFinish.technicalDetails}
                   </div>
                 </div>
 
                 {/* Specifications Checklist */}
                 <div>
-                  <h4 style={{ fontSize: '0.78rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '12px' }}>
+                  <h4
+                    style={{
+                      fontSize: '0.78rem',
+                      fontWeight: 800,
+                      color: '#64748b',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.08em',
+                      marginBottom: '12px',
+                    }}
+                  >
                     Key Specifications &amp; Features:
                   </h4>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px' }}>
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                      gap: '10px',
+                    }}
+                  >
                     {currentFinish.features.map((feat) => (
-                      <div key={feat} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.825rem', color: '#1e293b', fontWeight: 600 }}>
+                      <div
+                        key={feat}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          fontSize: '0.825rem',
+                          color: '#1e293b',
+                          fontWeight: 600,
+                        }}
+                      >
                         <CheckCircle2 size={15} color="#dc2626" style={{ flexShrink: 0 }} />
                         <span>{feat}</span>
                       </div>
@@ -422,7 +524,7 @@ export const FinishingSection: React.FC = () => {
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
               gap: '28px',
-              alignItems: 'center'
+              alignItems: 'center',
             }}
           >
             <div>
@@ -440,13 +542,21 @@ export const FinishingSection: React.FC = () => {
                   fontWeight: 800,
                   textTransform: 'uppercase',
                   letterSpacing: '0.08em',
-                  marginBottom: '12px'
+                  marginBottom: '12px',
                 }}
               >
                 <ShieldCheck size={14} />
                 Pharmaceutical &amp; FMCG Label Excellence
               </div>
-              <h3 style={{ fontSize: 'clamp(1.6rem, 2.8vw, 2.2rem)', color: '#ffffff', fontWeight: 800, margin: '0 0 10px 0', lineHeight: 1.18 }}>
+              <h3
+                style={{
+                  fontSize: 'clamp(1.6rem, 2.8vw, 2.2rem)',
+                  color: '#ffffff',
+                  fontWeight: 800,
+                  margin: '0 0 10px 0',
+                  lineHeight: 1.18,
+                }}
+              >
                 Finishing – Labels: Zero Error Guarantee
               </h3>
               <p style={{ fontSize: '0.925rem', color: '#d1d5db', lineHeight: 1.7, margin: 0 }}>
@@ -461,10 +571,18 @@ export const FinishingSection: React.FC = () => {
                 borderRadius: '18px',
                 backgroundColor: 'rgba(255,255,255,0.06)',
                 border: '1px solid rgba(255,255,255,0.12)',
-                backdropFilter: 'blur(10px)'
+                backdropFilter: 'blur(10px)',
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px', color: '#00aeef' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  marginBottom: '10px',
+                  color: '#00aeef',
+                }}
+              >
                 <Wind size={22} />
                 <h4 style={{ fontSize: '1.05rem', color: '#ffffff', fontWeight: 800, margin: 0 }}>
                   Centrally Air-Conditioned Cleanroom
@@ -484,7 +602,7 @@ export const FinishingSection: React.FC = () => {
                       borderRadius: '999px',
                       backgroundColor: 'rgba(0,174,239,0.2)',
                       color: '#38bdf8',
-                      border: '1px solid rgba(0,174,239,0.3)'
+                      border: '1px solid rgba(0,174,239,0.3)',
                     }}
                   >
                     ✓ {chip}
@@ -497,10 +615,11 @@ export const FinishingSection: React.FC = () => {
           {/* 4 Feature Cards Grid: Tubescan, Spectrophotometric, Varnishing, Serial Numbering */}
           <div
             style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
               gap: '24px',
-              marginBottom: '32px'
+              marginBottom: '32px',
             }}
           >
             {/* Card 1: Zero Error Printing & Tubescan Simulator */}
@@ -513,11 +632,20 @@ export const FinishingSection: React.FC = () => {
                 boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                flex: '1 1 280px',
+                maxWidth: '360px',
               }}
             >
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '16px',
+                  }}
+                >
                   <div
                     style={{
                       width: '42px',
@@ -527,7 +655,7 @@ export const FinishingSection: React.FC = () => {
                       color: '#dc2626',
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center'
+                      justifyContent: 'center',
                     }}
                   >
                     <SearchCheck size={22} />
@@ -540,17 +668,31 @@ export const FinishingSection: React.FC = () => {
                       borderRadius: '999px',
                       backgroundColor: '#dc2626',
                       color: '#ffffff',
-                      textTransform: 'uppercase'
+                      textTransform: 'uppercase',
                     }}
                   >
                     &lt; 0.5 mm Accuracy
                   </span>
                 </div>
 
-                <h4 style={{ fontSize: '1.25rem', color: '#111827', fontWeight: 800, marginBottom: '8px' }}>
+                <h4
+                  style={{
+                    fontSize: '1.25rem',
+                    color: '#111827',
+                    fontWeight: 800,
+                    marginBottom: '8px',
+                  }}
+                >
                   {LABEL_FINISHING.zeroErrorPrinting.title}
                 </h4>
-                <p style={{ fontSize: '0.875rem', color: '#475569', lineHeight: 1.68, marginBottom: '18px' }}>
+                <p
+                  style={{
+                    fontSize: '0.875rem',
+                    color: '#475569',
+                    lineHeight: 1.68,
+                    marginBottom: '18px',
+                  }}
+                >
                   {LABEL_FINISHING.zeroErrorPrinting.description}
                 </p>
               </div>
@@ -567,7 +709,7 @@ export const FinishingSection: React.FC = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  padding: '16px'
+                  padding: '16px',
                 }}
               >
                 <button
@@ -584,7 +726,7 @@ export const FinishingSection: React.FC = () => {
                     fontSize: '0.62rem',
                     fontWeight: 800,
                     cursor: 'pointer',
-                    zIndex: 10
+                    zIndex: 10,
                   }}
                 >
                   {isScanning ? 'PAUSE SCAN' : 'START SCAN'}
@@ -593,7 +735,12 @@ export const FinishingSection: React.FC = () => {
                 {isScanning && (
                   <motion.div
                     animate={{ y: ['-50px', '50px'] }}
-                    transition={{ repeat: Infinity, repeatType: 'reverse', duration: 1.8, ease: 'linear' }}
+                    transition={{
+                      repeat: Infinity,
+                      repeatType: 'reverse',
+                      duration: 1.8,
+                      ease: 'linear',
+                    }}
                     style={{
                       position: 'absolute',
                       left: 0,
@@ -601,7 +748,7 @@ export const FinishingSection: React.FC = () => {
                       height: '2px',
                       backgroundColor: '#dc2626',
                       boxShadow: '0 0 12px #dc2626',
-                      zIndex: 5
+                      zIndex: 5,
                     }}
                   />
                 )}
@@ -614,7 +761,7 @@ export const FinishingSection: React.FC = () => {
                     borderRadius: '8px',
                     boxShadow: '0 4px 14px rgba(0,0,0,0.3)',
                     textAlign: 'center',
-                    zIndex: 2
+                    zIndex: 2,
                   }}
                 >
                   <span style={{ fontSize: '0.7rem', fontWeight: 800, color: '#dc2626' }}>
@@ -637,11 +784,20 @@ export const FinishingSection: React.FC = () => {
                 boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                flex: '1 1 280px',
+                maxWidth: '360px',
               }}
             >
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '16px',
+                  }}
+                >
                   <div
                     style={{
                       width: '42px',
@@ -651,7 +807,7 @@ export const FinishingSection: React.FC = () => {
                       color: '#00aeef',
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center'
+                      justifyContent: 'center',
                     }}
                   >
                     <Cpu size={22} />
@@ -664,17 +820,31 @@ export const FinishingSection: React.FC = () => {
                       borderRadius: '999px',
                       backgroundColor: '#00aeef',
                       color: '#ffffff',
-                      textTransform: 'uppercase'
+                      textTransform: 'uppercase',
                     }}
                   >
                     Closed-Loop Sensing
                   </span>
                 </div>
 
-                <h4 style={{ fontSize: '1.25rem', color: '#111827', fontWeight: 800, marginBottom: '8px' }}>
+                <h4
+                  style={{
+                    fontSize: '1.25rem',
+                    color: '#111827',
+                    fontWeight: 800,
+                    marginBottom: '8px',
+                  }}
+                >
                   {LABEL_FINISHING.zeroNonUniformity.title}
                 </h4>
-                <p style={{ fontSize: '0.875rem', color: '#475569', lineHeight: 1.68, marginBottom: '18px' }}>
+                <p
+                  style={{
+                    fontSize: '0.875rem',
+                    color: '#475569',
+                    lineHeight: 1.68,
+                    marginBottom: '18px',
+                  }}
+                >
                   {LABEL_FINISHING.zeroNonUniformity.description}
                 </p>
               </div>
@@ -685,21 +855,37 @@ export const FinishingSection: React.FC = () => {
                   padding: '16px',
                   borderRadius: '14px',
                   backgroundColor: '#f8fafc',
-                  border: '1px solid #e2e8f0'
+                  border: '1px solid #e2e8f0',
                 }}
               >
-                <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#00aeef', textTransform: 'uppercase', marginBottom: '6px' }}>
+                <div
+                  style={{
+                    fontSize: '0.72rem',
+                    fontWeight: 800,
+                    color: '#00aeef',
+                    textTransform: 'uppercase',
+                    marginBottom: '6px',
+                  }}
+                >
                   Continuous Spectrophotometric Control:
                 </div>
                 <div
                   style={{
                     height: '10px',
                     borderRadius: '999px',
-                    background: 'linear-gradient(to right, #00aeef 0%, #ec008c 35%, #f59e0b 70%, #dc2626 100%)',
-                    marginBottom: '6px'
+                    background:
+                      'linear-gradient(to right, #00aeef 0%, #ec008c 35%, #f59e0b 70%, #dc2626 100%)',
+                    marginBottom: '6px',
                   }}
                 />
-                <div style={{ fontSize: '0.68rem', color: '#64748b', display: 'flex', justifyContent: 'space-between' }}>
+                <div
+                  style={{
+                    fontSize: '0.68rem',
+                    color: '#64748b',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                  }}
+                >
                   <span>Automatic Sensing</span>
                   <span>Zero Manual Error</span>
                 </div>
@@ -716,11 +902,20 @@ export const FinishingSection: React.FC = () => {
                 boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                flex: '1 1 280px',
+                maxWidth: '360px',
               }}
             >
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '16px',
+                  }}
+                >
                   <div
                     style={{
                       width: '42px',
@@ -730,7 +925,7 @@ export const FinishingSection: React.FC = () => {
                       color: '#dc2626',
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center'
+                      justifyContent: 'center',
                     }}
                   >
                     <Sun size={22} />
@@ -742,17 +937,31 @@ export const FinishingSection: React.FC = () => {
                       padding: '4px 10px',
                       borderRadius: '999px',
                       backgroundColor: '#fee2e2',
-                      color: '#dc2626'
+                      color: '#dc2626',
                     }}
                   >
                     Heat-Cured Layer
                   </span>
                 </div>
 
-                <h4 style={{ fontSize: '1.25rem', color: '#111827', fontWeight: 800, marginBottom: '8px' }}>
+                <h4
+                  style={{
+                    fontSize: '1.25rem',
+                    color: '#111827',
+                    fontWeight: 800,
+                    marginBottom: '8px',
+                  }}
+                >
                   {LABEL_FINISHING.varnishing.title}
                 </h4>
-                <p style={{ fontSize: '0.875rem', color: '#475569', lineHeight: 1.68, marginBottom: '18px' }}>
+                <p
+                  style={{
+                    fontSize: '0.875rem',
+                    color: '#475569',
+                    lineHeight: 1.68,
+                    marginBottom: '18px',
+                  }}
+                >
                   {LABEL_FINISHING.varnishing.description}
                 </p>
               </div>
@@ -767,7 +976,7 @@ export const FinishingSection: React.FC = () => {
                       borderRadius: '8px',
                       backgroundColor: '#fee2e2',
                       color: '#dc2626',
-                      fontWeight: 700
+                      fontWeight: 700,
                     }}
                   >
                     ✓ {b}
@@ -786,11 +995,20 @@ export const FinishingSection: React.FC = () => {
                 boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                flex: '1 1 280px',
+                maxWidth: '360px',
               }}
             >
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '16px',
+                  }}
+                >
                   <div
                     style={{
                       width: '42px',
@@ -800,7 +1018,7 @@ export const FinishingSection: React.FC = () => {
                       color: '#00aeef',
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center'
+                      justifyContent: 'center',
                     }}
                   >
                     <Barcode size={22} />
@@ -812,17 +1030,31 @@ export const FinishingSection: React.FC = () => {
                       padding: '4px 10px',
                       borderRadius: '999px',
                       backgroundColor: '#e0f2fe',
-                      color: '#00aeef'
+                      color: '#00aeef',
                     }}
                   >
                     Track &amp; Trace
                   </span>
                 </div>
 
-                <h4 style={{ fontSize: '1.25rem', color: '#111827', fontWeight: 800, marginBottom: '8px' }}>
+                <h4
+                  style={{
+                    fontSize: '1.25rem',
+                    color: '#111827',
+                    fontWeight: 800,
+                    marginBottom: '8px',
+                  }}
+                >
                   {LABEL_FINISHING.serialNumbering.title}
                 </h4>
-                <p style={{ fontSize: '0.875rem', color: '#475569', lineHeight: 1.68, marginBottom: '18px' }}>
+                <p
+                  style={{
+                    fontSize: '0.875rem',
+                    color: '#475569',
+                    lineHeight: 1.68,
+                    marginBottom: '18px',
+                  }}
+                >
                   {LABEL_FINISHING.serialNumbering.description}
                 </p>
               </div>
@@ -837,7 +1069,7 @@ export const FinishingSection: React.FC = () => {
                       borderRadius: '8px',
                       backgroundColor: '#e0f2fe',
                       color: '#00aeef',
-                      fontWeight: 700
+                      fontWeight: 700,
                     }}
                   >
                     ✓ {b}
@@ -849,5 +1081,5 @@ export const FinishingSection: React.FC = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}

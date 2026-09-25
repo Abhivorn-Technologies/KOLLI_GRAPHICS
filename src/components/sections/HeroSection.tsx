@@ -10,11 +10,18 @@ const stagger = {
 }
 const up = {
   hidden: { opacity: 0, y: 22 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+  },
 }
 const line = {
   hidden: { scaleX: 0 },
-  show: { scaleX: 1, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
+  show: {
+    scaleX: 1,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+  },
 }
 
 function CMYKDots() {
@@ -100,9 +107,9 @@ export const HeroSection: React.FC = () => {
 
       {/* Floating accent dots */}
       {[
-        { x: '8%',  y: '24%', c: '#00aeef', s: 5 },
+        { x: '8%', y: '24%', c: '#00aeef', s: 5 },
         { x: '90%', y: '18%', c: '#ec008c', s: 4 },
-        { x: '4%',  y: '74%', c: '#f59e0b', s: 4 },
+        { x: '4%', y: '74%', c: '#f59e0b', s: 4 },
       ].map((d, i) => (
         <motion.div
           key={i}
@@ -217,8 +224,8 @@ export const HeroSection: React.FC = () => {
               >
                 "We are full committed service oriented premier finishing company to provide high
                 quality craftsmanship and service in the timely manner. We stand by this and work
-                tirelessly to stand above our competitors to ensure that we meet your deadlines &amp;
-                deliver products that exceed customers' expectations. Our motto is{' '}
+                tirelessly to stand above our competitors to ensure that we meet your deadlines
+                &amp; deliver products that exceed customers' expectations. Our motto is{' '}
                 <strong style={{ fontStyle: 'normal', color: '#111827' }}>
                   Quality &amp; Customer service first.
                 </strong>
@@ -243,9 +250,9 @@ export const HeroSection: React.FC = () => {
                 maxWidth: 480,
               }}
             >
-              Offset lithography · Folding cartons · Flexo labels · Luxury finishing.
-              Operating from our{' '}
-              <strong style={{ color: '#374151' }}>43,000 sq.ft. Hyderabad facility</strong>, 24/7.
+              Offset lithography · Folding cartons · Flexo labels · Luxury finishing. Operating from
+              our <strong style={{ color: '#374151' }}>43,000 sq.ft. Hyderabad facility</strong>,
+              24/7.
             </motion.p>
 
             {/* CTA buttons */}
@@ -332,15 +339,15 @@ export const HeroSection: React.FC = () => {
               {[
                 { n: '43,000', unit: 'sq.ft.', label: 'Modern Hyderabad facility' },
                 { n: '40,000', unit: 'sq.ft.', label: '24/7 secured, CCTV' },
-                { n: '2009',   unit: '',       label: 'Year founded' },
-                { n: '< 0.5', unit: 'mm',     label: 'Tubescan inspection' },
+                { n: '2009', unit: '', label: 'Year founded' },
+                { n: '< 0.5', unit: 'mm', label: 'Tubescan inspection' },
               ].map((s, i, arr) => (
                 <div
                   key={i}
                   style={{
                     flex: 1,
                     paddingRight: i < arr.length - 1 ? 16 : 0,
-                    paddingLeft:  i > 0 ? 16 : 0,
+                    paddingLeft: i > 0 ? 16 : 0,
                     borderRight: i < arr.length - 1 ? '1px solid #e5e7eb' : 'none',
                   }}
                 >
@@ -368,7 +375,9 @@ export const HeroSection: React.FC = () => {
                       </span>
                     )}
                   </div>
-                  <div style={{ fontSize: '0.68rem', color: '#9ca3af', marginTop: 3, fontWeight: 500 }}>
+                  <div
+                    style={{ fontSize: '0.68rem', color: '#9ca3af', marginTop: 3, fontWeight: 500 }}
+                  >
                     {s.label}
                   </div>
                 </div>
@@ -384,7 +393,8 @@ export const HeroSection: React.FC = () => {
             style={{
               position: 'relative',
               borderRadius: 20,
-              background: 'linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(244,248,252,0.95) 100%)',
+              background:
+                'linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(244,248,252,0.95) 100%)',
               border: '1px solid rgba(220,38,38,0.1)',
               boxShadow: '0 4px 32px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04)',
               backdropFilter: 'blur(10px)',
@@ -442,4 +452,3 @@ export const HeroSection: React.FC = () => {
     </section>
   )
 }
-

@@ -1,45 +1,47 @@
-﻿import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Phone, MessageSquare, ArrowRight } from 'lucide-react';
-import { COMPANY_INFO } from '../../data/company';
+﻿import React, { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { Menu, X, Phone, MessageSquare, ArrowRight } from 'lucide-react'
+import { COMPANY_INFO } from '../../data/company'
 
 const NAV_LINKS = [
-  { label: 'Home',         path: '/'             },
-  { label: 'Company',      path: '/company'       },
-  { label: 'Capabilities', path: '/capabilities'  },
-  { label: 'Equipment',    path: '/equipment'     },
-  { label: 'Estimating',   path: '/estimating'    },
-  { label: 'Contact',      path: '/contact'       },
-];
+  { label: 'Home', path: '/' },
+  { label: 'Company', path: '/company' },
+  { label: 'Capabilities', path: '/capabilities' },
+  { label: 'Equipment', path: '/equipment' },
+  { label: 'Estimating', path: '/estimating' },
+  { label: 'Contact', path: '/contact' },
+]
 
 export const Navbar: React.FC = () => {
-  const location = useLocation();
-  const [isScrolled, setIsScrolled]       = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation()
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 30);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    const handleScroll = () => setIsScrolled(window.scrollY > 30)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   // Close mobile menu on route change
   useEffect(() => {
-    setMobileMenuOpen(false);
-    window.scrollTo({ top: 0 });
-  }, [location.pathname]);
+    setMobileMenuOpen(false)
+    window.scrollTo({ top: 0 })
+  }, [location.pathname])
 
   const isActive = (path: string) => {
-    if (path === '/') return location.pathname === '/' || location.pathname === '/home';
-    return location.pathname === path;
-  };
+    if (path === '/') return location.pathname === '/' || location.pathname === '/home'
+    return location.pathname === path
+  }
 
   return (
     <>
       <header
         style={{
           position: 'fixed',
-          top: 0, left: 0, right: 0,
+          top: 0,
+          left: 0,
+          right: 0,
           zIndex: 1000,
           transition: 'all 0.35s ease',
           backgroundColor: isScrolled ? 'rgba(255,255,255,0.97)' : 'rgba(255,255,255,0.92)',
@@ -78,7 +80,7 @@ export const Navbar: React.FC = () => {
             style={{ display: 'none', alignItems: 'center', gap: '6px' }}
           >
             {NAV_LINKS.map((link) => {
-              const active = isActive(link.path);
+              const active = isActive(link.path)
               return (
                 <Link
                   key={link.path}
@@ -94,10 +96,10 @@ export const Navbar: React.FC = () => {
                     textDecoration: 'none',
                   }}
                   onMouseEnter={(e) => {
-                    if (!active) e.currentTarget.style.color = '#dc2626';
+                    if (!active) e.currentTarget.style.color = '#dc2626'
                   }}
                   onMouseLeave={(e) => {
-                    if (!active) e.currentTarget.style.color = '#374151';
+                    if (!active) e.currentTarget.style.color = '#374151'
                   }}
                 >
                   {link.label}
@@ -106,7 +108,8 @@ export const Navbar: React.FC = () => {
                       style={{
                         position: 'absolute',
                         bottom: '2px',
-                        left: '14px', right: '14px',
+                        left: '14px',
+                        right: '14px',
                         height: '2px',
                         backgroundColor: '#dc2626',
                         borderRadius: '2px',
@@ -114,7 +117,7 @@ export const Navbar: React.FC = () => {
                     />
                   )}
                 </Link>
-              );
+              )
             })}
           </nav>
 
@@ -158,8 +161,12 @@ export const Navbar: React.FC = () => {
                 transition: 'all 0.25s ease',
                 textDecoration: 'none',
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)'
+              }}
             >
               <span>Estimating</span>
               <ArrowRight size={15} />
@@ -174,7 +181,8 @@ export const Navbar: React.FC = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                width: '42px', height: '42px',
+                width: '42px',
+                height: '42px',
                 borderRadius: '10px',
                 backgroundColor: '#ebeef2',
                 color: '#111827',
@@ -193,7 +201,10 @@ export const Navbar: React.FC = () => {
         <div
           style={{
             position: 'fixed',
-            top: 'var(--nav-height)', left: 0, right: 0, bottom: 0,
+            top: 'var(--nav-height)',
+            left: 0,
+            right: 0,
+            bottom: 0,
             zIndex: 999,
             backgroundColor: 'rgba(255,255,255,0.98)',
             backdropFilter: 'blur(20px)',
@@ -203,9 +214,11 @@ export const Navbar: React.FC = () => {
             overflowY: 'auto',
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '24px' }}>
+          <div
+            style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '24px' }}
+          >
             {NAV_LINKS.map((link) => {
-              const active = isActive(link.path);
+              const active = isActive(link.path)
               return (
                 <Link
                   key={link.path}
@@ -226,7 +239,7 @@ export const Navbar: React.FC = () => {
                   <span>{link.label}</span>
                   <ArrowRight size={16} color={active ? '#dc2626' : '#d1d5db'} />
                 </Link>
-              );
+              )
             })}
           </div>
 
@@ -235,7 +248,9 @@ export const Navbar: React.FC = () => {
               marginTop: 'auto',
               paddingTop: '20px',
               borderTop: '1px solid #e5e7eb',
-              display: 'flex', flexDirection: 'column', gap: '12px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px',
             }}
           >
             <a
@@ -243,10 +258,16 @@ export const Navbar: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                gap: '10px', padding: '14px', borderRadius: '12px',
-                backgroundColor: '#25D366', color: '#ffffff',
-                fontWeight: 600, textDecoration: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '10px',
+                padding: '14px',
+                borderRadius: '12px',
+                backgroundColor: '#25D366',
+                color: '#ffffff',
+                fontWeight: 600,
+                textDecoration: 'none',
               }}
             >
               <MessageSquare size={18} />
@@ -255,10 +276,16 @@ export const Navbar: React.FC = () => {
             <a
               href={`tel:${COMPANY_INFO.phone}`}
               style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                gap: '10px', padding: '14px', borderRadius: '12px',
-                backgroundColor: '#111827', color: '#ffffff',
-                fontWeight: 600, textDecoration: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '10px',
+                padding: '14px',
+                borderRadius: '12px',
+                backgroundColor: '#111827',
+                color: '#ffffff',
+                fontWeight: 600,
+                textDecoration: 'none',
               }}
             >
               <Phone size={18} />
@@ -276,6 +303,5 @@ export const Navbar: React.FC = () => {
         }
       `}</style>
     </>
-  );
-};
-
+  )
+}

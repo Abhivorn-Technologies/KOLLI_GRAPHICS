@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Layers, CheckCircle2 } from 'lucide-react';
-import { SectionHeader } from '../common/SectionHeader';
-import { ScrollReveal } from '../common/ScrollReveal';
-import { ImageWithFallback } from '../common/ImageWithFallback';
-import { CARTON_TYPES } from '../../data/products';
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Layers, CheckCircle2 } from 'lucide-react'
+import { SectionHeader } from '../common/SectionHeader'
+import { ScrollReveal } from '../common/ScrollReveal'
+import { ImageWithFallback } from '../common/ImageWithFallback'
+import { CARTON_TYPES } from '../../data/products'
 
 export const FoldingCartonSection: React.FC = () => {
-  const [selectedCartonId, setSelectedCartonId] = useState(CARTON_TYPES[0].id);
-  const currentCarton = CARTON_TYPES.find((c) => c.id === selectedCartonId) || CARTON_TYPES[0];
+  const [selectedCartonId, setSelectedCartonId] = useState(CARTON_TYPES[0].id)
+  const currentCarton = CARTON_TYPES.find((c) => c.id === selectedCartonId) || CARTON_TYPES[0]
 
   return (
-    <section id="cartons" style={{ padding: '100px 0', backgroundColor: '#ffffff' }}>
+    <section id="cartons" style={{ padding: '56px 0', backgroundColor: '#ffffff' }}>
       <div className="container">
         {/* Section Header */}
         <SectionHeader
@@ -25,29 +25,30 @@ export const FoldingCartonSection: React.FC = () => {
         {/* 4 Core Advantages Row */}
         <div
           style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
             gap: '18px',
-            marginBottom: '60px'
+            marginBottom: '60px',
           }}
         >
           {[
             {
               title: 'Premium Presentation',
-              desc: 'The smooth, high-quality finish of our folding cartons adds an unmistakable touch of luxury to your product packaging.'
+              desc: 'The smooth, high-quality finish of our folding cartons adds an unmistakable touch of luxury to your product packaging.',
             },
             {
               title: 'Customizable Design',
-              desc: 'Personalize folding cartons with brand colors, logos, metallic foils, and spot UV graphics reflecting brand identity.'
+              desc: 'Personalize folding cartons with brand colors, logos, metallic foils, and spot UV graphics reflecting brand identity.',
             },
             {
               title: 'Easy Assembly',
-              desc: 'Designed for quick and hassle-free assembly, our folding cartons save critical time and labor on the packaging floor.'
+              desc: 'Designed for quick and hassle-free assembly, our folding cartons save critical time and labor on the packaging floor.',
             },
             {
               title: 'Versatility',
-              desc: 'Suitable for a wide range of products, from cosmetics to confectionery, pharmaceuticals, and industrial hardware.'
-            }
+              desc: 'Suitable for a wide range of products, from cosmetics to confectionery, pharmaceuticals, and industrial hardware.',
+            },
           ].map((adv, idx) => (
             <ScrollReveal key={adv.title} direction="up" delay={idx * 0.1}>
               <div
@@ -56,7 +57,9 @@ export const FoldingCartonSection: React.FC = () => {
                   borderRadius: '16px',
                   backgroundColor: '#f4f6f8',
                   border: '1px solid #e5e7eb',
-                  height: '100%'
+                  height: '100%',
+                  flex: '1 1 240px',
+                  maxWidth: '300px',
                 }}
               >
                 <div
@@ -65,7 +68,7 @@ export const FoldingCartonSection: React.FC = () => {
                     alignItems: 'center',
                     gap: '8px',
                     marginBottom: '10px',
-                    color: '#dc2626'
+                    color: '#dc2626',
                   }}
                 >
                   <CheckCircle2 size={18} />
@@ -85,13 +88,14 @@ export const FoldingCartonSection: React.FC = () => {
             style={{
               padding: '28px 32px',
               borderRadius: '20px',
-              background: 'linear-gradient(135deg, rgba(0, 174, 239, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%)',
+              background:
+                'linear-gradient(135deg, rgba(0, 174, 239, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%)',
               border: '1px solid #e5e7eb',
               marginBottom: '50px',
               display: 'flex',
               alignItems: 'center',
               gap: '20px',
-              flexWrap: 'wrap'
+              flexWrap: 'wrap',
             }}
           >
             <div
@@ -105,7 +109,7 @@ export const FoldingCartonSection: React.FC = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: '#dc2626',
-                flexShrink: 0
+                flexShrink: 0,
               }}
             >
               <Layers size={22} />
@@ -115,7 +119,10 @@ export const FoldingCartonSection: React.FC = () => {
                 What is Paperboard?
               </h4>
               <p style={{ fontSize: '0.9rem', color: '#4b5563', lineHeight: 1.6 }}>
-                Paperboard, or cardstock, is a heavy or thick paper-based material which includes metallic paperboard, plus various other boards. All paperboard (including kraft) can be cut and formed easily while still remaining stable in order to protect the contents of the folding carton.
+                Paperboard, or cardstock, is a heavy or thick paper-based material which includes
+                metallic paperboard, plus various other boards. All paperboard (including kraft) can
+                be cut and formed easily while still remaining stable in order to protect the
+                contents of the folding carton.
               </p>
             </div>
           </div>
@@ -129,7 +136,8 @@ export const FoldingCartonSection: React.FC = () => {
             </div>
             <h3 style={{ fontSize: '1.85rem' }}>Different Types of Folding Cartons</h3>
             <p style={{ fontSize: '0.95rem', color: '#6b7280' }}>
-              Select a carton configuration to inspect structural folding physics, panel layout, and packaging benefits.
+              Select a carton configuration to inspect structural folding physics, panel layout, and
+              packaging benefits.
             </p>
           </div>
 
@@ -141,11 +149,11 @@ export const FoldingCartonSection: React.FC = () => {
               overflowX: 'auto',
               paddingBottom: '14px',
               marginBottom: '32px',
-              scrollbarWidth: 'none'
+              scrollbarWidth: 'none',
             }}
           >
             {CARTON_TYPES.map((carton) => {
-              const isActive = carton.id === selectedCartonId;
+              const isActive = carton.id === selectedCartonId
               return (
                 <button
                   key={carton.id}
@@ -161,13 +169,15 @@ export const FoldingCartonSection: React.FC = () => {
                     border: 'none',
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
-                    boxShadow: isActive ? '0 4px 12px rgba(220, 38, 38, 0.3)' : 'none'
+                    boxShadow: isActive ? '0 4px 12px rgba(220, 38, 38, 0.3)' : 'none',
                   }}
                 >
-                  <span style={{ opacity: 0.8, marginRight: '6px', fontSize: '0.75rem' }}>[{carton.code}]</span>
+                  <span style={{ opacity: 0.8, marginRight: '6px', fontSize: '0.75rem' }}>
+                    [{carton.code}]
+                  </span>
                   {carton.title.split('(')[0].trim()}
                 </button>
-              );
+              )
             })}
           </div>
 
@@ -188,7 +198,7 @@ export const FoldingCartonSection: React.FC = () => {
                 backgroundColor: '#ffffff',
                 border: '1px solid #e5e7eb',
                 boxShadow: 'var(--shadow-md)',
-                alignItems: 'center'
+                alignItems: 'center',
               }}
             >
               {/* Left Column: Visual Diagram */}
@@ -201,10 +211,20 @@ export const FoldingCartonSection: React.FC = () => {
                   backgroundColor: '#f4f6f8',
                   borderRadius: '18px',
                   padding: '30px',
-                  border: '1px solid #e5e7eb'
+                  border: '1px solid #e5e7eb',
                 }}
               >
-                <div style={{ position: 'relative', width: '100%', maxWidth: '320px', height: '280px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div
+                  style={{
+                    position: 'relative',
+                    width: '100%',
+                    maxWidth: '320px',
+                    height: '280px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
                   <ImageWithFallback
                     src={currentCarton.image}
                     alt={currentCarton.title}
@@ -212,7 +232,7 @@ export const FoldingCartonSection: React.FC = () => {
                     style={{
                       maxHeight: '260px',
                       maxWidth: '100%',
-                      objectFit: 'contain'
+                      objectFit: 'contain',
                     }}
                   />
                 </div>
@@ -227,7 +247,7 @@ export const FoldingCartonSection: React.FC = () => {
                     fontSize: '0.78rem',
                     color: '#6b7280',
                     textAlign: 'center',
-                    width: '100%'
+                    width: '100%',
                   }}
                 >
                   <strong>Folding Mechanics:</strong> {currentCarton.foldingConcept}
@@ -236,7 +256,9 @@ export const FoldingCartonSection: React.FC = () => {
 
               {/* Right Column: Content, Advantages, Best-For */}
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <div
+                  style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}
+                >
                   <span
                     style={{
                       padding: '3px 10px',
@@ -244,7 +266,7 @@ export const FoldingCartonSection: React.FC = () => {
                       backgroundColor: 'rgba(220, 38, 38, 0.1)',
                       color: '#dc2626',
                       fontSize: '0.75rem',
-                      fontWeight: 800
+                      fontWeight: 800,
                     }}
                   >
                     CODE: {currentCarton.code}
@@ -258,7 +280,14 @@ export const FoldingCartonSection: React.FC = () => {
                   {currentCarton.title}
                 </h3>
 
-                <p style={{ fontSize: '0.925rem', color: '#4b5563', lineHeight: 1.7, marginBottom: '20px' }}>
+                <p
+                  style={{
+                    fontSize: '0.925rem',
+                    color: '#4b5563',
+                    lineHeight: 1.7,
+                    marginBottom: '20px',
+                  }}
+                >
                   {currentCarton.description}
                 </p>
 
@@ -268,7 +297,16 @@ export const FoldingCartonSection: React.FC = () => {
                   </h4>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {currentCarton.advantages.map((adv) => (
-                      <div key={adv} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '0.875rem', color: '#374151' }}>
+                      <div
+                        key={adv}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'flex-start',
+                          gap: '8px',
+                          fontSize: '0.875rem',
+                          color: '#374151',
+                        }}
+                      >
                         <span style={{ color: '#dc2626', marginTop: '2px' }}>✓</span>
                         <span>{adv}</span>
                       </div>
@@ -277,7 +315,15 @@ export const FoldingCartonSection: React.FC = () => {
                 </div>
 
                 <div>
-                  <h4 style={{ fontSize: '0.85rem', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '8px' }}>
+                  <h4
+                    style={{
+                      fontSize: '0.85rem',
+                      color: '#6b7280',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.04em',
+                      marginBottom: '8px',
+                    }}
+                  >
                     Recommended Applications:
                   </h4>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -290,7 +336,7 @@ export const FoldingCartonSection: React.FC = () => {
                           backgroundColor: '#ebeef2',
                           color: '#4b5563',
                           fontSize: '0.78rem',
-                          fontWeight: 600
+                          fontWeight: 600,
                         }}
                       >
                         {tag}
@@ -304,6 +350,5 @@ export const FoldingCartonSection: React.FC = () => {
         </div>
       </div>
     </section>
-  );
-};
-
+  )
+}

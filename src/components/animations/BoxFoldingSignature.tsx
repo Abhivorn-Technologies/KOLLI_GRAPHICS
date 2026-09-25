@@ -1,70 +1,92 @@
-import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import { Sparkles, CheckCircle, Layers, Box } from 'lucide-react';
-import { useStickyScrollProgress, remap, easeOut, easeInOut } from '../../hooks/useScrollProgress';
+import React from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
+import { Sparkles, CheckCircle, Layers, Box } from 'lucide-react'
+import { useStickyScrollProgress, remap, easeOut, easeInOut } from '../../hooks/useScrollProgress'
 
 /* ─── helpers ─────────────────────────────────────────────────────────────── */
-function lerp(a: number, b: number, t: number) { return a + (b - a) * t; }
+function lerp(a: number, b: number, t: number) {
+  return a + (b - a) * t
+}
 
 // Phase boundaries (progress 0..1)
 const P = {
-  sidewallStart: 0.10,
-  sidewallEnd:   0.30,
-  frontWallStart:0.25,
-  frontWallEnd:  0.45,
-  bottomStart:   0.40,
-  bottomEnd:     0.58,
+  sidewallStart: 0.1,
+  sidewallEnd: 0.3,
+  frontWallStart: 0.25,
+  frontWallEnd: 0.45,
+  bottomStart: 0.4,
+  bottomEnd: 0.58,
   topCloseStart: 0.55,
-  topCloseEnd:   0.74,
-  topOpenStart:  0.78,
-  topOpenEnd:    1.00,
-};
+  topCloseEnd: 0.74,
+  topOpenStart: 0.78,
+  topOpenEnd: 1.0,
+}
 
 const STAGES = [
-  { label: 'Flat Die-Line Sheet',        prog: 0,    desc: 'Precision laser-scored paperboard, flat for maximum pallet density.' },
-  { label: 'Sidewalls Fold 90°',         prog: 0.25, desc: 'Side panels hinge along crease rules to form the prism walls.' },
-  { label: 'Auto-Lock Base Interlocks',  prog: 0.50, desc: 'Bottom flaps interlock and glue for structural rigidity.' },
-  { label: 'Tuck-End Closure Seals',     prog: 0.76, desc: 'Top lid folds down — hot foil stamped, gold embossed.' },
-  { label: 'Unboxing Reveal',            prog: 1.00, desc: 'Interior print & gold foil craftsmanship revealed.' },
-];
+  {
+    label: 'Flat Die-Line Sheet',
+    prog: 0,
+    desc: 'Precision laser-scored paperboard, flat for maximum pallet density.',
+  },
+  {
+    label: 'Sidewalls Fold 90°',
+    prog: 0.25,
+    desc: 'Side panels hinge along crease rules to form the prism walls.',
+  },
+  {
+    label: 'Auto-Lock Base Interlocks',
+    prog: 0.5,
+    desc: 'Bottom flaps interlock and glue for structural rigidity.',
+  },
+  {
+    label: 'Tuck-End Closure Seals',
+    prog: 0.76,
+    desc: 'Top lid folds down — hot foil stamped, gold embossed.',
+  },
+  {
+    label: 'Unboxing Reveal',
+    prog: 1.0,
+    desc: 'Interior print & gold foil craftsmanship revealed.',
+  },
+]
 
 export const BoxFoldingSignature: React.FC = () => {
-  const reduceMotion = useReducedMotion();
-  const { containerRef, progress } = useStickyScrollProgress();
+  const reduceMotion = useReducedMotion()
+  const { containerRef, progress } = useStickyScrollProgress()
 
-  const p = progress;
+  const p = progress
 
   // Derived fold angles
-  const leftWallAngle  = easeOut(remap(p, P.sidewallStart, P.sidewallEnd, 0, 1)) * 90;
-  const rightWallAngle = easeOut(remap(p, P.sidewallStart, P.sidewallEnd, 0, 1)) * 90;
-  const bottomFlapAngle= easeOut(remap(p, P.bottomStart, P.bottomEnd, 0, 1)) * 90;
+  const leftWallAngle = easeOut(remap(p, P.sidewallStart, P.sidewallEnd, 0, 1)) * 90
+  const rightWallAngle = easeOut(remap(p, P.sidewallStart, P.sidewallEnd, 0, 1)) * 90
+  const bottomFlapAngle = easeOut(remap(p, P.bottomStart, P.bottomEnd, 0, 1)) * 90
 
-  let topLidAngle = 0;
-  const closeT = easeInOut(remap(p, P.topCloseStart, P.topCloseEnd, 0, 1));
-  const openT   = easeOut(remap(p, P.topOpenStart, P.topOpenEnd, 0, 1));
+  let topLidAngle = 0
+  const closeT = easeInOut(remap(p, P.topCloseStart, P.topCloseEnd, 0, 1))
+  const openT = easeOut(remap(p, P.topOpenStart, P.topOpenEnd, 0, 1))
   if (p < P.topCloseStart) {
-    topLidAngle = 0;
+    topLidAngle = 0
   } else if (p < P.topOpenStart) {
-    topLidAngle = closeT * 90;
+    topLidAngle = closeT * 90
   } else {
     // re-opens to reveal contents
-    topLidAngle = lerp(90, -30, openT);
+    topLidAngle = lerp(90, -30, openT)
   }
 
   // Scene perspective rotation
-  const sceneRotX = lerp(26, 14, easeInOut(p));
-  const sceneRotY = lerp(-38, 12, easeInOut(p));
+  const sceneRotX = lerp(26, 14, easeInOut(p))
+  const sceneRotY = lerp(-38, 12, easeInOut(p))
 
   // Shadow
-  const shadowW = lerp(220, 320, easeInOut(p));
-  const shadowBlur = lerp(22, 14, easeInOut(p));
+  const shadowW = lerp(220, 320, easeInOut(p))
+  const shadowBlur = lerp(22, 14, easeInOut(p))
 
   // Interior content opacity: only bright when box is open
-  const interiorOpacity = remap(p, P.topOpenStart, P.topOpenEnd, 0, 1);
+  const interiorOpacity = remap(p, P.topOpenStart, P.topOpenEnd, 0, 1)
   // Gold foil badge on lid
-  const goldBadgeVisible = p > 0.7;
+  const goldBadgeVisible = p > 0.7
 
-  const currentStage = STAGES.reduce((acc, s) => p >= s.prog ? s : acc, STAGES[0]);
+  const currentStage = STAGES.reduce((acc, s) => (p >= s.prog ? s : acc), STAGES[0])
 
   return (
     /* Outer container: tall enough for sticky pinning (300vh) */
@@ -121,13 +143,13 @@ export const BoxFoldingSignature: React.FC = () => {
         />
         {/* CMYK decorative dots parallax */}
         {[
-          { color: '#00aeef', size: 6, x: '8%',  y: '20%', px: p * 25 },
+          { color: '#00aeef', size: 6, x: '8%', y: '20%', px: p * 25 },
           { color: '#ec008c', size: 5, x: '92%', y: '30%', px: -p * 20 },
           { color: '#f59e0b', size: 6, x: '15%', y: '75%', px: p * 15 },
           { color: '#dc2626', size: 5, x: '85%', y: '70%', px: -p * 18 },
-        ].map((dot, i) => (
+        ].map((dot) => (
           <div
-            key={i}
+            key={`dot-${dot.color}-${dot.x}-${dot.y}`}
             style={{
               position: 'absolute',
               left: dot.x,
@@ -208,7 +230,14 @@ export const BoxFoldingSignature: React.FC = () => {
                   marginBottom: '28px',
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    marginBottom: '6px',
+                  }}
+                >
                   <div
                     style={{
                       width: 9,
@@ -218,7 +247,15 @@ export const BoxFoldingSignature: React.FC = () => {
                       boxShadow: '0 0 10px rgba(220,38,38,0.4)',
                     }}
                   />
-                  <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#dc2626', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                  <span
+                    style={{
+                      fontSize: '0.85rem',
+                      fontWeight: 800,
+                      color: '#dc2626',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.06em',
+                    }}
+                  >
                     {currentStage.label}
                   </span>
                 </div>
@@ -229,9 +266,9 @@ export const BoxFoldingSignature: React.FC = () => {
 
               {/* Stage progress dots */}
               <div style={{ display: 'flex', gap: '8px', marginBottom: '36px' }}>
-                {STAGES.map((s, i) => (
+                {STAGES.map((s) => (
                   <div
-                    key={i}
+                    key={`stage-bar-${s.name}`}
                     style={{
                       height: '5px',
                       flex: 1,
@@ -246,9 +283,24 @@ export const BoxFoldingSignature: React.FC = () => {
               {/* Feature grid */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {[
-                  { icon: <Layers size={15} />, color: '#dc2626', label: 'Flat Shipping', text: 'Ships flat, folds in seconds — maximum pallet density.' },
-                  { icon: <CheckCircle size={15} />, color: '#00aeef', label: 'BOBST Swiss Die-Cutting', text: 'Undistorted blanks from BOBST SP Evoline 102 E.' },
-                  { icon: <Sparkles size={15} />, color: '#f59e0b', label: 'Luxury Unboxing', text: 'Interior CMYK + gold foil — premium consumer perception.' },
+                  {
+                    icon: <Layers size={15} />,
+                    color: '#dc2626',
+                    label: 'Flat Shipping',
+                    text: 'Ships flat, folds in seconds — maximum pallet density.',
+                  },
+                  {
+                    icon: <CheckCircle size={15} />,
+                    color: '#00aeef',
+                    label: 'BOBST Swiss Die-Cutting',
+                    text: 'Undistorted blanks from BOBST SP Evoline 102 E.',
+                  },
+                  {
+                    icon: <Sparkles size={15} />,
+                    color: '#f59e0b',
+                    label: 'Luxury Unboxing',
+                    text: 'Interior CMYK + gold foil — premium consumer perception.',
+                  },
                 ].map((f) => (
                   <div
                     key={f.label}
@@ -280,8 +332,19 @@ export const BoxFoldingSignature: React.FC = () => {
                       {f.icon}
                     </div>
                     <div>
-                      <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#111827', marginBottom: '2px' }}>{f.label}</div>
-                      <div style={{ fontSize: '0.8rem', color: '#6b7280', lineHeight: 1.5 }}>{f.text}</div>
+                      <div
+                        style={{
+                          fontSize: '0.88rem',
+                          fontWeight: 700,
+                          color: '#111827',
+                          marginBottom: '2px',
+                        }}
+                      >
+                        {f.label}
+                      </div>
+                      <div style={{ fontSize: '0.8rem', color: '#6b7280', lineHeight: 1.5 }}>
+                        {f.text}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -385,7 +448,8 @@ export const BoxFoldingSignature: React.FC = () => {
                               left: x,
                               width: '1px',
                               height: '100%',
-                              background: 'repeating-linear-gradient(to bottom, #9ca3af 0, #9ca3af 4px, transparent 4px, transparent 8px)',
+                              background:
+                                'repeating-linear-gradient(to bottom, #9ca3af 0, #9ca3af 4px, transparent 4px, transparent 8px)',
                               opacity: 0.4,
                             }}
                           />
@@ -399,7 +463,8 @@ export const BoxFoldingSignature: React.FC = () => {
                               left: 0,
                               height: '1px',
                               width: '100%',
-                              background: 'repeating-linear-gradient(to right, #9ca3af 0, #9ca3af 4px, transparent 4px, transparent 8px)',
+                              background:
+                                'repeating-linear-gradient(to right, #9ca3af 0, #9ca3af 4px, transparent 4px, transparent 8px)',
                               opacity: 0.4,
                             }}
                           />
@@ -421,7 +486,14 @@ export const BoxFoldingSignature: React.FC = () => {
                         alt="Kolli Graphics"
                         style={{ height: 36, width: 'auto', objectFit: 'contain', marginBottom: 8 }}
                       />
-                      <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#111827', letterSpacing: '0.04em' }}>
+                      <div
+                        style={{
+                          fontSize: '0.78rem',
+                          fontWeight: 800,
+                          color: '#111827',
+                          letterSpacing: '0.04em',
+                        }}
+                      >
                         PREMIUM PACKAGING
                       </div>
                       <div style={{ fontSize: '0.65rem', color: '#6b7280', marginTop: 2 }}>
@@ -464,7 +536,8 @@ export const BoxFoldingSignature: React.FC = () => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      boxShadow: leftWallAngle > 30 ? 'inset -12px 0 24px rgba(0,0,0,0.07)' : 'none',
+                      boxShadow:
+                        leftWallAngle > 30 ? 'inset -12px 0 24px rgba(0,0,0,0.07)' : 'none',
                     }}
                   >
                     <span
@@ -497,7 +570,8 @@ export const BoxFoldingSignature: React.FC = () => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      boxShadow: rightWallAngle > 30 ? 'inset 12px 0 24px rgba(0,0,0,0.07)' : 'none',
+                      boxShadow:
+                        rightWallAngle > 30 ? 'inset 12px 0 24px rgba(0,0,0,0.07)' : 'none',
                     }}
                   >
                     <span
@@ -567,7 +641,8 @@ export const BoxFoldingSignature: React.FC = () => {
                         width: 48,
                         height: 48,
                         borderRadius: '50%',
-                        background: 'linear-gradient(135deg,#ffd700 0%,#b8860b 45%,#fff2a3 75%,#daa520 100%)',
+                        background:
+                          'linear-gradient(135deg,#ffd700 0%,#b8860b 45%,#fff2a3 75%,#daa520 100%)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -576,10 +651,19 @@ export const BoxFoldingSignature: React.FC = () => {
                     >
                       <Sparkles size={22} color="#4a2c00" />
                     </div>
-                    <span style={{ fontSize: '0.7rem', fontWeight: 800, color: '#111827', letterSpacing: '0.04em' }}>
+                    <span
+                      style={{
+                        fontSize: '0.7rem',
+                        fontWeight: 800,
+                        color: '#111827',
+                        letterSpacing: '0.04em',
+                      }}
+                    >
                       KOLLI GRAPHICS
                     </span>
-                    <span style={{ fontSize: '0.58rem', color: '#9ca3af', letterSpacing: '0.06em' }}>
+                    <span
+                      style={{ fontSize: '0.58rem', color: '#9ca3af', letterSpacing: '0.06em' }}
+                    >
                       HOT FOIL STAMPED
                     </span>
                   </div>
@@ -639,7 +723,5 @@ export const BoxFoldingSignature: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
-
-
+  )
+}

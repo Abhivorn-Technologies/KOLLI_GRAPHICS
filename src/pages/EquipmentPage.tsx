@@ -1,9 +1,9 @@
-﻿import React, { useEffect } from "react"
-import { EquipmentSection } from "../components/sections/EquipmentSection"
+﻿import React, { useEffect } from 'react'
+import { EquipmentSection } from '../components/sections/EquipmentSection'
 
 export const EquipmentPage: React.FC = () => {
   useEffect(() => {
-    document.title = "Machinery & Equipment | Kolli Graphics"
+    document.title = 'Machinery & Equipment | Kolli Graphics'
     window.scrollTo({ top: 0 })
   }, [])
 

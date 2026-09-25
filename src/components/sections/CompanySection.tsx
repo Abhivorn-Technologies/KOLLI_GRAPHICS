@@ -2,6 +2,7 @@ import React from 'react'
 import { Building2, Users, Briefcase } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { SectionHeader } from '@common/SectionHeader'
+import { COMPANY_INFO } from '../../data/company'
 
 const P: React.FC<{ children: React.ReactNode; style?: React.CSSProperties }> = ({
   children,
@@ -22,14 +23,15 @@ const P: React.FC<{ children: React.ReactNode; style?: React.CSSProperties }> = 
 
 export const CompanySection: React.FC = () => {
   return (
-    <section id="company" style={{ padding: '88px 0', backgroundColor: '#ffffff' }}>
+    <section id="company" style={{ padding: '56px 0', backgroundColor: '#ffffff' }}>
       <div className="container">
-        {/* Section Header — document: "COMPANY", "Get To Know More About Who We Are" */}
+        {/* Section Header */}
         <SectionHeader
-          badge="Company"
+          badge="Company Overview"
           badgeVariant="cyan"
-          title="COMPANY"
-          subtitle="Get To Know More About Who We Are"
+          title="Get To Know More About"
+          titleHighlight="Who We Are"
+          subtitle="Kolli Graphics Private Limited commands 15+ years of packaging excellence in Hyderabad."
         />
 
         {/* Sub-nav — exact from document line 2: About Us, Meet Our Team, Career Opportunities */}
@@ -115,7 +117,10 @@ export const CompanySection: React.FC = () => {
                 lithography with a full array of packaging services and Labels of all kinds. Kolli
                 Graphics is founded in <strong style={{ color: '#111827' }}>2009</strong> with a
                 motive of{' '}
-                <strong style={{ color: '#dc2626' }}>&ldquo;Quality &amp; Customer First&rdquo;</strong>.
+                <strong style={{ color: '#dc2626' }}>
+                  &ldquo;Quality &amp; Customer First&rdquo;
+                </strong>
+                .
               </P>
 
               <P>
@@ -128,15 +133,14 @@ export const CompanySection: React.FC = () => {
                 We have Heidelberg offset printing machines with online coaters and Komori with
                 double coater and full UV press for the printing. With respect lable printing we
                 have Omet Flexo printer with foil stamping and Slitter, Rewinder and online
-                inspection machine. In addition to the investment in these state-of-the-art
-                printing technologies, the company has installed an impressive array of finishing
-                equipment as well. This includes BOBST Die cutters, BOBST Foil Stamping machines,
-                BOBST Domino, BOBST Media pasting machines and DGM pasting machine with online
-                inspection system. Also we have numerous automated production lines like Handy
-                packs at the end of pasting machines, ATS Banding machinery, Waste stripping
-                machines, Automatic Box sealing machine etc., The company is continuing to invest
-                in a wide-range of finishing equipment to meet the needs of our growing client
-                base.
+                inspection machine. In addition to the investment in these state-of-the-art printing
+                technologies, the company has installed an impressive array of finishing equipment
+                as well. This includes BOBST Die cutters, BOBST Foil Stamping machines, BOBST
+                Domino, BOBST Media pasting machines and DGM pasting machine with online inspection
+                system. Also we have numerous automated production lines like Handy packs at the end
+                of pasting machines, ATS Banding machinery, Waste stripping machines, Automatic Box
+                sealing machine etc., The company is continuing to invest in a wide-range of
+                finishing equipment to meet the needs of our growing client base.
               </P>
 
               <P>
@@ -204,16 +208,29 @@ export const CompanySection: React.FC = () => {
 
             <div
               style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
                 gap: 20,
                 maxWidth: 640,
                 margin: '0 auto',
               }}
             >
               {[
-                { initials: 'RR', name: 'Ranga Reddy Kolli', role: 'CEO', color: '#dc2626', bg: 'rgba(0,174,239,0.09)' },
-                { initials: 'PR', name: 'Parasurami Reddy Kolli', role: 'COO', color: '#dc2626', bg: 'rgba(220,38,38,0.08)' },
+                {
+                  initials: 'RR',
+                  name: 'Ranga Reddy Kolli',
+                  role: 'CEO',
+                  color: '#dc2626',
+                  bg: 'rgba(0,174,239,0.09)',
+                },
+                {
+                  initials: 'PR',
+                  name: 'Parasurami Reddy Kolli',
+                  role: 'COO',
+                  color: '#dc2626',
+                  bg: 'rgba(220,38,38,0.08)',
+                },
               ].map((m) => (
                 <motion.div
                   key={m.name}
@@ -228,6 +245,8 @@ export const CompanySection: React.FC = () => {
                     border: '1px solid #e5e7eb',
                     textAlign: 'center',
                     boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
+                    flex: '1 1 260px',
+                    maxWidth: '300px',
                   }}
                 >
                   <div
@@ -298,8 +317,8 @@ export const CompanySection: React.FC = () => {
             </div>
             <P>
               Our dedicated manufacturing team operates our Heidelberg, Komori, OMET, and BOBST
-              automated production lines, delivering precision craftsmanship and zero-defect
-              quality across every production shift.
+              automated production lines, delivering precision craftsmanship and zero-defect quality
+              across every production shift.
             </P>
           </motion.div>
         </div>
@@ -314,7 +333,8 @@ export const CompanySection: React.FC = () => {
           style={{
             padding: '28px 32px',
             borderRadius: 14,
-            background: 'linear-gradient(135deg, rgba(0,174,239,0.05) 0%, rgba(220,38,38,0.04) 100%)',
+            background:
+              'linear-gradient(135deg, rgba(0,174,239,0.05) 0%, rgba(220,38,38,0.04) 100%)',
             border: '1px solid #e5e7eb',
             display: 'flex',
             alignItems: 'center',
@@ -349,27 +369,51 @@ export const CompanySection: React.FC = () => {
             </div>
           </div>
 
-          <a
-            href="mailto:rangarkolli@gmail.com?subject=Career%20Inquiry%20-%20Kolli%20Graphics"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 7,
-              padding: '10px 22px',
-              borderRadius: 999,
-              backgroundColor: '#111827',
-              color: '#ffffff',
-              fontSize: '0.8125rem',
-              fontWeight: 600,
-              textDecoration: 'none',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            Inquire About Careers
-          </a>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+            <a
+              href={`https://wa.me/91${COMPANY_INFO.phone}?text=Hello%20Kolli%20Graphics%20Team,%20I%20am%20interested%20in%20Career%20Opportunities.`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 7,
+                padding: '10px 20px',
+                borderRadius: 999,
+                backgroundColor: '#dc2626',
+                color: '#ffffff',
+                fontSize: '0.8125rem',
+                fontWeight: 600,
+                textDecoration: 'none',
+                whiteSpace: 'nowrap',
+                boxShadow: '0 4px 14px rgba(220,38,38,0.25)',
+              }}
+            >
+              Inquire via WhatsApp
+            </a>
+
+            <a
+              href="mailto:rangarkolli@gmail.com?subject=Career%20Application%20-%20Kolli%20Graphics"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 7,
+                padding: '10px 20px',
+                borderRadius: 999,
+                backgroundColor: '#ffffff',
+                color: '#111827',
+                border: '1px solid #e5e7eb',
+                fontSize: '0.8125rem',
+                fontWeight: 600,
+                textDecoration: 'none',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              Email Resume
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>
   )
 }
-

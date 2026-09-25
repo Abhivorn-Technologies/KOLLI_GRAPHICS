@@ -1,10 +1,11 @@
-import React, { useState, useRef, useCallback } from 'react';
-import { motion, AnimatePresence, useInView, useReducedMotion } from 'framer-motion';
-import { CheckCircle2, Search, X, ShieldCheck, ArrowRight, Zap } from 'lucide-react';
-import { SectionHeader } from '../common/SectionHeader';
-import { ImageWithFallback } from '../common/ImageWithFallback';
-import { EQUIPMENT_LIST, EquipmentItem } from '../../data/equipment';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef, useCallback } from 'react'
+import { motion, AnimatePresence, useInView, useReducedMotion } from 'framer-motion'
+import { CheckCircle2, Search, X, ShieldCheck, ArrowRight, Zap } from 'lucide-react'
+import { SectionHeader } from '../common/SectionHeader'
+import { ImageWithFallback } from '../common/ImageWithFallback'
+import { EQUIPMENT_LIST } from '../../data/equipment'
+import type { EquipmentItem } from '../../data/equipment'
+import { Link } from 'react-router-dom'
 
 /* ─── Sequential reveal container ──────────────────────────────────── */
 const containerVariants = {
@@ -12,7 +13,7 @@ const containerVariants = {
   visible: {
     transition: { staggerChildren: 0.1, delayChildren: 0.05 },
   },
-};
+}
 
 const cardVariants = {
   hidden: { opacity: 0, y: 36, scale: 0.97 },
@@ -20,48 +21,57 @@ const cardVariants = {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { duration: 0.55, ease: [0.21, 0.47, 0.32, 0.98] as [number, number, number, number] },
+    transition: {
+      duration: 0.55,
+      ease: [0.21, 0.47, 0.32, 0.98] as [number, number, number, number],
+    },
   },
-};
+}
 
 /* ─── Category accent colors ────────────────────────────────────────── */
 const CATEGORY_COLORS: Record<string, string> = {
-  offset: '#dc2626',      // Crimson
-  labels: '#00aeef',      // Cyan
-  'die-cutting': '#f59e0b',// Yellow Gold
-  finishing: '#ec008c',   // Magenta
-};
+  offset: '#dc2626', // Crimson
+  labels: '#00aeef', // Cyan
+  'die-cutting': '#f59e0b', // Yellow Gold
+  finishing: '#ec008c', // Magenta
+}
 
 /* ─── Equipment card with 3D hover & open modal trigger ──────────── */
 interface EquipCardProps {
-  eq: EquipmentItem;
-  index: number;
-  onOpenModal: (item: EquipmentItem) => void;
+  eq: EquipmentItem
+  index: number
+  onOpenModal: (item: EquipmentItem) => void
 }
 
 const EquipCard: React.FC<EquipCardProps> = ({ eq, index, onOpenModal }) => {
-  const reduce = useReducedMotion();
-  const [hovered, setHovered] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
-  const cardRef = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion()
+  const [hovered, setHovered] = useState(false)
+  const [mousePos, setMousePos] = useState({ x: 50, y: 50 })
+  const cardRef = useRef<HTMLDivElement>(null)
 
-  const accentColor = CATEGORY_COLORS[eq.category] || '#dc2626';
+  const accentColor = CATEGORY_COLORS[eq.category] || '#dc2626'
 
-  const onMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (reduce || !cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    setMousePos({
-      x: ((e.clientX - rect.left) / rect.width) * 100,
-      y: ((e.clientY - rect.top) / rect.height) * 100,
-    });
-  }, [reduce]);
+  const onMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (reduce || !cardRef.current) return
+      const rect = cardRef.current.getBoundingClientRect()
+      setMousePos({
+        x: ((e.clientX - rect.left) / rect.width) * 100,
+        y: ((e.clientY - rect.top) / rect.height) * 100,
+      })
+    },
+    [reduce]
+  )
 
   return (
     <motion.div
       ref={cardRef}
       variants={cardVariants}
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => { setHovered(false); setMousePos({ x: 50, y: 50 }); }}
+      onMouseLeave={() => {
+        setHovered(false)
+        setMousePos({ x: 50, y: 50 })
+      }}
       onMouseMove={onMouseMove}
       animate={{
         y: hovered ? -8 : 0,
@@ -80,6 +90,9 @@ const EquipCard: React.FC<EquipCardProps> = ({ eq, index, onOpenModal }) => {
         height: '100%',
         position: 'relative',
         cursor: 'pointer',
+        flex: '1 1 320px',
+        maxWidth: '380px',
+        width: '100%',
       }}
       onClick={() => onOpenModal(eq)}
     >
@@ -212,9 +225,7 @@ const EquipCard: React.FC<EquipCardProps> = ({ eq, index, onOpenModal }) => {
           >
             {eq.name}
           </h3>
-          <span style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>
-            {eq.model}
-          </span>
+          <span style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>{eq.model}</span>
         </div>
 
         <p style={{ fontSize: '0.85rem', color: '#4b5563', lineHeight: 1.6, marginBottom: '20px' }}>
@@ -225,12 +236,30 @@ const EquipCard: React.FC<EquipCardProps> = ({ eq, index, onOpenModal }) => {
         {eq.specs && (
           <div style={{ display: 'flex', gap: '6px', marginBottom: '20px', flexWrap: 'wrap' }}>
             {eq.specs.speed && (
-              <span style={{ fontSize: '0.7rem', padding: '3px 10px', borderRadius: '6px', backgroundColor: '#f1f5f9', color: '#334155', fontWeight: 700 }}>
+              <span
+                style={{
+                  fontSize: '0.7rem',
+                  padding: '3px 10px',
+                  borderRadius: '6px',
+                  backgroundColor: '#f1f5f9',
+                  color: '#334155',
+                  fontWeight: 700,
+                }}
+              >
                 ⚡ {eq.specs.speed}
               </span>
             )}
             {eq.specs.country && (
-              <span style={{ fontSize: '0.7rem', padding: '3px 10px', borderRadius: '6px', backgroundColor: `${accentColor}12`, color: accentColor, fontWeight: 700 }}>
+              <span
+                style={{
+                  fontSize: '0.7rem',
+                  padding: '3px 10px',
+                  borderRadius: '6px',
+                  backgroundColor: `${accentColor}12`,
+                  color: accentColor,
+                  fontWeight: 700,
+                }}
+              >
                 🌐 {eq.specs.country}
               </span>
             )}
@@ -266,13 +295,13 @@ const EquipCard: React.FC<EquipCardProps> = ({ eq, index, onOpenModal }) => {
         </div>
       </div>
     </motion.div>
-  );
-};
+  )
+}
 
 /* ─── Animated Grid Wrapper ─────────────────────────────────────────── */
 function AnimatedGrid({ children }: { children: React.ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-60px 0px' });
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-60px 0px' })
 
   return (
     <motion.div
@@ -281,23 +310,24 @@ function AnimatedGrid({ children }: { children: React.ReactNode }) {
       initial="hidden"
       animate={inView ? 'visible' : 'hidden'}
       style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
         gap: '28px',
       }}
     >
       {children}
     </motion.div>
-  );
+  )
 }
 
 /* ─── Machine Spec Detail Modal Component ────────────────────────────── */
 const EquipmentDetailModal: React.FC<{
-  eq: EquipmentItem | null;
-  onClose: () => void;
+  eq: EquipmentItem | null
+  onClose: () => void
 }> = ({ eq, onClose }) => {
-  if (!eq) return null;
-  const accentColor = CATEGORY_COLORS[eq.category] || '#dc2626';
+  if (!eq) return null
+  const accentColor = CATEGORY_COLORS[eq.category] || '#dc2626'
 
   return (
     <motion.div
@@ -362,31 +392,70 @@ const EquipmentDetailModal: React.FC<{
         </button>
 
         {/* Modal Header Banner */}
-        <div style={{ position: 'relative', height: '260px', backgroundColor: '#f1f5f9', flexShrink: 0 }}>
+        <div
+          style={{
+            position: 'relative',
+            height: '260px',
+            backgroundColor: '#f1f5f9',
+            flexShrink: 0,
+          }}
+        >
           <ImageWithFallback
             src={eq.image}
             alt={eq.name}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(17,24,39,0.9) 0%, transparent 60%)' }} />
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(to top, rgba(17,24,39,0.9) 0%, transparent 60%)',
+            }}
+          />
 
           <div style={{ position: 'absolute', bottom: '24px', left: '28px', right: '28px' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 800, padding: '4px 12px', borderRadius: '999px', backgroundColor: accentColor, color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+            <span
+              style={{
+                fontSize: '0.75rem',
+                fontWeight: 800,
+                padding: '4px 12px',
+                borderRadius: '999px',
+                backgroundColor: accentColor,
+                color: '#ffffff',
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em',
+              }}
+            >
               {eq.badge}
             </span>
-            <h2 style={{ fontSize: '1.6rem', color: '#ffffff', fontWeight: 800, marginTop: '8px', marginBottom: '2px' }}>
+            <h2
+              style={{
+                fontSize: '1.6rem',
+                color: '#ffffff',
+                fontWeight: 800,
+                marginTop: '8px',
+                marginBottom: '2px',
+              }}
+            >
               {eq.name}
             </h2>
-            <p style={{ fontSize: '0.85rem', color: '#cbd5e1', margin: 0 }}>
-              {eq.model}
-            </p>
+            <p style={{ fontSize: '0.85rem', color: '#cbd5e1', margin: 0 }}>{eq.model}</p>
           </div>
         </div>
 
         {/* Modal Scrollable Body */}
         <div style={{ padding: '32px 28px', overflowY: 'auto' }}>
           <div style={{ marginBottom: '24px' }}>
-            <h4 style={{ fontSize: '0.82rem', fontWeight: 800, color: accentColor, textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: '6px' }}>
+            <h4
+              style={{
+                fontSize: '0.82rem',
+                fontWeight: 800,
+                color: accentColor,
+                textTransform: 'uppercase',
+                letterSpacing: '0.07em',
+                marginBottom: '6px',
+              }}
+            >
               Operational Overview
             </h4>
             <p style={{ fontSize: '0.92rem', color: '#334155', lineHeight: 1.7, margin: 0 }}>
@@ -396,17 +465,66 @@ const EquipmentDetailModal: React.FC<{
 
           {/* Specs Table */}
           {eq.specs && (
-            <div style={{ marginBottom: '28px', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '20px' }}>
-              <h4 style={{ fontSize: '0.82rem', fontWeight: 800, color: '#111827', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div
+              style={{
+                marginBottom: '28px',
+                backgroundColor: '#f8fafc',
+                border: '1px solid #e2e8f0',
+                borderRadius: '16px',
+                padding: '20px',
+              }}
+            >
+              <h4
+                style={{
+                  fontSize: '0.82rem',
+                  fontWeight: 800,
+                  color: '#111827',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.07em',
+                  marginBottom: '14px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                }}
+              >
                 <Zap size={15} color={accentColor} /> Technical Specifications
               </h4>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px' }}>
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                  gap: '14px',
+                }}
+              >
                 {Object.entries(eq.specs).map(([key, val]) => (
-                  <div key={key} style={{ padding: '10px 14px', borderRadius: '10px', backgroundColor: '#ffffff', border: '1px solid #e2e8f0' }}>
-                    <div style={{ fontSize: '0.68rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.05em' }}>
+                  <div
+                    key={key}
+                    style={{
+                      padding: '10px 14px',
+                      borderRadius: '10px',
+                      backgroundColor: '#ffffff',
+                      border: '1px solid #e2e8f0',
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontSize: '0.68rem',
+                        color: '#64748b',
+                        textTransform: 'uppercase',
+                        fontWeight: 700,
+                        letterSpacing: '0.05em',
+                      }}
+                    >
                       {key}
                     </div>
-                    <div style={{ fontSize: '0.85rem', color: '#0f172a', fontWeight: 700, marginTop: '2px' }}>
+                    <div
+                      style={{
+                        fontSize: '0.85rem',
+                        color: '#0f172a',
+                        fontWeight: 700,
+                        marginTop: '2px',
+                      }}
+                    >
                       {val}
                     </div>
                   </div>
@@ -417,13 +535,47 @@ const EquipmentDetailModal: React.FC<{
 
           {/* Capability Highlights */}
           <div style={{ marginBottom: '28px' }}>
-            <h4 style={{ fontSize: '0.82rem', fontWeight: 800, color: '#111827', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <h4
+              style={{
+                fontSize: '0.82rem',
+                fontWeight: 800,
+                color: '#111827',
+                textTransform: 'uppercase',
+                letterSpacing: '0.07em',
+                marginBottom: '14px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+              }}
+            >
               <ShieldCheck size={15} color={accentColor} /> Key Machine Capabilities
             </h4>
-            <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <ul
+              style={{
+                listStyle: 'none',
+                padding: 0,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '10px',
+              }}
+            >
               {eq.highlights.map((h) => (
-                <li key={h} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '0.88rem', color: '#334155', lineHeight: 1.5 }}>
-                  <CheckCircle2 size={16} color={accentColor} style={{ marginTop: '2px', flexShrink: 0 }} />
+                <li
+                  key={h}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '10px',
+                    fontSize: '0.88rem',
+                    color: '#334155',
+                    lineHeight: 1.5,
+                  }}
+                >
+                  <CheckCircle2
+                    size={16}
+                    color={accentColor}
+                    style={{ marginTop: '2px', flexShrink: 0 }}
+                  />
                   <span>{h}</span>
                 </li>
               ))}
@@ -431,7 +583,17 @@ const EquipmentDetailModal: React.FC<{
           </div>
 
           {/* Modal Action CTA */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap', paddingTop: '20px', borderTop: '1px solid #e2e8f0' }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '16px',
+              flexWrap: 'wrap',
+              paddingTop: '20px',
+              borderTop: '1px solid #e2e8f0',
+            }}
+          >
             <span style={{ fontSize: '0.82rem', color: '#64748b', fontWeight: 600 }}>
               Need production availability for this machine?
             </span>
@@ -457,37 +619,38 @@ const EquipmentDetailModal: React.FC<{
         </div>
       </motion.div>
     </motion.div>
-  );
-};
+  )
+}
 
 /* ─── Main Equipment Section ───────────────────────────────────────── */
 export const EquipmentSection: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [selectedModalItem, setSelectedModalItem] = useState<EquipmentItem | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all')
+  const [searchQuery, setSearchQuery] = useState<string>('')
+  const [selectedModalItem, setSelectedModalItem] = useState<EquipmentItem | null>(null)
 
   const categories = [
-    { id: 'all',         label: 'All Machinery' },
-    { id: 'offset',      label: 'Offset Presses' },
-    { id: 'labels',      label: 'Flexo Labels' },
+    { id: 'all', label: 'All Machinery' },
+    { id: 'offset', label: 'Offset Presses' },
+    { id: 'labels', label: 'Flexo Labels' },
     { id: 'die-cutting', label: 'Die-Cutting & Foiling' },
-    { id: 'finishing',   label: 'Folder-Gluers & Pasting' },
-  ];
+    { id: 'finishing', label: 'Folder-Gluers & Pasting' },
+  ]
 
   const filteredEquipment = EQUIPMENT_LIST.filter((eq) => {
-    const matchesCategory = selectedCategory === 'all' || eq.category === selectedCategory;
-    const matchesSearch = searchQuery.trim() === '' ||
+    const matchesCategory = selectedCategory === 'all' || eq.category === selectedCategory
+    const matchesSearch =
+      searchQuery.trim() === '' ||
       eq.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       eq.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      eq.tagline.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+      eq.tagline.toLowerCase().includes(searchQuery.toLowerCase())
+    return matchesCategory && matchesSearch
+  })
 
   return (
     <section
       id="equipment"
       style={{
-        padding: '110px 0',
+        padding: '56px 0',
         backgroundColor: '#ffffff',
         position: 'relative',
         overflow: 'hidden',
@@ -517,7 +680,15 @@ export const EquipmentSection: React.FC = () => {
         />
 
         {/* Filter Navigation & Search Bar */}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', marginBottom: '52px' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '20px',
+            marginBottom: '52px',
+          }}
+        >
           {/* Category Pills */}
           <div
             style={{
@@ -528,8 +699,8 @@ export const EquipmentSection: React.FC = () => {
             }}
           >
             {categories.map((cat) => {
-              const isSelected = selectedCategory === cat.id;
-              const accentColor = isSelected ? (CATEGORY_COLORS[cat.id] || '#dc2626') : '#ebeef2';
+              const isSelected = selectedCategory === cat.id
+              const accentColor = isSelected ? CATEGORY_COLORS[cat.id] || '#dc2626' : '#ebeef2'
               return (
                 <motion.button
                   key={cat.id}
@@ -553,7 +724,7 @@ export const EquipmentSection: React.FC = () => {
                 >
                   {cat.label}
                 </motion.button>
-              );
+              )
             })}
           </div>
 
@@ -565,7 +736,16 @@ export const EquipmentSection: React.FC = () => {
               maxWidth: '420px',
             }}
           >
-            <Search size={16} color="#94a3b8" style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)' }} />
+            <Search
+              size={16}
+              color="#94a3b8"
+              style={{
+                position: 'absolute',
+                left: '16px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+              }}
+            />
             <input
               type="text"
               placeholder="Search press, brand, or capability..."
@@ -586,7 +766,16 @@ export const EquipmentSection: React.FC = () => {
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                style={{ position: 'absolute', right: '14px', top: '50%', transform: 'translateY(-50%)', border: 'none', background: 'none', color: '#94a3b8', cursor: 'pointer' }}
+                style={{
+                  position: 'absolute',
+                  right: '14px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  border: 'none',
+                  background: 'none',
+                  color: '#94a3b8',
+                  cursor: 'pointer',
+                }}
               >
                 <X size={14} />
               </button>
@@ -597,7 +786,12 @@ export const EquipmentSection: React.FC = () => {
         {/* Equipment Grid */}
         <AnimatedGrid key={`${selectedCategory}-${searchQuery}`}>
           {filteredEquipment.map((eq, idx) => (
-            <EquipCard key={eq.id} eq={eq} index={idx} onOpenModal={(item) => setSelectedModalItem(item)} />
+            <EquipCard
+              key={eq.id}
+              eq={eq}
+              index={idx}
+              onOpenModal={(item) => setSelectedModalItem(item)}
+            />
           ))}
         </AnimatedGrid>
       </div>
@@ -609,5 +803,5 @@ export const EquipmentSection: React.FC = () => {
         )}
       </AnimatePresence>
     </section>
-  );
-};
+  )
+}

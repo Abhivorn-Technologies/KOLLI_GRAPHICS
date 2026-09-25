@@ -1,8 +1,8 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useState } from 'react'
 
 interface ImageWithFallbackProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-  fallbackLabel?: string;
-  fallbackCategory?: string;
+  fallbackLabel?: string
+  fallbackCategory?: string
 }
 
 export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
@@ -13,7 +13,7 @@ export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   className = '',
   ...props
 }) => {
-  const [hasError, setHasError] = useState(false);
+  const [hasError, setHasError] = useState(false)
 
   if (hasError || !src) {
     return (
@@ -30,20 +30,26 @@ export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
           padding: '24px',
           textAlign: 'center',
           minHeight: '220px',
-          color: '#4b5563'
+          color: '#4b5563',
         }}
       >
         <div style={{ display: 'flex', gap: '6px', marginBottom: '12px' }}>
-          <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#dc2626' }} />
-          <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#dc2626' }} />
-          <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#b45309' }} />
+          <span
+            style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#dc2626' }}
+          />
+          <span
+            style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#dc2626' }}
+          />
+          <span
+            style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#b45309' }}
+          />
         </div>
         <p style={{ fontWeight: 600, fontSize: '0.9rem', color: '#111827', marginBottom: '4px' }}>
           {fallbackLabel || alt || 'Kolli Graphics Machinery / Production Asset'}
         </p>
         <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>{fallbackCategory}</span>
       </div>
-    );
+    )
   }
 
   return (
@@ -55,6 +61,5 @@ export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
       loading="lazy"
       {...props}
     />
-  );
-};
-
+  )
+}

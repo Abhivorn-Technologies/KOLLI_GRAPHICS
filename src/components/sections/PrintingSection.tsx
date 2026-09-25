@@ -1,21 +1,21 @@
-﻿import React, { useRef, useState } from 'react';
-import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { Printer, CheckCircle2 } from 'lucide-react';
-import { SectionHeader } from '../common/SectionHeader';
-import { PRINTING_PROCESSES } from '../../data/processes';
+import React, { useRef, useState } from 'react'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
+import { Printer, CheckCircle2 } from 'lucide-react'
+import { SectionHeader } from '../common/SectionHeader'
+import { PRINTING_PROCESSES } from '../../data/processes'
 
 /* ─── Flow step card with staggered entrance ─────────────────────── */
 interface FlowStepProps {
-  step: { step: string; label: string; desc: string };
-  index: number;
-  color: string;
-  totalSteps: number;
+  step: { step: string; label: string; desc: string }
+  index: number
+  color: string
+  totalSteps: number
 }
 
 const FlowStep: React.FC<FlowStepProps> = ({ step, index, color, totalSteps }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-40px 0px' });
-  const [hovered, setHovered] = useState(false);
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-40px 0px' })
+  const [hovered, setHovered] = useState(false)
 
   return (
     <motion.div
@@ -93,18 +93,19 @@ const FlowStep: React.FC<FlowStepProps> = ({ step, index, color, totalSteps }) =
         >
           {step.label}
         </h5>
-        <p style={{ fontSize: '0.82rem', color: '#9ca3af', lineHeight: 1.6 }}>
-          {step.desc}
-        </p>
+        <p style={{ fontSize: '0.82rem', color: '#9ca3af', lineHeight: 1.6 }}>{step.desc}</p>
       </motion.div>
     </motion.div>
-  );
-};
+  )
+}
 
 /* ─── Process tab button ─────────────────────────────────────────── */
-const ProcessTab: React.FC<{ label: string; active: boolean; color: string; onClick: () => void }> = ({
-  label, active, color, onClick
-}) => (
+const ProcessTab: React.FC<{
+  label: string
+  active: boolean
+  color: string
+  onClick: () => void
+}> = ({ label, active, color, onClick }) => (
   <motion.button
     onClick={onClick}
     whileHover={{ scale: 1.03 }}
@@ -126,12 +127,16 @@ const ProcessTab: React.FC<{ label: string; active: boolean; color: string; onCl
   >
     {label}
   </motion.button>
-);
+)
 
 /* ─── Capability check item ─────────────────────────────────────── */
-const CapItem: React.FC<{ text: string; color: string; index: number }> = ({ text, color, index }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-30px 0px' });
+const CapItem: React.FC<{ text: string; color: string; index: number }> = ({
+  text,
+  color,
+  index,
+}) => {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-30px 0px' })
 
   return (
     <motion.div
@@ -147,20 +152,20 @@ const CapItem: React.FC<{ text: string; color: string; index: number }> = ({ tex
         color: '#374151',
       }}
     >
-      <CheckCircle2
-        size={16}
-        color={color}
-        style={{ marginTop: '3px', flexShrink: 0 }}
-      />
+      <CheckCircle2 size={16} color={color} style={{ marginTop: '3px', flexShrink: 0 }} />
       <span>{text}</span>
     </motion.div>
-  );
-};
+  )
+}
 
 /* ─── Substrate pill ─────────────────────────────────────────────── */
-const SubstratePill: React.FC<{ sub: string; color: string; index: number }> = ({ sub, color, index }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-30px 0px' });
+const SubstratePill: React.FC<{ sub: string; color: string; index: number }> = ({
+  sub,
+  color,
+  index,
+}) => {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-30px 0px' })
 
   return (
     <motion.div
@@ -195,21 +200,22 @@ const SubstratePill: React.FC<{ sub: string; color: string; index: number }> = (
       />
       {sub}
     </motion.div>
-  );
-};
+  )
+}
 
 /* ─── Main section ─────────────────────────────────────────────── */
 export const PrintingSection: React.FC = () => {
-  const [activeProcessId, setActiveProcessId] = useState<'offset' | 'flexography'>('offset');
-  const activeProcess = PRINTING_PROCESSES.find((p) => p.id === activeProcessId) || PRINTING_PROCESSES[0];
+  const [activeProcessId, setActiveProcessId] = useState<'offset' | 'flexography'>('offset')
+  const activeProcess =
+    PRINTING_PROCESSES.find((p) => p.id === activeProcessId) || PRINTING_PROCESSES[0]
 
-  const processColor = activeProcessId === 'offset' ? '#dc2626' : '#dc2626';
+  const processColor = activeProcessId === 'offset' ? '#dc2626' : '#dc2626'
 
   return (
     <section
       id="printing"
       style={{
-        padding: '110px 0',
+        padding: '56px 0',
         backgroundColor: '#ffffff',
         position: 'relative',
         overflow: 'hidden',
@@ -304,10 +310,23 @@ export const PrintingSection: React.FC = () => {
                 >
                   {activeProcess.tagline}
                 </span>
-                <h3 style={{ fontSize: 'clamp(1.4rem,2.2vw,1.8rem)', color: '#111827', marginBottom: '16px' }}>
+                <h3
+                  style={{
+                    fontSize: 'clamp(1.4rem,2.2vw,1.8rem)',
+                    color: '#111827',
+                    marginBottom: '16px',
+                  }}
+                >
                   {activeProcess.name}
                 </h3>
-                <p style={{ fontSize: '1rem', color: '#4b5563', lineHeight: 1.75, marginBottom: '24px' }}>
+                <p
+                  style={{
+                    fontSize: '1rem',
+                    color: '#4b5563',
+                    lineHeight: 1.75,
+                    marginBottom: '24px',
+                  }}
+                >
                   {activeProcess.description}
                 </p>
 
@@ -333,7 +352,14 @@ export const PrintingSection: React.FC = () => {
                 <h4 style={{ fontSize: '1.05rem', color: '#111827', marginBottom: '16px' }}>
                   Supported Substrates &amp; Stock:
                 </h4>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px',
+                    marginBottom: '24px',
+                  }}
+                >
                   {activeProcess.substrates.map((sub, i) => (
                     <SubstratePill key={sub} sub={sub} color={processColor} index={i} />
                   ))}
@@ -355,7 +381,15 @@ export const PrintingSection: React.FC = () => {
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
                     <Printer size={14} color={processColor} />
-                    <span style={{ fontWeight: 700, color: processColor, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    <span
+                      style={{
+                        fontWeight: 700,
+                        color: processColor,
+                        fontSize: '0.75rem',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                      }}
+                    >
                       Press Equipment
                     </span>
                   </div>
@@ -413,7 +447,9 @@ export const PrintingSection: React.FC = () => {
                   Mechanical Transfer Flow — Scroll to Explore
                 </span>
                 <span style={{ fontSize: '0.72rem', color: '#6b7280' }}>
-                  {activeProcessId === 'offset' ? 'Plate → Blanket → Paper' : 'Plate → Ink Roller → Substrate'}
+                  {activeProcessId === 'offset'
+                    ? 'Plate → Blanket → Paper'
+                    : 'Plate → Ink Roller → Substrate'}
                 </span>
               </div>
 
@@ -434,7 +470,5 @@ export const PrintingSection: React.FC = () => {
         </AnimatePresence>
       </div>
     </section>
-  );
-};
-
-
+  )
+}

@@ -1,46 +1,49 @@
-import React, { useState, useRef, useCallback } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import { Box } from 'lucide-react';
-import { SectionHeader } from '../common/SectionHeader';
-import { ScrollReveal } from '../common/ScrollReveal';
-import { PRODUCT_CATEGORIES } from '../../data/products';
+import React, { useState, useRef, useCallback } from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
+import { Box } from 'lucide-react'
+import { SectionHeader } from '../common/SectionHeader'
+import { ScrollReveal } from '../common/ScrollReveal'
+import { PRODUCT_CATEGORIES } from '../../data/products'
 
 /* ─── 3D tilt card ─────────────────────────────────────────────────────── */
 interface TiltCardProps {
-  children: React.ReactNode;
-  style?: React.CSSProperties;
-  className?: string;
+  children: React.ReactNode
+  style?: React.CSSProperties
+  className?: string
 }
 
 const TiltCard: React.FC<TiltCardProps> = ({ children, style, className }) => {
-  const reduce = useReducedMotion();
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [shine, setShine] = useState({ x: 50, y: 50, opacity: 0 });
-  const [hovered, setHovered] = useState(false);
-  const rafRef = useRef<number | null>(null);
+  const reduce = useReducedMotion()
+  const cardRef = useRef<HTMLDivElement>(null)
+  const [tilt, setTilt] = useState({ x: 0, y: 0 })
+  const [shine, setShine] = useState({ x: 50, y: 50, opacity: 0 })
+  const [hovered, setHovered] = useState(false)
+  const rafRef = useRef<number | null>(null)
 
-  const onMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (reduce || !cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const cx = (e.clientX - rect.left) / rect.width;   // 0..1
-    const cy = (e.clientY - rect.top)  / rect.height;  // 0..1
-    const targetX = (cy - 0.5) * -14;  // tilt up/down
-    const targetY = (cx - 0.5) *  14;  // tilt left/right
+  const onMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (reduce || !cardRef.current) return
+      const rect = cardRef.current.getBoundingClientRect()
+      const cx = (e.clientX - rect.left) / rect.width // 0..1
+      const cy = (e.clientY - rect.top) / rect.height // 0..1
+      const targetX = (cy - 0.5) * -14 // tilt up/down
+      const targetY = (cx - 0.5) * 14 // tilt left/right
 
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(() => {
-      setTilt({ x: targetX, y: targetY });
-      setShine({ x: cx * 100, y: cy * 100, opacity: 0.12 });
-    });
-  }, [reduce]);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+      rafRef.current = requestAnimationFrame(() => {
+        setTilt({ x: targetX, y: targetY })
+        setShine({ x: cx * 100, y: cy * 100, opacity: 0.12 })
+      })
+    },
+    [reduce]
+  )
 
   const onMouseLeave = useCallback(() => {
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    setTilt({ x: 0, y: 0 });
-    setShine(prev => ({ ...prev, opacity: 0 }));
-    setHovered(false);
-  }, []);
+    if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    setTilt({ x: 0, y: 0 })
+    setShine((prev) => ({ ...prev, opacity: 0 }))
+    setHovered(false)
+  }, [])
 
   return (
     <motion.div
@@ -84,12 +87,14 @@ const TiltCard: React.FC<TiltCardProps> = ({ children, style, className }) => {
         }}
       />
     </motion.div>
-  );
-};
+  )
+}
 
 /* ─── Category filter pill ──────────────────────────────────────────────── */
 const FilterPill: React.FC<{ label: string; active: boolean; onClick: () => void }> = ({
-  label, active, onClick
+  label,
+  active,
+  onClick,
 }) => (
   <motion.button
     onClick={onClick}
@@ -113,23 +118,24 @@ const FilterPill: React.FC<{ label: string; active: boolean; onClick: () => void
   >
     {label}
   </motion.button>
-);
+)
 
 /* ─── Main section ──────────────────────────────────────────────────────── */
 export const ProductsSection: React.FC = () => {
-  const [activeCategoryId, setActiveCategoryId] = useState('all');
+  const [activeCategoryId, setActiveCategoryId] = useState('all')
 
   const categories = [
-    { id: 'all',                  label: 'All Products' },
-    { id: 'cartons',              label: 'Cartons' },
-    { id: 'tray-boxes',          label: 'Tray Boxes' },
-    { id: 'cigarette',           label: 'Cigarette Packaging' },
+    { id: 'all', label: 'All Products' },
+    { id: 'cartons', label: 'Cartons' },
+    { id: 'tray-boxes', label: 'Tray Boxes' },
+    { id: 'cigarette', label: 'Cigarette Packaging' },
     { id: 'specialty-packaging', label: 'Specialty Solutions' },
-  ];
+  ]
 
-  const displayedCategories = activeCategoryId === 'all'
-    ? PRODUCT_CATEGORIES
-    : PRODUCT_CATEGORIES.filter((c) => c.id === activeCategoryId);
+  const displayedCategories =
+    activeCategoryId === 'all'
+      ? PRODUCT_CATEGORIES
+      : PRODUCT_CATEGORIES.filter((c) => c.id === activeCategoryId)
 
   // Category CMYK accent colors
   const categoryColors: Record<string, string> = {
@@ -137,13 +143,13 @@ export const ProductsSection: React.FC = () => {
     'tray-boxes': '#00aeef',
     cigarette: '#f59e0b',
     'specialty-packaging': '#ec008c',
-  };
+  }
 
   return (
     <section
       id="products"
       style={{
-        padding: '110px 0',
+        padding: '56px 0',
         backgroundColor: '#f4f6f8',
         position: 'relative',
         overflow: 'hidden',
@@ -193,12 +199,9 @@ export const ProductsSection: React.FC = () => {
         </div>
 
         {/* Product Categories */}
-        <motion.div
-          layout
-          style={{ display: 'flex', flexDirection: 'column', gap: '44px' }}
-        >
+        <motion.div layout style={{ display: 'flex', flexDirection: 'column', gap: '44px' }}>
           {displayedCategories.map((category, catIdx) => {
-            const accentColor = categoryColors[category.id] || '#dc2626';
+            const accentColor = categoryColors[category.id] || '#dc2626'
             return (
               <ScrollReveal key={category.id} direction="up" delay={catIdx * 0.07}>
                 <div>
@@ -258,12 +261,13 @@ export const ProductsSection: React.FC = () => {
                     </span>
                   </div>
 
-                  {/* Items grid */}
+                  {/* Items grid — balanced centered flex layout */}
                   <div
                     style={{
-                      display: 'grid',
-                      gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-                      gap: '10px',
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      justifyContent: 'center',
+                      gap: '14px',
                       perspective: '1000px',
                     }}
                   >
@@ -271,25 +275,37 @@ export const ProductsSection: React.FC = () => {
                       <ScrollReveal key={item} direction="up" delay={idx * 0.035}>
                         <TiltCard
                           style={{
-                            padding: '12px 16px',
+                            padding: '14px 18px',
                             backgroundColor: '#ffffff',
-                            border: '1px solid #e8eef4',
+                            border: '1px solid #e2e8f0',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'space-between',
-                            gap: '10px',
+                            gap: '12px',
                             cursor: 'default',
+                            minHeight: '68px',
+                            flex: '1 1 250px',
+                            maxWidth: '290px',
+                            width: '100%',
                           }}
                         >
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: 1, minWidth: 0 }}>
+                          <div
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '12px',
+                              flex: 1,
+                              minWidth: 0,
+                            }}
+                          >
                             {/* Icon */}
                             <div
                               style={{
-                                width: 28,
-                                height: 28,
-                                borderRadius: '7px',
+                                width: 32,
+                                height: 32,
+                                borderRadius: '8px',
                                 background: `${accentColor}12`,
-                                border: `1px solid ${accentColor}20`,
+                                border: `1px solid ${accentColor}25`,
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
@@ -297,34 +313,44 @@ export const ProductsSection: React.FC = () => {
                                 flexShrink: 0,
                               }}
                             >
-                              <Box size={13} />
+                              <Box size={15} />
                             </div>
-                            {/* Label */}
+                            {/* Label — multiline wrap for full readability */}
                             <span
                               style={{
-                                fontSize: '0.8125rem',
-                                fontWeight: 500,
+                                fontSize: '0.85rem',
+                                fontWeight: 600,
                                 color: '#111827',
+                                lineHeight: 1.35,
+                                display: '-webkit-box',
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: 'vertical',
                                 overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                                whiteSpace: 'nowrap',
                               }}
                             >
                               {item}
                             </span>
                           </div>
-                          <span style={{ color: accentColor, fontSize: '0.75rem', opacity: 0.45, flexShrink: 0 }}>→</span>
+                          <span
+                            style={{
+                              color: accentColor,
+                              fontSize: '0.8rem',
+                              opacity: 0.6,
+                              flexShrink: 0,
+                            }}
+                          >
+                            →
+                          </span>
                         </TiltCard>
                       </ScrollReveal>
                     ))}
                   </div>
                 </div>
               </ScrollReveal>
-            );
+            )
           })}
         </motion.div>
       </div>
     </section>
-  );
-};
-
+  )
+}
