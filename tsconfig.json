@@ -1,0 +1,58 @@
+{
+  "compilerOptions": {
+    // ── Target & Module ────────────────────────────────────────
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "moduleDetection": "force",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    // ── Path Aliases ───────────────────────────────────────────
+    "baseUrl": ".",
+    "paths": {
+      "@/*":            ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@sections/*":   ["src/components/sections/*"],
+      "@common/*":     ["src/components/common/*"],
+      "@layout/*":     ["src/components/layout/*"],
+      "@hooks/*":      ["src/hooks/*"],
+      "@data/*":       ["src/data/*"],
+      "@styles/*":     ["src/styles/*"],
+      "@types/*":      ["src/types/*"],
+      "@utils/*":      ["src/utils/*"]
+    },
+
+    // ── Strict Mode — all checks enabled ──────────────────────
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+
+    // ── Additional Quality Checks ──────────────────────────────
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": false,
+    "exactOptionalPropertyTypes": false,
+
+    // ── Interop ────────────────────────────────────────────────
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+
+    // ── Source Maps (for dev debugging) ───────────────────────
+    "sourceMap": false
+  },
+  "include": ["src", "eslint.config.js"],
+  "exclude": ["node_modules", "dist", "extracted_docx_media"]
+}

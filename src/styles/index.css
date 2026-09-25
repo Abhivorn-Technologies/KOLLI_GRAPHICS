@@ -1,0 +1,217 @@
+:root {
+  /* ── Backgrounds — clean, neutral whites & grays ─────────────── */
+  --bg-primary:   #ffffff;
+  --bg-secondary: #f4f6f8;
+  --bg-tertiary:  #ebeef2;
+  --bg-card:      #ffffff;
+  --bg-dark:      #111827;
+  --bg-dark-card: #1f2937;
+  --bg-dark-hover:#374151;
+
+  /* ── Text — true neutral charcoal, zero color cast ──────────── */
+  --text-primary:   #111827;
+  --text-secondary: #4b5563;
+  --text-muted:     #6b7280;
+  --text-light:     #9ca3af;
+  --text-inverse:   #f9fafb;
+
+  /* ── Primary — Crimson Red (from KOLLI text in brand logo) ────── */
+  --brand-primary:       #dc2626;
+  --brand-primary-light: #fee2e2;
+  --brand-primary-glow:  rgba(220, 38, 38, 0.2);
+  --brand-primary-hover: #b91c1c;
+  --brand-primary-dark:  #991b1b;
+
+  /* ── Secondary — Vibrant Magenta (CMYK logo identity) ────────── */
+  --brand-secondary:       #ec008c;
+  --brand-secondary-light: #fce7f3;
+  --brand-secondary-glow:  rgba(236, 0, 140, 0.18);
+
+  /* ── Accent — Rich Yellow Gold (CMYK logo identity) ─────────── */
+  --brand-accent:       #f59e0b;
+  --brand-accent-light: #fef3c7;
+  --brand-accent-glow:  rgba(245, 158, 11, 0.18);
+
+  /* ── CMYK Logo Flame Color System ───────────────────────────── */
+  --brand-cyan:         #00aeef;
+  --brand-cyan-light:   #e0f2fe;
+  --brand-cyan-glow:    rgba(0, 174, 239, 0.2);
+  --brand-magenta:      #ec008c;
+  --brand-magenta-light:#fce7f3;
+  --brand-magenta-glow: rgba(236, 0, 140, 0.18);
+  --brand-yellow:       #f59e0b;
+  --brand-yellow-light: #fef3c7;
+  --brand-yellow-glow:  rgba(245, 158, 11, 0.18);
+  --brand-black:        #111827;
+
+  /* ── Metallic Finishing ──────────────────────────────────────── */
+  --foil-gold:   linear-gradient(135deg,#d97706 0%,#92400e 45%,#fcd34d 75%,#b45309 100%);
+  --foil-silver: linear-gradient(135deg,#e5e7eb 0%,#9ca3af 50%,#ffffff 72%,#6b7280 100%);
+  --foil-bronze: linear-gradient(135deg,#a16207 0%,#713f12 50%,#fde68a 72%,#854d0e 100%);
+
+  /* ── Borders & Shadows — neutral ────────────────────────────── */
+  --border-subtle:  #e5e7eb;
+  --border-card:    rgba(17, 24, 39, 0.07);
+  --border-dark:    rgba(255,255,255,0.1);
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:  0 4px 16px -2px rgba(0,0,0,0.08), 0 2px 6px -1px rgba(0,0,0,0.04);
+  --shadow-lg:  0 12px 32px -4px rgba(0,0,0,0.1), 0 4px 12px -2px rgba(0,0,0,0.05);
+  --shadow-xl:  0 24px 50px -10px rgba(0,0,0,0.14), 0 10px 20px -5px rgba(0,0,0,0.07);
+
+  /* ── Typography ─────────────────────────────────────────────── */
+  --font-sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-ui:      'DM Sans', 'Inter', sans-serif;
+  --font-mono:    'Courier New', monospace;
+
+  /* ── Layout ─────────────────────────────────────────────────── */
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-full: 9999px;
+  --nav-height:    72px;
+  --container-max: 1260px;
+}
+
+/* ── Reset ─────────────────────────────────────────────────────── */
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body { min-height:100vh; overflow-x:hidden; line-height:1.65; }
+
+/* ── Container ─────────────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+@media (max-width:640px) { .container { padding-left:16px; padding-right:16px; } }
+
+/* ── Headings ──────────────────────────────────────────────────── */
+h1,h2,h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+h4,h5,h6 {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-primary);
+}
+h1 { font-size: clamp(1.85rem, 4vw, 3rem); }
+h2 { font-size: clamp(1.45rem, 2.6vw, 2.2rem); }
+h3 { font-size: clamp(1.1rem, 1.6vw, 1.4rem); }
+h4 { font-size: 1rem; }
+h5 { font-size: 0.9rem; }
+
+p {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.72;
+}
+
+a { color:inherit; text-decoration:none; }
+button { font-family:var(--font-ui); cursor:pointer; border:none; background:none; }
+
+/* ── Scrollbar ─────────────────────────────────────────────────── */
+::-webkit-scrollbar { width:7px; }
+::-webkit-scrollbar-track { background:#f4f6f8; }
+::-webkit-scrollbar-thumb { background:#d1d5db; border-radius:6px; }
+::-webkit-scrollbar-thumb:hover { background:#9ca3af; }
+
+/* ── Reduced Motion ────────────────────────────────────────────── */
+@media (prefers-reduced-motion:reduce) {
+  *,::before,::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Hero grid background ──────────────────────────────────────── */
+.paper-grid-bg {
+  background-color: var(--bg-primary);
+  background-image:
+    radial-gradient(ellipse 60% 50% at 80% 50%, rgba(21,128,61,0.05) 0%, transparent 70%),
+    linear-gradient(to right,  rgba(17,24,39,0.018) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17,24,39,0.018) 1px, transparent 1px);
+  background-size: 100% 100%, 52px 52px, 52px 52px;
+}
+
+/* ── Section Badge ─────────────────────────────────────────────── */
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: rgba(21,128,61,0.08);
+  border: 1px solid rgba(21,128,61,0.2);
+  color: var(--brand-primary);
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 14px;
+}
+.section-badge.magenta {
+  background: rgba(220,38,38,0.07);
+  border-color: rgba(220,38,38,0.2);
+  color: var(--brand-secondary);
+}
+.section-badge.dark {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.16);
+  color: #6ee7b7;
+}
+
+.section-subtitle {
+  font-size: 0.9rem;
+  max-width: 580px;
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+
+/* ── Cards ─────────────────────────────────────────────────────── */
+.premium-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-card);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.28s cubic-bezier(0.16,1,0.3,1);
+}
+.premium-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: rgba(21,128,61,0.2);
+  transform: translateY(-3px);
+}
+
+/* ── CMYK dots ─────────────────────────────────────────────────── */
+.cmyk-indicator { display:inline-flex; gap:5px; align-items:center; }
+.cmyk-dot { width:7px; height:7px; border-radius:50%; }
+.cmyk-c { background-color: var(--brand-primary); }
+.cmyk-m { background-color: var(--brand-secondary); }
+.cmyk-y { background-color: var(--brand-accent); }
+.cmyk-k { background-color: var(--brand-black); }
+
+/* ── Focus ring ────────────────────────────────────────────────── */
+:focus-visible { outline:2px solid var(--brand-primary); outline-offset:3px; border-radius:4px; }
