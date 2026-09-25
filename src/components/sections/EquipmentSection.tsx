@@ -650,7 +650,7 @@ export const EquipmentSection: React.FC = () => {
     <section
       id="equipment"
       style={{
-        padding: '56px 0',
+        padding: '110px 0 80px 0',
         backgroundColor: '#ffffff',
         position: 'relative',
         overflow: 'hidden',

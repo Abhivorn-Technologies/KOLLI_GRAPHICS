@@ -38,7 +38,7 @@ export const CapabilitiesSection: React.FC = () => {
   }
 
   return (
-    <section id="capabilities" style={{ padding: '56px 0', backgroundColor: '#f4f6f8' }}>
+    <section id="capabilities" style={{ padding: '110px 0 80px 0', backgroundColor: '#f4f6f8' }}>
       <div className="container">
         {/* Section Header */}
         <SectionHeader
@@ -318,13 +318,12 @@ export const CapabilitiesSection: React.FC = () => {
             </p>
           </div>
 
-          {/* Interactive Steps Grid */}
+          {/* Interactive Steps Grid — All 6 cards in 1 single horizontal row */}
           <div
             style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-              gap: '14px',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(6, minmax(0, 1fr))',
+              gap: '10px',
               marginBottom: '28px',
             }}
           >
@@ -335,7 +334,7 @@ export const CapabilitiesSection: React.FC = () => {
                   key={item.step}
                   onClick={() => setActiveStep(idx)}
                   style={{
-                    padding: '16px',
+                    padding: '14px 10px',
                     borderRadius: '14px',
                     textAlign: 'left',
                     backgroundColor: isSelected ? '#ffffff' : 'rgba(255, 255, 255, 0.6)',
@@ -343,6 +342,8 @@ export const CapabilitiesSection: React.FC = () => {
                     boxShadow: isSelected ? 'var(--shadow-md)' : 'none',
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
+                    width: '100%',
+                    minWidth: 0,
                   }}
                 >
                   <div

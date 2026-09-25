@@ -23,7 +23,7 @@ const P: React.FC<{ children: React.ReactNode; style?: React.CSSProperties }> = 
 
 export const CompanySection: React.FC = () => {
   return (
-    <section id="company" style={{ padding: '56px 0', backgroundColor: '#ffffff' }}>
+    <section id="company" style={{ padding: '110px 0 80px 0', backgroundColor: '#ffffff' }}>
       <div className="container">
         {/* Section Header */}
         <SectionHeader

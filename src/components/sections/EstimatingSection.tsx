@@ -128,7 +128,7 @@ export const EstimatingSection: React.FC = () => {
   const previewH = Math.max(50, Math.min(200, h * scaleRatio))
 
   return (
-    <section id="estimating" style={{ padding: '56px 0', backgroundColor: '#f8fafc' }}>
+    <section id="estimating" style={{ padding: '110px 0 80px 0', backgroundColor: '#f8fafc' }}>
       <div className="container">
         {/* Section Header */}
         <SectionHeader
