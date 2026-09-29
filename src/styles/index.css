@@ -1,4 +1,7 @@
+@import "./factory-hero.css";
+
 :root {
+
   /* ── Backgrounds — clean, neutral whites & grays ─────────────── */
   --bg-primary: #ffffff;
   --bg-secondary: #f4f6f8;
@@ -286,3 +289,36 @@ button {
   outline-offset: 3px;
   border-radius: 4px;
 }
+
+/* ── Factory Hero Styles ───────────────────────────────────────── */
+.bg-factory {
+  background-color: #15191b;
+}
+
+.text-brand-red {
+  color: #c8202b;
+}
+
+@keyframes title-in {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.animate-title-in {
+  animation: title-in 0.7s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.animate-progress {
+  animation: progress 6.5s linear both;
+}
+
+.factory-vignette {
+  background: linear-gradient(90deg, rgba(21, 25, 27, 0.85) 0%, transparent 55%),
+              linear-gradient(0deg, rgba(21, 25, 27, 0.95) 0%, transparent 62%);
+}
+

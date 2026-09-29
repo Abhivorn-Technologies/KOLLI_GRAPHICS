@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { CapabilitiesSection } from '../components/sections/CapabilitiesSection'
-import { ProductsSection } from '../components/sections/ProductsSection'
 import { FoldingCartonSection } from '../components/sections/FoldingCartonSection'
 import { PrintingSection } from '../components/sections/PrintingSection'
 import { FinishingSection } from '../components/sections/FinishingSection'
@@ -17,7 +16,7 @@ const SectionDivider = () => (
 
 export const CapabilitiesPage: React.FC = () => {
   useEffect(() => {
-    document.title = 'Capabilities & Products | Kolli Graphics'
+    document.title = 'Capabilities & Technical Finishing | Kolli Graphics'
     window.scrollTo({ top: 0 })
   }, [])
 
@@ -26,8 +25,6 @@ export const CapabilitiesPage: React.FC = () => {
       <CapabilitiesSection />
       <SectionDivider />
       <FoldingCartonSection />
-      <SectionDivider />
-      <ProductsSection />
       <SectionDivider />
       <PrintingSection />
       <SectionDivider />
