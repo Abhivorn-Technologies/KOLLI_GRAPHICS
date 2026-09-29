@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react'
-import { HeroSection } from '../components/sections/HeroSection'
+import { FactoryHero } from '../components/hero/FactoryHero'
+import { HomeMetricsBanner } from '../components/sections/HomeMetricsBanner'
 import { ProductsSection } from '../components/sections/ProductsSection'
+import { HomeEquipmentTeaser } from '../components/sections/HomeEquipmentTeaser'
+import { HomeTrustBanner } from '../components/sections/HomeTrustBanner'
 
 const SectionDivider = () => (
   <div
@@ -15,14 +18,20 @@ const SectionDivider = () => (
 export const HomePage: React.FC = () => {
   useEffect(() => {
     document.title = 'Kolli Graphics | Premium Printing & Packaging — Hyderabad'
-    window.scrollTo({ top: 0 })
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+    window.scrollTo(0, 0)
   }, [])
 
   return (
     <>
-      <HeroSection />
-      <SectionDivider />
+      <FactoryHero />
+      <HomeMetricsBanner />
       <ProductsSection />
+      <SectionDivider />
+      <HomeEquipmentTeaser />
+      <HomeTrustBanner />
     </>
   )
 }

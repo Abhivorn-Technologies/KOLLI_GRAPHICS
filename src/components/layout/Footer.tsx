@@ -464,7 +464,7 @@ export const Footer: React.FC = () => {
                   letterSpacing: '0.02em',
                 }}
               >
-                Abhivorn Technologies
+                Abhivorn Technologies & DigiLevelUp
               </span>
             </div>
           </div>

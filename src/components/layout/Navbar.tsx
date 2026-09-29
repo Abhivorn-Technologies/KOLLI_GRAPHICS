@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, Phone, MessageSquare, ArrowRight } from 'lucide-react'
 import { COMPANY_INFO } from '../../data/company'

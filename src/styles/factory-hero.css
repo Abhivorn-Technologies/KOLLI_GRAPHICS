@@ -1,0 +1,302 @@
+/* ── Factory Hero Section (GSAP ScrollTrigger Pinned) ────────────────────────── */
+.factory-hero-scroll-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.factory-hero-sticky {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 640px;
+  overflow: hidden;
+  background-color: #15191b;
+  color: #ffffff;
+  padding-top: 72px; /* space for navbar */
+}
+
+.factory-hero-section {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.factory-hero-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.factory-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: 
+    linear-gradient(90deg, rgba(21, 25, 27, 0.9) 0%, rgba(21, 25, 27, 0.4) 50%, transparent 100%),
+    linear-gradient(0deg, rgba(21, 25, 27, 0.95) 0%, transparent 60%);
+}
+
+/* Stage Nav Right Side */
+.factory-stage-nav {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (max-width: 1024px) {
+  .factory-stage-nav {
+    display: none;
+  }
+}
+
+.factory-stage-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 6px 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: right;
+  transition: all 0.2s ease;
+}
+
+.factory-stage-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #9ca3af;
+  transition: color 0.2s ease;
+}
+
+.factory-stage-btn:hover .factory-stage-label,
+.factory-stage-btn.active .factory-stage-label {
+  color: #ffffff;
+}
+
+.factory-stage-line {
+  height: 1px;
+  width: 16px;
+  background-color: rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
+}
+
+.factory-stage-btn.active .factory-stage-line {
+  width: 40px;
+  background-color: #dc2626;
+}
+
+/* Bottom Overlay Content */
+.factory-hero-content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  padding: 0 40px 48px 40px;
+  pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+  .factory-hero-content {
+    padding: 0 20px 24px 20px;
+  }
+}
+
+.factory-welcome-box {
+  max-width: 750px;
+  animation: factoryFadeIn 0.6s ease-out;
+}
+
+.factory-stage-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #dc2626;
+  margin-bottom: 12px;
+}
+
+.factory-badge-line {
+  height: 1px;
+  width: 40px;
+  background-color: #dc2626;
+}
+
+.factory-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.05;
+  color: #ffffff;
+  margin-bottom: 16px;
+}
+
+.factory-title-highlight {
+  color: #dc2626;
+}
+
+.factory-hero-copy {
+  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  line-height: 1.7;
+  color: #d1d5db;
+  max-width: 650px;
+  margin-bottom: 16px;
+}
+
+.factory-hero-copy strong {
+  color: #ffffff;
+}
+
+.factory-machine-tag {
+  display: inline-block;
+  border-left: 3px solid #dc2626;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #f3f4f6;
+  backdrop-filter: blur(8px);
+  margin-bottom: 16px;
+}
+
+.factory-founders {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #9ca3af;
+  margin-top: 12px;
+}
+
+.factory-action-btn {
+  margin-top: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 28px;
+  background-color: #dc2626;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4);
+}
+
+.factory-action-btn:hover {
+  background-color: #b91c1c;
+  transform: translateY(-1px);
+}
+
+/* Controls & Progress Bar Footer */
+.factory-footer-controls {
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 20px;
+}
+
+.factory-progress-bar-container {
+  display: flex;
+  flex: 1;
+  gap: 6px;
+  max-width: 600px;
+}
+
+.factory-progress-step {
+  flex: 1;
+  height: 16px;
+  padding: 6px 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.factory-progress-track {
+  display: block;
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.factory-progress-fill {
+  display: block;
+  height: 100%;
+  background-color: #dc2626;
+  width: 0%;
+  transition: width 0.15s ease-out;
+}
+
+.factory-progress-step.active .factory-progress-fill {
+  background-color: #dc2626;
+}
+
+.factory-scroll-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(8px);
+  white-space: nowrap;
+}
+
+.factory-scroll-btn:hover {
+  background: rgba(220, 38, 38, 0.85);
+  border-color: #dc2626;
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+}
+
+.factory-scroll-arrow {
+  animation: scrollBounce 1.5s infinite ease-in-out;
+}
+
+@keyframes scrollBounce {
+  0%, 100% {
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+
+@keyframes factoryFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
