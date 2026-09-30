@@ -11,25 +11,26 @@ export const FoldingCartonSection: React.FC = () => {
   const currentCarton = CARTON_TYPES.find((c) => c.id === selectedCartonId) || CARTON_TYPES[0]
 
   return (
-    <section id="cartons" style={{ padding: '80px 0', backgroundColor: '#ffffff' }}>
+    <section id="cartons" style={{ padding: '50px 0 40px 0', backgroundColor: '#ffffff' }}>
       <div className="container">
         {/* Section Header */}
-        <SectionHeader
-          badge="Structural Engineering"
-          badgeVariant="magenta"
-          title="What is a"
-          titleHighlight="Folding Carton?"
-          subtitle="The term “folding carton” has been used since the late 19th century! It refers to a box made of paperboard that is printed, cut, glued, and scored. Shipped flat, they construct into protective, luxury containers."
-        />
+        <ScrollReveal direction="up" delay={0.05}>
+          <SectionHeader
+            badge="Structural Engineering"
+            badgeVariant="magenta"
+            title="What is a"
+            titleHighlight="Folding Carton?"
+            subtitle="The term “folding carton” has been used since the late 19th century! It refers to a box made of paperboard that is printed, cut, glued, and scored. Shipped flat, they construct into protective, luxury containers."
+          />
+        </ScrollReveal>
 
-        {/* 4 Core Advantages Row */}
+        {/* 4 Core Advantages Row — Displays in 1 Single Line */}
         <div
           style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            gap: '18px',
-            marginBottom: '60px',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
+            gap: '16px',
+            marginBottom: '32px',
           }}
         >
           {[
@@ -52,14 +53,16 @@ export const FoldingCartonSection: React.FC = () => {
           ].map((adv, idx) => (
             <ScrollReveal key={adv.title} direction="up" delay={idx * 0.1}>
               <div
+                className="smoke-hover-card"
                 style={{
-                  padding: '24px',
+                  padding: '22px 18px',
                   borderRadius: '16px',
-                  backgroundColor: '#f4f6f8',
+                  backgroundColor: '#ffffff',
                   border: '1px solid #e5e7eb',
                   height: '100%',
-                  flex: '1 1 240px',
-                  maxWidth: '300px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  cursor: 'pointer',
                 }}
               >
                 <div
@@ -72,9 +75,9 @@ export const FoldingCartonSection: React.FC = () => {
                   }}
                 >
                   <CheckCircle2 size={18} />
-                  <h4 style={{ fontSize: '1.05rem', color: '#111827' }}>{adv.title}</h4>
+                  <h4 style={{ fontSize: '1.05rem', color: '#111827', margin: 0 }}>{adv.title}</h4>
                 </div>
-                <p style={{ fontSize: '0.875rem', color: '#4b5563', lineHeight: 1.6 }}>
+                <p style={{ fontSize: '0.875rem', color: '#4b5563', lineHeight: 1.6, margin: 0 }}>
                   {adv.desc}
                 </p>
               </div>
@@ -91,7 +94,7 @@ export const FoldingCartonSection: React.FC = () => {
               background:
                 'linear-gradient(135deg, rgba(0, 174, 239, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%)',
               border: '1px solid #e5e7eb',
-              marginBottom: '50px',
+              marginBottom: '28px',
               display: 'flex',
               alignItems: 'center',
               gap: '20px',
@@ -129,130 +132,138 @@ export const FoldingCartonSection: React.FC = () => {
         </ScrollReveal>
 
         {/* Folding Carton Structural Types Interactive Showcase */}
-        <div>
-          <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-            <div className="section-badge cyan" style={{ margin: '0 auto 10px auto' }}>
-              Structural Blueprint
+        <ScrollReveal direction="up" delay={0.1}>
+          <div>
+            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+              <div className="section-badge cyan" style={{ margin: '0 auto 10px auto' }}>
+                Structural Blueprint
+              </div>
+              <h3 style={{ fontSize: '1.85rem' }}>Different Types of Folding Cartons</h3>
+              <p style={{ fontSize: '0.95rem', color: '#6b7280' }}>
+                Select a carton configuration to inspect structural folding physics, panel layout, and
+                packaging benefits.
+              </p>
             </div>
-            <h3 style={{ fontSize: '1.85rem' }}>Different Types of Folding Cartons</h3>
-            <p style={{ fontSize: '0.95rem', color: '#6b7280' }}>
-              Select a carton configuration to inspect structural folding physics, panel layout, and
-              packaging benefits.
-            </p>
-          </div>
 
-          {/* Type Selector Tabs */}
-          <div
-            style={{
-              display: 'flex',
-              gap: '10px',
-              overflowX: 'auto',
-              paddingBottom: '14px',
-              marginBottom: '32px',
-              scrollbarWidth: 'none',
-            }}
-          >
-            {CARTON_TYPES.map((carton) => {
-              const isActive = carton.id === selectedCartonId
-              return (
-                <button
-                  key={carton.id}
-                  onClick={() => setSelectedCartonId(carton.id)}
-                  style={{
-                    padding: '10px 18px',
-                    borderRadius: '10px',
-                    whiteSpace: 'nowrap',
-                    fontSize: '0.875rem',
-                    fontWeight: 600,
-                    backgroundColor: isActive ? '#dc2626' : '#ebeef2',
-                    color: isActive ? '#ffffff' : '#374151',
-                    border: 'none',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    boxShadow: isActive ? '0 4px 12px rgba(220, 38, 38, 0.3)' : 'none',
-                  }}
-                >
-                  <span style={{ opacity: 0.8, marginRight: '6px', fontSize: '0.75rem' }}>
-                    [{carton.code}]
-                  </span>
-                  {carton.title.split('(')[0].trim()}
-                </button>
-              )
-            })}
-          </div>
-
-          {/* Detailed Structural Card with Extracted Diagrams */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentCarton.id}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.3 }}
+            {/* Type Selector Tabs with Hover & Active Motion */}
+            <div
               style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-                gap: '36px',
-                padding: '36px',
-                borderRadius: '24px',
-                backgroundColor: '#ffffff',
-                border: '1px solid #e5e7eb',
-                boxShadow: 'var(--shadow-md)',
-                alignItems: 'center',
+                display: 'flex',
+                gap: '10px',
+                overflowX: 'auto',
+                paddingBottom: '14px',
+                marginBottom: '32px',
+                scrollbarWidth: 'none',
               }}
             >
-              {/* Left Column: Visual Diagram */}
-              <div
+              {CARTON_TYPES.map((carton) => {
+                const isActive = carton.id === selectedCartonId
+                return (
+                  <motion.button
+                    key={carton.id}
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setSelectedCartonId(carton.id)}
+                    className={isActive ? '' : 'smoke-hover-card'}
+                    style={{
+                      padding: '10px 18px',
+                      borderRadius: '12px',
+                      whiteSpace: 'nowrap',
+                      fontSize: '0.875rem',
+                      fontWeight: 600,
+                      backgroundColor: isActive ? '#dc2626' : '#ffffff',
+                      color: isActive ? '#ffffff' : '#374151',
+                      border: isActive ? '1px solid #dc2626' : '1px solid #e5e7eb',
+                      cursor: 'pointer',
+                      transition: 'all 0.25s ease',
+                      boxShadow: isActive ? '0 6px 20px rgba(220, 38, 38, 0.3)' : '0 2px 8px rgba(0,0,0,0.04)',
+                    }}
+                  >
+                    <span style={{ opacity: 0.8, marginRight: '6px', fontSize: '0.75rem' }}>
+                      [{carton.code}]
+                    </span>
+                    {carton.title.split('(')[0].trim()}
+                  </motion.button>
+                )
+              })}
+            </div>
+
+            {/* Detailed Structural Card with Smoke Glow & Diagram Image Zoom */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentCarton.id}
+                initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.98 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="smoke-hover-card"
                 style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: '#f4f6f8',
-                  borderRadius: '18px',
-                  padding: '30px',
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                  gap: '36px',
+                  padding: '36px',
+                  borderRadius: '24px',
+                  backgroundColor: '#ffffff',
                   border: '1px solid #e5e7eb',
+                  boxShadow: 'var(--shadow-md)',
+                  alignItems: 'center',
                 }}
               >
-                <div
+                {/* Left Column: Visual Diagram Frame with Hover Zoom */}
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
                   style={{
-                    position: 'relative',
-                    width: '100%',
-                    maxWidth: '320px',
-                    height: '280px',
                     display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                  }}
-                >
-                  <ImageWithFallback
-                    src={currentCarton.image}
-                    alt={currentCarton.title}
-                    fallbackLabel={currentCarton.title}
-                    style={{
-                      maxHeight: '260px',
-                      maxWidth: '100%',
-                      objectFit: 'contain',
-                    }}
-                  />
-                </div>
-
-                <div
-                  style={{
-                    marginTop: '16px',
-                    padding: '8px 14px',
-                    borderRadius: '8px',
-                    backgroundColor: '#ffffff',
+                    backgroundColor: '#f8fafc',
+                    borderRadius: '18px',
+                    padding: '30px',
                     border: '1px solid #e5e7eb',
-                    fontSize: '0.78rem',
-                    color: '#6b7280',
-                    textAlign: 'center',
-                    width: '100%',
                   }}
                 >
-                  <strong>Folding Mechanics:</strong> {currentCarton.foldingConcept}
-                </div>
-              </div>
+                  <div
+                    style={{
+                      position: 'relative',
+                      width: '100%',
+                      maxWidth: '320px',
+                      height: '280px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <ImageWithFallback
+                      src={currentCarton.image}
+                      alt={currentCarton.title}
+                      fallbackLabel={currentCarton.title}
+                      style={{
+                        maxHeight: '260px',
+                        maxWidth: '100%',
+                        objectFit: 'contain',
+                        transition: 'transform 0.4s ease',
+                      }}
+                    />
+                  </div>
+
+                  <div
+                    style={{
+                      marginTop: '16px',
+                      padding: '8px 14px',
+                      borderRadius: '8px',
+                      backgroundColor: '#ffffff',
+                      border: '1px solid #e5e7eb',
+                      fontSize: '0.78rem',
+                      color: '#6b7280',
+                      textAlign: 'center',
+                      width: '100%',
+                    }}
+                  >
+                    <strong>Folding Mechanics:</strong> {currentCarton.foldingConcept}
+                  </div>
+                </motion.div>
 
               {/* Right Column: Content, Advantages, Best-For */}
               <div>
@@ -347,7 +358,8 @@ export const FoldingCartonSection: React.FC = () => {
               </div>
             </motion.div>
           </AnimatePresence>
-        </div>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   )

@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { motion } from 'framer-motion'
 import { MessageSquare, Upload, FileText, Info } from 'lucide-react'
 import { SectionHeader } from '../common/SectionHeader'
+import { ScrollReveal } from '../common/ScrollReveal'
 import { COMPANY_INFO } from '../../data/company'
 
 interface FormData {
@@ -128,16 +130,18 @@ export const EstimatingSection: React.FC = () => {
   const previewH = Math.max(50, Math.min(200, h * scaleRatio))
 
   return (
-    <section id="estimating" style={{ padding: '110px 0 80px 0', backgroundColor: '#f8fafc' }}>
+    <section id="estimating" style={{ padding: '135px 0 70px 0', backgroundColor: '#f8fafc' }}>
       <div className="container">
         {/* Section Header */}
-        <SectionHeader
-          badge="Direct Estimating"
-          badgeVariant="cyan"
-          title="Request a Custom"
-          titleHighlight="Carton & Print Estimate"
-          subtitle="Provide your packaging specifications below and our executive team will revert back to you within one business working day."
-        />
+        <ScrollReveal direction="up" delay={0.05}>
+          <SectionHeader
+            badge="Direct Estimating"
+            badgeVariant="cyan"
+            title="Request a Custom"
+            titleHighlight="Carton & Print Estimate"
+            subtitle="Provide your packaging specifications below and our executive team will revert back to you within one business working day."
+          />
+        </ScrollReveal>
 
         <div
           style={{
@@ -148,112 +152,76 @@ export const EstimatingSection: React.FC = () => {
           }}
         >
           {/* Left Column: Comprehensive Estimating Form */}
-          <div
-            style={{
-              padding: '36px',
-              borderRadius: '24px',
-              backgroundColor: '#ffffff',
-              border: '1px solid #e2e8f0',
-              boxShadow: '0 8px 30px rgba(0,0,0,0.04)',
-            }}
-          >
-            <form onSubmit={handleSubmit} noValidate>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                {/* 1. Contact Information */}
-                <div>
-                  <h4
-                    style={{
-                      fontSize: '1rem',
-                      color: '#111827',
-                      fontWeight: 800,
-                      marginBottom: '14px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px',
-                    }}
-                  >
-                    <span
+          <ScrollReveal direction="up" delay={0.1}>
+            <div
+              className="smoke-hover-card"
+              style={{
+                padding: '36px',
+                borderRadius: '24px',
+                backgroundColor: '#ffffff',
+                border: '1px solid #e2e8f0',
+                boxShadow: '0 8px 30px rgba(0,0,0,0.04)',
+              }}
+            >
+              <form onSubmit={handleSubmit} noValidate>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                  {/* 1. Contact Information */}
+                  <div>
+                    <h4
                       style={{
-                        width: '8px',
-                        height: '8px',
-                        borderRadius: '50%',
-                        backgroundColor: '#dc2626',
+                        fontSize: '1rem',
+                        color: '#111827',
+                        fontWeight: 800,
+                        marginBottom: '14px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
                       }}
-                    />
-                    1. Contact Information
-                  </h4>
-
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
-                    <div>
-                      <label
+                    >
+                      <span
                         style={{
-                          display: 'block',
-                          fontSize: '0.8rem',
-                          fontWeight: 700,
-                          color: '#334155',
-                          marginBottom: '6px',
-                        }}
-                      >
-                        Your Name *
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="e.g. Rakesh Kumar"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        style={{
-                          width: '100%',
-                          padding: '11px 14px',
-                          borderRadius: '10px',
-                          border: errors.name ? '1.5px solid #dc2626' : '1px solid #cbd5e1',
-                          fontSize: '0.9rem',
-                          backgroundColor: '#ffffff',
-                          color: '#0f172a',
-                          outline: 'none',
+                          width: '8px',
+                          height: '8px',
+                          borderRadius: '50%',
+                          backgroundColor: '#dc2626',
                         }}
                       />
-                      {errors.name && (
-                        <span
-                          style={{
-                            color: '#dc2626',
-                            fontSize: '0.75rem',
-                            marginTop: '4px',
-                            display: 'block',
-                            fontWeight: 600,
-                          }}
-                        >
-                          {errors.name}
-                        </span>
-                      )}
-                    </div>
+                      1. Contact Information
+                    </h4>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                      <div>
+                        <label className="modern-input-label">Your Name *</label>
+                        <input
+                          type="text"
+                          placeholder="Enter your name"
+                          value={formData.name}
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          className={`modern-input-field ${errors.name ? 'error' : ''}`}
+                        />
+                        {errors.name && (
+                          <span
+                            style={{
+                              color: '#dc2626',
+                              fontSize: '0.75rem',
+                              marginTop: '4px',
+                              display: 'block',
+                              fontWeight: 600,
+                            }}
+                          >
+                            {errors.name}
+                          </span>
+                        )}
+                      </div>
 
                     <div>
-                      <label
-                        style={{
-                          display: 'block',
-                          fontSize: '0.8rem',
-                          fontWeight: 700,
-                          color: '#334155',
-                          marginBottom: '6px',
-                        }}
-                      >
-                        Company Name *
-                      </label>
+                      <label className="modern-input-label">Company Name *</label>
                       <input
                         type="text"
-                        placeholder="e.g. Acme Pharma Ltd"
+                        placeholder="Enter company name"
                         value={formData.companyName}
                         onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                        style={{
-                          width: '100%',
-                          padding: '11px 14px',
-                          borderRadius: '10px',
-                          border: errors.companyName ? '1.5px solid #dc2626' : '1px solid #cbd5e1',
-                          fontSize: '0.9rem',
-                          backgroundColor: '#ffffff',
-                          color: '#0f172a',
-                          outline: 'none',
-                        }}
+                        className={`modern-input-field ${errors.companyName ? 'error' : ''}`}
                       />
                       {errors.companyName && (
                         <span
@@ -280,32 +248,13 @@ export const EstimatingSection: React.FC = () => {
                     }}
                   >
                     <div>
-                      <label
-                        style={{
-                          display: 'block',
-                          fontSize: '0.8rem',
-                          fontWeight: 700,
-                          color: '#334155',
-                          marginBottom: '6px',
-                        }}
-                      >
-                        Contact Phone *
-                      </label>
+                      <label className="modern-input-label">Contact Phone *</label>
                       <input
                         type="tel"
-                        placeholder="e.g. 98490 00000"
+                        placeholder="Enter phone number"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        style={{
-                          width: '100%',
-                          padding: '11px 14px',
-                          borderRadius: '10px',
-                          border: errors.phone ? '1.5px solid #dc2626' : '1px solid #cbd5e1',
-                          fontSize: '0.9rem',
-                          backgroundColor: '#ffffff',
-                          color: '#0f172a',
-                          outline: 'none',
-                        }}
+                        className={`modern-input-field ${errors.phone ? 'error' : ''}`}
                       />
                       {errors.phone && (
                         <span
@@ -323,32 +272,13 @@ export const EstimatingSection: React.FC = () => {
                     </div>
 
                     <div>
-                      <label
-                        style={{
-                          display: 'block',
-                          fontSize: '0.8rem',
-                          fontWeight: 700,
-                          color: '#334155',
-                          marginBottom: '6px',
-                        }}
-                      >
-                        Email ID *
-                      </label>
+                      <label className="modern-input-label">Email ID *</label>
                       <input
                         type="email"
-                        placeholder="e.g. contact@acme.com"
+                        placeholder="Enter email address"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        style={{
-                          width: '100%',
-                          padding: '11px 14px',
-                          borderRadius: '10px',
-                          border: errors.email ? '1.5px solid #dc2626' : '1px solid #cbd5e1',
-                          fontSize: '0.9rem',
-                          backgroundColor: '#ffffff',
-                          color: '#0f172a',
-                          outline: 'none',
-                        }}
+                        className={`modern-input-field ${errors.email ? 'error' : ''}`}
                       />
                       {errors.email && (
                         <span
@@ -392,24 +322,7 @@ export const EstimatingSection: React.FC = () => {
                         type="button"
                         key={type}
                         onClick={() => setFormData({ ...formData, cartonType: type })}
-                        style={{
-                          padding: '10px',
-                          borderRadius: '10px',
-                          fontSize: '0.82rem',
-                          fontWeight: 700,
-                          backgroundColor: formData.cartonType === type ? '#dc2626' : '#f8fafc',
-                          color: formData.cartonType === type ? '#ffffff' : '#475569',
-                          border:
-                            formData.cartonType === type
-                              ? '1px solid #dc2626'
-                              : '1px solid #e2e8f0',
-                          cursor: 'pointer',
-                          transition: 'all 0.2s ease',
-                          boxShadow:
-                            formData.cartonType === type
-                              ? '0 4px 12px rgba(220,38,38,0.25)'
-                              : 'none',
-                        }}
+                        className={`modern-pill-btn ${formData.cartonType === type ? 'active-red' : ''}`}
                       >
                         {type}
                       </button>
@@ -420,19 +333,12 @@ export const EstimatingSection: React.FC = () => {
                     <div style={{ marginTop: '12px' }}>
                       <input
                         type="text"
-                        placeholder="Please describe carton style (e.g. Four Corner Tray, Sleeve, Tuck-Top)"
+                        placeholder="Describe custom carton style"
                         value={formData.cartonTypeOther}
                         onChange={(e) =>
                           setFormData({ ...formData, cartonTypeOther: e.target.value })
                         }
-                        style={{
-                          width: '100%',
-                          padding: '11px 14px',
-                          borderRadius: '10px',
-                          border: '1px solid #cbd5e1',
-                          fontSize: '0.85rem',
-                          outline: 'none',
-                        }}
+                        className="modern-input-field"
                       />
                     </div>
                   )}
@@ -453,66 +359,33 @@ export const EstimatingSection: React.FC = () => {
                   </label>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
                     <div>
-                      <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b' }}>
-                        Length (mm) *
-                      </label>
+                      <label className="modern-input-label">Length (mm) *</label>
                       <input
                         type="number"
                         min="1"
                         value={formData.lengthMm}
                         onChange={(e) => setFormData({ ...formData, lengthMm: e.target.value })}
-                        style={{
-                          width: '100%',
-                          padding: '10px 12px',
-                          borderRadius: '10px',
-                          border: errors.lengthMm ? '1.5px solid #dc2626' : '1px solid #cbd5e1',
-                          fontSize: '0.9rem',
-                          fontWeight: 700,
-                          color: '#0f172a',
-                          outline: 'none',
-                        }}
+                        className={`modern-input-field ${errors.lengthMm ? 'error' : ''}`}
                       />
                     </div>
                     <div>
-                      <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b' }}>
-                        Width (mm) *
-                      </label>
+                      <label className="modern-input-label">Width (mm) *</label>
                       <input
                         type="number"
                         min="1"
                         value={formData.widthMm}
                         onChange={(e) => setFormData({ ...formData, widthMm: e.target.value })}
-                        style={{
-                          width: '100%',
-                          padding: '10px 12px',
-                          borderRadius: '10px',
-                          border: errors.widthMm ? '1.5px solid #dc2626' : '1px solid #cbd5e1',
-                          fontSize: '0.9rem',
-                          fontWeight: 700,
-                          color: '#0f172a',
-                          outline: 'none',
-                        }}
+                        className={`modern-input-field ${errors.widthMm ? 'error' : ''}`}
                       />
                     </div>
                     <div>
-                      <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b' }}>
-                        Height (mm) *
-                      </label>
+                      <label className="modern-input-label">Height (mm) *</label>
                       <input
                         type="number"
                         min="1"
                         value={formData.heightMm}
                         onChange={(e) => setFormData({ ...formData, heightMm: e.target.value })}
-                        style={{
-                          width: '100%',
-                          padding: '10px 12px',
-                          borderRadius: '10px',
-                          border: errors.heightMm ? '1.5px solid #dc2626' : '1px solid #cbd5e1',
-                          fontSize: '0.9rem',
-                          fontWeight: 700,
-                          color: '#0f172a',
-                          outline: 'none',
-                        }}
+                        className={`modern-input-field ${errors.heightMm ? 'error' : ''}`}
                       />
                     </div>
                   </div>
@@ -545,20 +418,7 @@ export const EstimatingSection: React.FC = () => {
                           type="button"
                           key={b}
                           onClick={() => setFormData({ ...formData, boardType: b })}
-                          style={{
-                            padding: '10px',
-                            borderRadius: '10px',
-                            fontSize: '0.82rem',
-                            fontWeight: 700,
-                            backgroundColor: formData.boardType === b ? '#00aeef' : '#f8fafc',
-                            color: formData.boardType === b ? '#ffffff' : '#475569',
-                            border:
-                              formData.boardType === b ? '1px solid #00aeef' : '1px solid #e2e8f0',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s ease',
-                            boxShadow:
-                              formData.boardType === b ? '0 4px 12px rgba(0,174,239,0.25)' : 'none',
-                          }}
+                          className={`modern-pill-btn ${formData.boardType === b ? 'active-cyan' : ''}`}
                         >
                           {b}
                         </button>
@@ -570,50 +430,24 @@ export const EstimatingSection: React.FC = () => {
                     <div style={{ marginBottom: '14px' }}>
                       <input
                         type="text"
-                        placeholder="Please specify board (e.g. MetPET, Metallized Board, Poly-coated)"
+                        placeholder="Specify board material"
                         value={formData.boardTypeOther}
                         onChange={(e) =>
                           setFormData({ ...formData, boardTypeOther: e.target.value })
                         }
-                        style={{
-                          width: '100%',
-                          padding: '11px 14px',
-                          borderRadius: '10px',
-                          border: '1px solid #cbd5e1',
-                          fontSize: '0.85rem',
-                          outline: 'none',
-                        }}
+                        className="modern-input-field"
                       />
                     </div>
                   )}
 
                   <div>
-                    <label
-                      style={{
-                        display: 'block',
-                        fontSize: '0.75rem',
-                        fontWeight: 700,
-                        color: '#64748b',
-                        marginBottom: '4px',
-                      }}
-                    >
-                      Board Grammage (GSM)
-                    </label>
+                    <label className="modern-input-label">Board Grammage (GSM)</label>
                     <input
                       type="text"
-                      placeholder="e.g. 250, 300, 350, 400"
+                      placeholder="Enter GSM (e.g. 300)"
                       value={formData.gsm}
                       onChange={(e) => setFormData({ ...formData, gsm: e.target.value })}
-                      style={{
-                        width: '100%',
-                        padding: '10px 14px',
-                        borderRadius: '10px',
-                        border: '1px solid #cbd5e1',
-                        fontSize: '0.9rem',
-                        fontWeight: 700,
-                        color: '#0f172a',
-                        outline: 'none',
-                      }}
+                      className="modern-input-field"
                     />
                   </div>
                 </div>
@@ -650,25 +484,7 @@ export const EstimatingSection: React.FC = () => {
                         type="button"
                         key={coating}
                         onClick={() => setFormData({ ...formData, surfaceCoating: coating })}
-                        style={{
-                          padding: '10px',
-                          borderRadius: '10px',
-                          fontSize: '0.8rem',
-                          fontWeight: 700,
-                          backgroundColor:
-                            formData.surfaceCoating === coating ? '#f59e0b' : '#f8fafc',
-                          color: formData.surfaceCoating === coating ? '#ffffff' : '#475569',
-                          border:
-                            formData.surfaceCoating === coating
-                              ? '1px solid #f59e0b'
-                              : '1px solid #e2e8f0',
-                          cursor: 'pointer',
-                          transition: 'all 0.2s ease',
-                          boxShadow:
-                            formData.surfaceCoating === coating
-                              ? '0 4px 12px rgba(245,158,11,0.25)'
-                              : 'none',
-                        }}
+                        className={`modern-pill-btn ${formData.surfaceCoating === coating ? 'active-amber' : ''}`}
                       >
                         {coating}
                       </button>
@@ -830,8 +646,10 @@ export const EstimatingSection: React.FC = () => {
                 </div>
 
                 {/* Submit Action */}
-                <button
+                <motion.button
                   type="submit"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
                   style={{
                     width: '100%',
                     padding: '16px',
@@ -850,12 +668,10 @@ export const EstimatingSection: React.FC = () => {
                     transition: 'all 0.25s ease',
                     marginTop: '8px',
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-2px)')}
-                  onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
                 >
                   <MessageSquare size={20} />
                   <span>Send Estimate Request via WhatsApp</span>
-                </button>
+                </motion.button>
 
                 <p
                   style={{
@@ -898,19 +714,22 @@ export const EstimatingSection: React.FC = () => {
               </div>
             )}
           </div>
+        </ScrollReveal>
 
-          {/* Right Column: Live 3D Proportion Box Preview */}
-          <div style={{ position: 'sticky', top: '100px' }}>
-            <div
-              style={{
-                padding: '36px',
-                borderRadius: '24px',
-                backgroundColor: '#ffffff',
-                border: '1px solid #e2e8f0',
-                color: '#111827',
-                boxShadow: '0 8px 30px rgba(0,0,0,0.04)',
-              }}
-            >
+            {/* Right Column: Live 3D Proportion Box Preview */}
+            <ScrollReveal direction="up" delay={0.2}>
+              <div style={{ position: 'sticky', top: '100px' }}>
+                <div
+                  className="smoke-hover-card"
+                  style={{
+                    padding: '36px',
+                    borderRadius: '24px',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #e2e8f0',
+                    color: '#111827',
+                    boxShadow: '0 8px 30px rgba(0,0,0,0.04)',
+                  }}
+                >
               <div style={{ marginBottom: '20px' }}>
                 <span
                   style={{
@@ -1102,6 +921,7 @@ export const EstimatingSection: React.FC = () => {
               </div>
             </div>
           </div>
+        </ScrollReveal>
         </div>
       </div>
     </section>

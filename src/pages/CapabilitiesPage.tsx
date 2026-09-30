@@ -3,13 +3,14 @@ import { CapabilitiesSection } from '../components/sections/CapabilitiesSection'
 import { FoldingCartonSection } from '../components/sections/FoldingCartonSection'
 import { PrintingSection } from '../components/sections/PrintingSection'
 import { FinishingSection } from '../components/sections/FinishingSection'
+import '../styles/company-redesign.css'
 
 const SectionDivider = () => (
   <div
     style={{
-      height: '2px',
+      height: '3px',
       background:
-        'linear-gradient(to right, transparent 0%, rgba(21,128,61,0.18) 30%, rgba(220,38,38,0.12) 70%, transparent 100%)',
+        'linear-gradient(to right, transparent 0%, rgba(0,174,239,0.2) 30%, rgba(220,38,38,0.2) 70%, transparent 100%)',
     }}
   />
 )

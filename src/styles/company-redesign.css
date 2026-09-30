@@ -1,0 +1,230 @@
+/* ============================================================
+   KOLLI GRAPHICS — Modern Clean Card & Scroll Animation Styles
+   ============================================================ */
+
+/* Floating Glow Accent */
+.company-glow-accent {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.15;
+  transition: opacity 0.5s ease;
+}
+
+/* Premium Clean Interactive Card Hover (No rainbow outline) */
+.smoke-hover-card,
+.company-interactive-card,
+.premium-card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+/* Clean Elevation & Subtle Red Border Accent on Hover */
+.smoke-hover-card:hover,
+.company-interactive-card:hover,
+.premium-card:hover {
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: 0 20px 40px -10px rgba(220, 38, 38, 0.12), 0 8px 24px -4px rgba(0, 0, 0, 0.06);
+  border-color: rgba(220, 38, 38, 0.35) !important;
+}
+
+/* Image Zoom inside Card */
+.smoke-hover-card img,
+.company-interactive-card img,
+.premium-card img,
+.card-img-zoom {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.smoke-hover-card:hover img,
+.company-interactive-card:hover img,
+.premium-card:hover img,
+.smoke-hover-card:hover .card-img-zoom {
+  transform: scale(1.06) !important;
+}
+
+/* Glassmorphism Card Overlay */
+.company-glass-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(229, 231, 235, 0.8);
+  border-radius: 20px;
+}
+
+/* Image Zoom & Overlay Effect */
+.company-img-zoom-container {
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.company-img-zoom-container img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.company-img-zoom-container:hover img {
+  transform: scale(1.06);
+}
+
+.company-img-zoom-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(17, 24, 39, 0.75) 0%, rgba(17, 24, 39, 0.1) 60%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+  color: #ffffff;
+}
+
+.company-img-zoom-container:hover .company-img-zoom-overlay {
+  opacity: 1;
+}
+
+/* Lightbox Modal Backdrop */
+.company-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* Modal Content Card */
+.company-modal-content {
+  background: #ffffff;
+  border-radius: 24px;
+  max-width: 720px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+  position: relative;
+  border: 1px solid rgba(229, 231, 235, 0.8);
+}
+
+/* Sticky Sub-nav Pill active style */
+.company-subnav-pill {
+  padding: 8px 20px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #4b5563;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.company-subnav-pill:hover,
+.company-subnav-pill.active {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.25);
+}
+
+/* ============================================================
+   Modern Interactive Input Fields & Form Styling
+   ============================================================ */
+.modern-input-field {
+  width: 100%;
+  padding: 11px 15px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #0f172a;
+  font-size: 0.925rem;
+  font-family: inherit;
+  outline: none !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+}
+
+.modern-input-field:hover {
+  border-color: #cbd5e1;
+  background-color: #ffffff;
+}
+
+.modern-input-field:focus {
+  border-color: #dc2626 !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.08) !important;
+  outline: none !important;
+}
+
+.modern-input-field.error {
+  border-color: #ef4444 !important;
+  background-color: #fef2f2 !important;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.1) !important;
+}
+
+/* Modern Input Label */
+.modern-input-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 6px;
+  letter-spacing: 0.01em;
+}
+
+/* Interactive Select Pill Button */
+.modern-pill-btn {
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1.5px solid #e2e8f0;
+  background: #f8fafc;
+  color: #475569;
+}
+
+.modern-pill-btn:hover {
+  transform: translateY(-2px);
+  border-color: #cbd5e1;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.modern-pill-btn.active-red {
+  background: #dc2626 !important;
+  color: #ffffff !important;
+  border-color: #dc2626 !important;
+  box-shadow: 0 6px 18px rgba(220, 38, 38, 0.3) !important;
+}
+
+.modern-pill-btn.active-cyan {
+  background: #00aeef !important;
+  color: #ffffff !important;
+  border-color: #00aeef !important;
+  box-shadow: 0 6px 18px rgba(0, 174, 239, 0.3) !important;
+}
+
+.modern-pill-btn.active-amber {
+  background: #f59e0b !important;
+  color: #ffffff !important;
+  border-color: #f59e0b !important;
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.3) !important;
+}
+
