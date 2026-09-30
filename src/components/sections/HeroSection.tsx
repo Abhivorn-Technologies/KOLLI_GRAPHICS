@@ -1,8 +1,8 @@
-import React from 'react'
-import { motion } from 'framer-motion'
+import React, { useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, MessageSquare, ChevronDown } from 'lucide-react'
 import { COMPANY_INFO } from '@data/company'
-import { HeroBoxAnimation } from '../animations/HeroBoxAnimation'
+import heroBg from '@/assets/images/image.png'
 
 const stagger = {
   hidden: {},
@@ -24,6 +24,17 @@ const line = {
   },
 }
 
+const STAGE_LABELS = [
+  'Die-Cut Flat Sheet',
+  'Side Walls Folding',
+  'Front Panel Closing',
+  'Base Lock Engaging',
+  'Tuck-Top Sealing',
+  'Box Complete',
+  'Unboxing Reveal',
+]
+const STAGE_DURATION_MS = 2600
+
 function CMYKDots() {
   const colors = ['#00aeef', '#ec008c', '#f59e0b', '#111827']
   return (
@@ -43,6 +54,228 @@ function CMYKDots() {
         />
       ))}
     </span>
+  )
+}
+
+function HeroImagePanel() {
+  const [stageIdx, setStageIdx] = useState(0)
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    let startTime: number | null = null
+    let raf: number
+
+    function tick(now: number) {
+      if (startTime === null) startTime = now
+      const elapsed = now - startTime
+      const cycleProgress = (elapsed % STAGE_DURATION_MS) / STAGE_DURATION_MS
+      setProgress(cycleProgress)
+      const idx = Math.floor(elapsed / STAGE_DURATION_MS) % STAGE_LABELS.length
+      setStageIdx(idx)
+      raf = requestAnimationFrame(tick)
+    }
+
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [])
+
+  const totalProgress =
+    (stageIdx + progress) / STAGE_LABELS.length
+
+  return (
+    <div
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        minHeight: 460,
+        overflow: 'hidden',
+        borderRadius: 20,
+      }}
+    >
+      {/* Background image */}
+      <img
+        src={heroBg}
+        alt="Kolli Graphics Hyderabad facility"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center',
+        }}
+      />
+
+      {/* Dark gradient overlay — heavier at bottom for text legibility */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background:
+            'linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.42) 55%, rgba(0,0,0,0.78) 100%)',
+        }}
+      />
+
+      {/* Top-left: facility badge */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 16,
+          left: 16,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 7,
+          padding: '5px 13px',
+          borderRadius: 999,
+          backgroundColor: 'rgba(255,255,255,0.12)',
+          backdropFilter: 'blur(8px)',
+          border: '1px solid rgba(255,255,255,0.22)',
+        }}
+      >
+        <div
+          style={{
+            width: 7,
+            height: 7,
+            borderRadius: '50%',
+            backgroundColor: '#4ade80',
+            boxShadow: '0 0 8px #4ade80cc',
+          }}
+        />
+        <span
+          style={{
+            fontSize: '0.6rem',
+            fontWeight: 700,
+            color: '#fff',
+            letterSpacing: '0.07em',
+            textTransform: 'uppercase',
+          }}
+        >
+          Hyderabad Facility · 43,000 sq.ft.
+        </span>
+      </div>
+
+      {/* Top-right: CMYK corner dots */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 16,
+          right: 16,
+          display: 'flex',
+          gap: 5,
+          alignItems: 'center',
+        }}
+      >
+        {['#00aeef', '#ec008c', '#f59e0b', '#111827'].map((c) => (
+          <div
+            key={c}
+            style={{
+              width: 8,
+              height: 8,
+              borderRadius: '50%',
+              backgroundColor: c,
+              boxShadow: `0 0 6px ${c}99`,
+              border: '1.5px solid rgba(255,255,255,0.4)',
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Bottom overlay — dynamic text area */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          padding: '28px 24px 24px',
+        }}
+      >
+        {/* Animated stage label */}
+        <div style={{ minHeight: 52, marginBottom: 14, overflow: 'hidden' }}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={stageIdx}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {/* Step counter */}
+              <div
+                style={{
+                  fontSize: '0.6rem',
+                  fontWeight: 600,
+                  color: 'rgba(255,255,255,0.5)',
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  marginBottom: 6,
+                }}
+              >
+                Stage {stageIdx + 1} / {STAGE_LABELS.length}
+              </div>
+              {/* Main label */}
+              <div
+                style={{
+                  fontSize: '1.35rem',
+                  fontWeight: 800,
+                  color: '#ffffff',
+                  letterSpacing: '0.02em',
+                  lineHeight: 1.15,
+                  textShadow: '0 2px 12px rgba(0,0,0,0.5)',
+                }}
+              >
+                {STAGE_LABELS[stageIdx]}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Progress bar — full cycle across all stages */}
+        <div
+          style={{
+            height: 3,
+            borderRadius: 3,
+            backgroundColor: 'rgba(255,255,255,0.18)',
+            overflow: 'hidden',
+          }}
+        >
+          <motion.div
+            style={{
+              height: '100%',
+              background: 'linear-gradient(to right, #00aeef, #ec008c, #f59e0b, #dc2626)',
+              borderRadius: 3,
+              originX: 0,
+            }}
+            animate={{ scaleX: totalProgress }}
+            transition={{ duration: 0.15, ease: 'linear' }}
+          />
+        </div>
+
+        {/* Sub-label dots row */}
+        <div
+          style={{
+            display: 'flex',
+            gap: 5,
+            marginTop: 10,
+            alignItems: 'center',
+          }}
+        >
+          {STAGE_LABELS.map((_, i) => (
+            <div
+              key={i}
+              style={{
+                flex: i === stageIdx ? 2 : 1,
+                height: 3,
+                borderRadius: 3,
+                backgroundColor: i <= stageIdx ? '#dc2626' : 'rgba(255,255,255,0.2)',
+                transition: 'flex 0.4s ease, background-color 0.3s ease',
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -130,7 +363,7 @@ export const HeroSection: React.FC = () => {
       ))}
 
       <div className="container" style={{ position: 'relative', zIndex: 2, width: '100%' }}>
-        {/* Two-column grid: text left, 3D box right */}
+        {/* Two-column grid: text left, facility image right */}
         <div
           style={{
             display: 'grid',
@@ -385,7 +618,7 @@ export const HeroSection: React.FC = () => {
             </motion.div>
           </motion.div>
 
-          {/* ── RIGHT: 3D Box Animation ── */}
+          {/* ── RIGHT: Facility image with dynamic text ── */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
@@ -393,37 +626,12 @@ export const HeroSection: React.FC = () => {
             style={{
               position: 'relative',
               borderRadius: 20,
-              background:
-                'linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(244,248,252,0.95) 100%)',
-              border: '1px solid rgba(220,38,38,0.1)',
-              boxShadow: '0 4px 32px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04)',
-              backdropFilter: 'blur(10px)',
+              boxShadow: '0 8px 40px rgba(0,0,0,0.18), 0 1px 4px rgba(0,0,0,0.06)',
               overflow: 'hidden',
               minHeight: 460,
             }}
           >
-            {/* Corner label */}
-            <div
-              style={{
-                position: 'absolute',
-                top: 14,
-                right: 14,
-                padding: '3px 10px',
-                borderRadius: 6,
-                backgroundColor: 'rgba(220,38,38,0.07)',
-                border: '1px solid rgba(220,38,38,0.14)',
-                fontSize: '0.6rem',
-                fontWeight: 700,
-                color: '#dc2626',
-                letterSpacing: '0.07em',
-                textTransform: 'uppercase',
-                zIndex: 10,
-              }}
-            >
-              Live 3D Preview
-            </div>
-
-            <HeroBoxAnimation />
+            <HeroImagePanel />
           </motion.div>
         </div>
       </div>
