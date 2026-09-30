@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { Phone, Mail, MessageSquare, ArrowUp, ArrowRight } from 'lucide-react'
 import { COMPANY_INFO } from '../../data/company'
 
@@ -33,7 +34,11 @@ export const Footer: React.FC = () => {
         }}
       >
         <div className="container" style={{ padding: '60px 0' }}>
-          <div
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55 }}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -48,11 +53,13 @@ export const Footer: React.FC = () => {
             }}
           >
             <div>
-              {/* CMYK dots */}
+              {/* Animated CMYK dots */}
               <div style={{ display: 'flex', gap: 6, marginBottom: 16 }}>
-                {['#00aeef', '#ec008c', '#f59e0b', '#dc2626'].map((c) => (
-                  <div
+                {['#00aeef', '#ec008c', '#f59e0b', '#dc2626'].map((c, idx) => (
+                  <motion.div
                     key={c}
+                    animate={{ scale: [1, 1.25, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: idx * 0.3 }}
                     style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: c }}
                   />
                 ))}
@@ -82,60 +89,64 @@ export const Footer: React.FC = () => {
             </div>
 
             <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
-              <Link
-                to="/estimating"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '14px 26px',
-                  borderRadius: '999px',
-                  background: 'linear-gradient(135deg,#dc2626 0%,#b91c1c 100%)',
-                  color: '#ffffff',
-                  fontWeight: 700,
-                  fontSize: '0.95rem',
-                  boxShadow: '0 4px 16px rgba(220,38,38,0.3)',
-                  transition: 'all 0.2s ease',
-                  textDecoration: 'none',
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-2px)')}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
-              >
-                Request an Estimate <ArrowRight size={16} />
-              </Link>
+              <motion.div whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }}>
+                <Link
+                  to="/estimating"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '14px 26px',
+                    borderRadius: '999px',
+                    background: 'linear-gradient(135deg,#dc2626 0%,#b91c1c 100%)',
+                    color: '#ffffff',
+                    fontWeight: 700,
+                    fontSize: '0.95rem',
+                    boxShadow: '0 4px 16px rgba(220,38,38,0.3)',
+                    transition: 'all 0.2s ease',
+                    textDecoration: 'none',
+                  }}
+                >
+                  Request an Estimate <ArrowRight size={16} />
+                </Link>
+              </motion.div>
 
-              <a
-                href={`https://wa.me/91${COMPANY_INFO.phone}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '14px 24px',
-                  borderRadius: '999px',
-                  backgroundColor: '#25D366',
-                  color: '#ffffff',
-                  fontWeight: 700,
-                  fontSize: '0.95rem',
-                  boxShadow: '0 4px 14px rgba(37,211,102,0.25)',
-                  transition: 'all 0.2s ease',
-                  textDecoration: 'none',
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-2px)')}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
-              >
-                <MessageSquare size={17} />
-                Direct WhatsApp
-              </a>
+              <motion.div whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }}>
+                <a
+                  href={`https://wa.me/91${COMPANY_INFO.phone}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '14px 24px',
+                    borderRadius: '999px',
+                    backgroundColor: '#25D366',
+                    color: '#ffffff',
+                    fontWeight: 700,
+                    fontSize: '0.95rem',
+                    boxShadow: '0 4px 14px rgba(37,211,102,0.25)',
+                    transition: 'all 0.2s ease',
+                    textDecoration: 'none',
+                  }}
+                >
+                  <MessageSquare size={17} />
+                  Direct WhatsApp
+                </a>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
       {/* ── Main footer columns ────────────────────────────── */}
       <div className="container" style={{ paddingTop: '64px', paddingBottom: '48px' }}>
-        <div
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
           style={{
             display: 'grid',
             gridTemplateColumns: 'minmax(0,1.6fr) minmax(0,1fr) minmax(0,1.2fr) minmax(0,1.2fr)',
@@ -217,24 +228,26 @@ export const Footer: React.FC = () => {
             >
               {NAV_LINKS.map((link) => (
                 <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    style={{
-                      fontSize: '0.875rem',
-                      color: '#4b5563',
-                      fontWeight: 500,
-                      transition: 'color 0.2s ease',
-                      textDecoration: 'none',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = '#dc2626')}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = '#4b5563')}
-                  >
-                    <span style={{ color: '#dc2626', fontSize: '0.7rem' }}>›</span>
-                    {link.label}
-                  </Link>
+                  <motion.div whileHover={{ x: 5 }} transition={{ duration: 0.2 }}>
+                    <Link
+                      to={link.path}
+                      style={{
+                        fontSize: '0.875rem',
+                        color: '#4b5563',
+                        fontWeight: 500,
+                        transition: 'color 0.2s ease',
+                        textDecoration: 'none',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = '#dc2626')}
+                      onMouseLeave={(e) => (e.currentTarget.style.color = '#4b5563')}
+                    >
+                      <span style={{ color: '#dc2626', fontSize: '0.7rem' }}>›</span>
+                      {link.label}
+                    </Link>
+                  </motion.div>
                 </li>
               ))}
             </ul>
@@ -313,7 +326,10 @@ export const Footer: React.FC = () => {
               Get In Touch
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <motion.div
+                whileHover={{ x: 3 }}
+                style={{ display: 'flex', alignItems: 'center', gap: '10px' }}
+              >
                 <div
                   style={{
                     width: 32,
@@ -340,9 +356,12 @@ export const Footer: React.FC = () => {
                 >
                   +91 {COMPANY_INFO.phone}
                 </a>
-              </div>
+              </motion.div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <motion.div
+                whileHover={{ x: 3 }}
+                style={{ display: 'flex', alignItems: 'center', gap: '10px' }}
+              >
                 <div
                   style={{
                     width: 32,
@@ -370,9 +389,12 @@ export const Footer: React.FC = () => {
                 >
                   {COMPANY_INFO.email}
                 </a>
-              </div>
+              </motion.div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <motion.div
+                whileHover={{ x: 3 }}
+                style={{ display: 'flex', alignItems: 'center', gap: '10px' }}
+              >
                 <div
                   style={{
                     width: 32,
@@ -401,10 +423,11 @@ export const Footer: React.FC = () => {
                 >
                   WhatsApp Us
                 </a>
-              </div>
+              </motion.div>
 
               {/* Facility stats */}
-              <div
+              <motion.div
+                whileHover={{ scale: 1.02 }}
                 style={{
                   marginTop: '8px',
                   padding: '14px 16px',
@@ -434,10 +457,10 @@ export const Footer: React.FC = () => {
                   40,000 sq.ft.{' '}
                   <span style={{ color: '#64748b', fontWeight: 400 }}>Secured, 24/7 CCTV</span>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* ── Bottom bar ──────────────────────────────────── */}
         <div
@@ -464,7 +487,7 @@ export const Footer: React.FC = () => {
                   letterSpacing: '0.02em',
                 }}
               >
-                Abhivorn Technologies & DigiLevelUp
+                Abhivorn Technologies &amp; DigiLevelUp
               </span>
             </div>
           </div>
@@ -473,7 +496,9 @@ export const Footer: React.FC = () => {
             <span style={{ fontSize: '0.78rem', color: '#64748b' }}>
               Hyderabad, Telangana, India
             </span>
-            <button
+            <motion.button
+              whileHover={{ scale: 1.06, y: -3 }}
+              whileTap={{ scale: 0.95 }}
               onClick={scrollToTop}
               style={{
                 display: 'inline-flex',
@@ -489,17 +514,9 @@ export const Footer: React.FC = () => {
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#fca5a5'
-                e.currentTarget.style.transform = 'translateY(-2px)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#fee2e2'
-                e.currentTarget.style.transform = 'translateY(0)'
-              }}
             >
               Back to Top <ArrowUp size={13} />
-            </button>
+            </motion.button>
           </div>
         </div>
       </div>

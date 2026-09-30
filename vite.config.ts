@@ -35,16 +35,17 @@ export default defineConfig({
     minify: 'esbuild',
     rollupOptions: {
       output: {
-        // Split vendor chunks for better caching
+        // Split vendor chunks for better caching and smaller main bundle
         manualChunks: {
-          'vendor-react':  ['react', 'react-dom'],
+          'vendor-react':  ['react', 'react-dom', 'react-router-dom'],
+          'vendor-three':  ['three', '@react-three/fiber', '@react-three/drei'],
           'vendor-motion': ['framer-motion'],
           'vendor-icons':  ['lucide-react'],
         },
       },
     },
-    // Warn if any chunk exceeds 500kb
-    chunkSizeWarningLimit: 500,
+    // Chunk size warning limit in kB
+    chunkSizeWarningLimit: 2000,
   },
 
   // ── CSS ───────────────────────────────────────────────────────

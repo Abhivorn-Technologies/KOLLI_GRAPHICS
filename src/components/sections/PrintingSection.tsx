@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { Printer, CheckCircle2 } from 'lucide-react'
 import { SectionHeader } from '../common/SectionHeader'
+import { ScrollReveal } from '../common/ScrollReveal'
 import { PRINTING_PROCESSES } from '../../data/processes'
 
 /* ─── Flow step card with staggered entrance ─────────────────────── */
@@ -215,7 +216,7 @@ export const PrintingSection: React.FC = () => {
     <section
       id="printing"
       style={{
-        padding: '80px 0',
+        padding: '50px 0 40px 0',
         backgroundColor: '#ffffff',
         position: 'relative',
         overflow: 'hidden',
@@ -237,40 +238,44 @@ export const PrintingSection: React.FC = () => {
       />
 
       <div className="container" style={{ position: 'relative' }}>
-        <SectionHeader
-          badge="Core Printing Technologies"
-          badgeVariant="cyan"
-          title="Offset Lithography &"
-          titleHighlight="High-Speed Flexography"
-          subtitle="Explore the mass-production physics of our Heidelberg/Komori offset presses and OMET rotary flexo converting systems."
-        />
+        <ScrollReveal direction="up" delay={0.05}>
+          <SectionHeader
+            badge="Core Printing Technologies"
+            badgeVariant="cyan"
+            title="Offset Lithography &"
+            titleHighlight="High-Speed Flexography"
+            subtitle="Explore the mass-production physics of our Heidelberg/Komori offset presses and OMET rotary flexo converting systems."
+          />
+        </ScrollReveal>
 
         {/* Process selector */}
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '56px' }}>
-          <div
-            style={{
-              display: 'inline-flex',
-              padding: '6px',
-              borderRadius: '999px',
-              backgroundColor: '#ebeef2',
-              border: '1px solid #e5e7eb',
-              gap: '4px',
-            }}
-          >
-            <ProcessTab
-              label="Printing – Offset Lithography"
-              active={activeProcessId === 'offset'}
-              color="#dc2626"
-              onClick={() => setActiveProcessId('offset')}
-            />
-            <ProcessTab
-              label="Printing – Flexography (Flexo)"
-              active={activeProcessId === 'flexography'}
-              color="#dc2626"
-              onClick={() => setActiveProcessId('flexography')}
-            />
+        <ScrollReveal direction="up" delay={0.1}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '28px' }}>
+            <div
+              style={{
+                display: 'inline-flex',
+                padding: '6px',
+                borderRadius: '999px',
+                backgroundColor: '#ebeef2',
+                border: '1px solid #e5e7eb',
+                gap: '4px',
+              }}
+            >
+              <ProcessTab
+                label="Printing – Offset Lithography"
+                active={activeProcessId === 'offset'}
+                color="#dc2626"
+                onClick={() => setActiveProcessId('offset')}
+              />
+              <ProcessTab
+                label="Printing – Flexography (Flexo)"
+                active={activeProcessId === 'flexography'}
+                color="#dc2626"
+                onClick={() => setActiveProcessId('flexography')}
+              />
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Main content — animated on tab switch */}
         <AnimatePresence mode="wait">
@@ -283,6 +288,7 @@ export const PrintingSection: React.FC = () => {
           >
             {/* Top grid: description + substrates */}
             <div
+              className="smoke-hover-card"
               style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
@@ -290,7 +296,7 @@ export const PrintingSection: React.FC = () => {
                 marginBottom: '40px',
                 padding: '40px',
                 borderRadius: '24px',
-                backgroundColor: '#f4f6f8',
+                backgroundColor: '#ffffff',
                 border: '1px solid #e5e7eb',
               }}
             >

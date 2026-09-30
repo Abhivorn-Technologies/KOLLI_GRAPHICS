@@ -1,4 +1,4 @@
-﻿import React from 'react'
+import React from 'react'
 import { motion } from 'framer-motion'
 
 interface SectionHeaderProps {
@@ -42,8 +42,8 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
     >
       {/* Badge */}
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 12, scale: 0.95 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         style={{ marginBottom: '14px' }}
@@ -51,11 +51,13 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
         <span
           className={`section-badge${dark ? ' dark' : badgeVariant === 'magenta' ? ' magenta' : ''}`}
         >
-          {/* CMYK dots — smaller */}
+          {/* CMYK dots — animated pulse */}
           <span style={{ display: 'inline-flex', gap: 4 }}>
-            {['#dc2626', '#dc2626', '#b45309'].map((c) => (
-              <span
+            {['#dc2626', '#dc2626', '#b45309'].map((c, idx) => (
+              <motion.span
                 key={c}
+                animate={{ scale: [1, 1.3, 1] }}
+                transition={{ duration: 1.8, repeat: Infinity, delay: idx * 0.2 }}
                 style={{
                   display: 'inline-block',
                   width: 5,
@@ -71,43 +73,45 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
         </span>
       </motion.div>
 
-      {/* Heading */}
-      <motion.h2
-        initial={{ opacity: 0, y: 14 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          color: dark ? '#f4f6f8' : 'var(--text-primary)',
-          marginBottom: titleHighlight || subtitle ? '12px' : '0',
-          lineHeight: 1.15,
-        }}
-      >
-        {title}
-        {titleHighlight && (
-          <>
-            {' '}
-            <span
-              style={{
-                background: gradientMap[badgeVariant] || gradientMap.cyan,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
-            >
-              {titleHighlight}
-            </span>
-          </>
-        )}
-      </motion.h2>
+      {/* Heading with Masked & Blur-to-Sharp Reveal */}
+      <div style={{ overflow: 'hidden', paddingBottom: '4px' }}>
+        <motion.h2
+          initial={{ opacity: 0, y: 22, filter: 'blur(6px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.65, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+          style={{
+            color: dark ? '#f4f6f8' : 'var(--text-primary)',
+            marginBottom: titleHighlight || subtitle ? '12px' : '0',
+            lineHeight: 1.15,
+          }}
+        >
+          {title}
+          {titleHighlight && (
+            <>
+              {' '}
+              <span
+                style={{
+                  background: gradientMap[badgeVariant] || gradientMap.cyan,
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                {titleHighlight}
+              </span>
+            </>
+          )}
+        </motion.h2>
+      </div>
 
-      {/* Thin rule */}
+      {/* Thin rule expansion */}
       <motion.div
         initial={{ scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.45, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.55, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
         style={{
-          width: '36px',
+          width: '42px',
           height: '2px',
           background: gradientMap[dark ? 'dark' : badgeVariant] || gradientMap.cyan,
           borderRadius: '2px',
@@ -120,7 +124,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
       {subtitle && (
         <motion.p
           className="section-subtitle"
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
