@@ -146,7 +146,7 @@ export const EstimatingSection: React.FC = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
             gap: '36px',
             alignItems: 'start',
           }}
@@ -189,7 +189,7 @@ export const EstimatingSection: React.FC = () => {
                       1. Contact Information
                     </h4>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '14px' }}>
                       <div>
                         <label className="modern-input-label">Your Name *</label>
                         <input
@@ -242,7 +242,7 @@ export const EstimatingSection: React.FC = () => {
                   <div
                     style={{
                       display: 'grid',
-                      gridTemplateColumns: '1fr 1fr',
+                      gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))',
                       gap: '14px',
                       marginTop: '14px',
                     }}
@@ -357,7 +357,7 @@ export const EstimatingSection: React.FC = () => {
                   >
                     3. Dimensions (in millimeters):
                   </label>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 90px), 1fr))', gap: '12px' }}>
                     <div>
                       <label className="modern-input-label">Length (mm) *</label>
                       <input
@@ -509,7 +509,7 @@ export const EstimatingSection: React.FC = () => {
                   <div
                     style={{
                       display: 'grid',
-                      gridTemplateColumns: '1fr 1fr',
+                      gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))',
                       gap: '14px',
                       marginBottom: '14px',
                     }}

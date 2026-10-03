@@ -339,6 +339,7 @@ export const ProductsSection: React.FC = () => {
                   >
                     {/* Category Top Banner */}
                     <div
+                      className="product-category-banner"
                       style={{
                         padding: '28px 32px',
                         background: `linear-gradient(to right, ${meta.bgLight} 0%, #ffffff 100%)`,
@@ -437,10 +438,11 @@ export const ProductsSection: React.FC = () => {
 
                     {/* Items Specification Grid with Staggered Cascading Scroll Arrivals */}
                     <div
+                      className="product-category-items-grid"
                       style={{
                         padding: '24px 32px 32px 32px',
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+                        gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 260px), 1fr))',
                         gap: '14px',
                         backgroundColor: '#ffffff',
                         perspective: '1000px',
@@ -663,6 +665,18 @@ export const ProductsSection: React.FC = () => {
           </div>
         </ScrollReveal>
       </div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .product-category-banner {
+            padding: 20px 16px !important;
+          }
+          .product-category-items-grid {
+            padding: 16px 14px 22px 14px !important;
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </section>
   )
 }

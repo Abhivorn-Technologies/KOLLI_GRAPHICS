@@ -299,7 +299,7 @@ export const CompanySection: React.FC = () => {
             transition={{ duration: 0.6 }}
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
               gap: 32,
               alignItems: 'center',
               marginBottom: 40,
@@ -570,7 +570,7 @@ export const CompanySection: React.FC = () => {
             transition={{ duration: 0.6 }}
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
               gap: 32,
               alignItems: 'center',
               marginBottom: 40,
@@ -706,7 +706,7 @@ export const CompanySection: React.FC = () => {
             transition={{ duration: 0.6 }}
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
               gap: 32,
               alignItems: 'center',
             }}
@@ -858,7 +858,7 @@ export const CompanySection: React.FC = () => {
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))',
                 gap: 24,
                 maxWidth: 720,
                 margin: '0 auto',
@@ -975,7 +975,7 @@ export const CompanySection: React.FC = () => {
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))',
                 gap: 20,
               }}
             >
@@ -1549,7 +1549,7 @@ export const CompanySection: React.FC = () => {
                 initial pre-press proof to final delivery:
               </P>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: 14 }}>
                 {[
                   {
                     title: 'Service & Quality First',

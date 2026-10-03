@@ -45,25 +45,12 @@ export const Footer: React.FC = () => {
           borderBottom: '1px solid #e2e8f0',
         }}
       >
-        <div className="container" style={{ padding: '60px 0' }}>
+        <div className="container footer-cta-container">
           <ScrollReveal direction="up" distance={32} duration={0.65}>
             <motion.div
               whileHover={{ y: -3 }}
               transition={{ duration: 0.3 }}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                flexWrap: 'wrap',
-                gap: '28px',
-                padding: '44px 48px',
-                borderRadius: '24px',
-                background: 'linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%)',
-                border: '1px solid #e2e8f0',
-                boxShadow: '0 8px 30px rgba(0,0,0,0.04)',
-                position: 'relative',
-                overflow: 'hidden',
-              }}
+              className="footer-cta-card"
             >
               {/* Decorative subtle corner glow */}
               <div
@@ -116,7 +103,10 @@ export const Footer: React.FC = () => {
                 </p>
               </div>
 
-              <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', position: 'relative', zIndex: 1 }}>
+              <div
+                className="footer-cta-actions"
+                style={{ position: 'relative', zIndex: 1 }}
+              >
                 <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.98 }}>
                   <Link
                     to="/estimating"
@@ -171,15 +161,8 @@ export const Footer: React.FC = () => {
       </div>
 
       {/* ── Main footer columns with Staggered Scroll Arrivals ────────────────────────────── */}
-      <div className="container" style={{ paddingTop: '64px', paddingBottom: '48px' }}>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'minmax(0,1.6fr) minmax(0,1fr) minmax(0,1.2fr) minmax(0,1.2fr)',
-            gap: '40px',
-            marginBottom: '52px',
-          }}
-        >
+      <div className="container footer-main-container">
+        <div className="footer-grid">
           {/* Column 1: Brand & Bio */}
           <ScrollReveal direction="up" distance={30} delay={0.05} duration={0.6}>
             <div>
@@ -195,12 +178,12 @@ export const Footer: React.FC = () => {
                 />
               </motion.div>
               <p
+                className="footer-brand-bio"
                 style={{
                   fontSize: '0.85rem',
                   color: '#4b5563',
                   lineHeight: 1.78,
                   marginBottom: '18px',
-                  maxWidth: '280px',
                 }}
               >
                 Kolli Graphics Private Limited — Hyderabad's premier offset lithography, folding
@@ -555,17 +538,7 @@ export const Footer: React.FC = () => {
 
         {/* ── Bottom bar with Scroll Arrival ──────────────────────────────────── */}
         <ScrollReveal direction="up" distance={20} delay={0.2} duration={0.5}>
-          <div
-            style={{
-              paddingTop: '28px',
-              borderTop: '1px solid #e2e8f0',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              flexWrap: 'wrap',
-              gap: '14px',
-            }}
-          >
+          <div className="footer-bottom-bar">
             <div>
               <div style={{ fontSize: '0.8rem', color: '#64748b', marginBottom: '4px' }}>
                 © {year} {COMPANY_INFO.name}. All rights reserved.
@@ -616,16 +589,99 @@ export const Footer: React.FC = () => {
         </ScrollReveal>
       </div>
 
-      {/* Responsive grid fallback */}
+      {/* Responsive styles */}
       <style>{`
-        @media (max-width: 900px) {
-          footer .container > div:nth-child(2) > div:first-child {
-            grid-template-columns: 1fr 1fr !important;
+        .footer-cta-container {
+          padding: 60px 0;
+        }
+        .footer-cta-card {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 28px;
+          padding: 44px 48px;
+          border-radius: 24px;
+          background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+          border: 1px solid #e2e8f0;
+          box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+          position: relative;
+          overflow: hidden;
+        }
+        .footer-cta-actions {
+          display: flex;
+          gap: 14px;
+          flex-wrap: wrap;
+        }
+        .footer-main-container {
+          padding-top: 64px;
+          padding-bottom: 48px;
+        }
+        .footer-grid {
+          display: grid;
+          grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1.2fr);
+          gap: 40px;
+          margin-bottom: 52px;
+        }
+        .footer-brand-bio {
+          max-width: 280px;
+        }
+        .footer-bottom-bar {
+          padding-top: 28px;
+          border-top: 1px solid #e2e8f0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 14px;
+        }
+
+        @media (max-width: 1024px) {
+          .footer-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            gap: 36px !important;
+          }
+          .footer-brand-bio {
+            max-width: 100% !important;
           }
         }
-        @media (max-width: 600px) {
-          footer .container > div:nth-child(2) > div:first-child {
+
+        @media (max-width: 680px) {
+          .footer-cta-container {
+            padding: 36px 0 !important;
+          }
+          .footer-cta-card {
+            padding: 26px 20px !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 22px !important;
+            border-radius: 18px !important;
+          }
+          .footer-cta-actions {
+            width: 100% !important;
+            flex-direction: column !important;
+            gap: 12px !important;
+          }
+          .footer-cta-actions > div,
+          .footer-cta-actions a {
+            width: 100% !important;
+            box-sizing: border-box !important;
+            text-align: center !important;
+            justify-content: center !important;
+          }
+          .footer-main-container {
+            padding-top: 36px !important;
+            padding-bottom: 32px !important;
+          }
+          .footer-grid {
             grid-template-columns: 1fr !important;
+            gap: 32px !important;
+            margin-bottom: 36px !important;
+          }
+          .footer-bottom-bar {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 16px !important;
           }
         }
       `}</style>

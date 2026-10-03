@@ -138,7 +138,7 @@ export const CapabilitiesSection: React.FC = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
             gap: '24px',
             marginBottom: '32px',
           }}
@@ -549,7 +549,7 @@ export const CapabilitiesSection: React.FC = () => {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
               gap: '36px',
               alignItems: 'center',
             }}
@@ -615,7 +615,7 @@ export const CapabilitiesSection: React.FC = () => {
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 180px), 1fr))',
                 gap: '14px',
               }}
             >
@@ -758,7 +758,7 @@ export const CapabilitiesSection: React.FC = () => {
                     padding: 0,
                     margin: 0,
                     display: 'grid',
-                    gridTemplateColumns: '1fr 1fr',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 180px), 1fr))',
                     gap: 12,
                   }}
                 >
