@@ -47,7 +47,7 @@ export const ContactSection: React.FC = () => {
     ]
 
     const encoded = encodeURIComponent(messageLines.join('\n'))
-    const url = `https://wa.me/91${COMPANY_INFO.phone}?text=${encoded}`
+    const url = `https://wa.me/${COMPANY_INFO.phoneRaw}?text=${encoded}`
     setSubmitted(true)
     window.open(url, '_blank', 'noopener,noreferrer')
   }
@@ -214,7 +214,7 @@ export const ContactSection: React.FC = () => {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <Phone size={16} color="#dc2626" />
                     <a
-                      href={`tel:${COMPANY_INFO.phone}`}
+                      href={`tel:${COMPANY_INFO.phoneRaw}`}
                       style={{ color: '#dc2626', fontWeight: 600 }}
                     >
                       {COMPANY_INFO.phone}
@@ -363,7 +363,7 @@ export const ContactSection: React.FC = () => {
               >
                 <CheckCircle2 size={18} />
                 <span>
-                  Thank you! Your message has been prepared for Ranga Reddy Kolli (+91{' '}
+                  Thank you! Your message has been prepared for Ranga Reddy Kolli (
                   {COMPANY_INFO.phone}).
                 </span>
               </div>

@@ -142,7 +142,7 @@ export const Footer: React.FC = () => {
 
                 <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.98 }}>
                   <a
-                    href={`https://wa.me/91${COMPANY_INFO.phone}`}
+                    href={`https://wa.me/${COMPANY_INFO.phoneRaw}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
@@ -191,7 +191,7 @@ export const Footer: React.FC = () => {
                 <img
                   src="/assets/logo/kolli-logo.png"
                   alt="Kolli Graphics"
-                  style={{ height: '48px', width: 'auto', objectFit: 'contain' }}
+                  style={{ height: '60px', width: 'auto', objectFit: 'contain' }}
                 />
               </motion.div>
               <p
@@ -432,7 +432,7 @@ export const Footer: React.FC = () => {
                     <Phone size={14} color="#dc2626" />
                   </div>
                   <a
-                    href={`tel:${COMPANY_INFO.phone}`}
+                    href={`tel:${COMPANY_INFO.phoneRaw}`}
                     style={{
                       fontSize: '0.875rem',
                       color: '#111827',
@@ -440,7 +440,7 @@ export const Footer: React.FC = () => {
                       textDecoration: 'none',
                     }}
                   >
-                    +91 {COMPANY_INFO.phone}
+                    {COMPANY_INFO.phone}
                   </a>
                 </motion.div>
 
@@ -499,7 +499,7 @@ export const Footer: React.FC = () => {
                     <MessageSquare size={14} color="#16a34a" />
                   </div>
                   <a
-                    href={`https://wa.me/91${COMPANY_INFO.phone}`}
+                    href={`https://wa.me/${COMPANY_INFO.phoneRaw}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
@@ -541,8 +541,8 @@ export const Footer: React.FC = () => {
                   <div
                     style={{ fontSize: '0.8rem', color: '#111827', fontWeight: 600, lineHeight: 1.6 }}
                   >
-                    43,000 sq.ft.{' '}
-                    <span style={{ color: '#64748b', fontWeight: 400 }}>Total Campus</span>
+                    40,000 sq.ft.{' '}
+                    <span style={{ color: '#64748b', fontWeight: 400 }}>Total Facility</span>
                     <br />
                     40,000 sq.ft.{' '}
                     <span style={{ color: '#64748b', fontWeight: 400 }}>Secured, 24/7 CCTV</span>

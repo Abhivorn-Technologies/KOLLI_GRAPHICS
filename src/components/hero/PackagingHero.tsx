@@ -53,11 +53,11 @@ const STAGES: StageData[] = [
       'We are a fully committed, service-oriented premier finishing company providing high quality craftsmanship and service in a timely manner. We stand by this and work tirelessly to ensure we meet your deadlines & deliver products that exceed customers’ expectations.',
     leftAuthor: '— Ranga Reddy Kolli & Parasurami Reddy Kolli, Founders',
     description:
-      'Operating out of a modern 43,000+ sq. ft. secured manufacturing facility in Cherlapally Industrial Park, Hyderabad. Delivering world-class mono-cartons, rigid luxury boxes, and high-security labels.',
+      'Operating out of a modern 40,000 sq. ft. secured manufacturing facility in Cherlapally Industrial Park, Hyderabad. Delivering world-class mono-cartons, rigid luxury boxes, and high-security labels.',
     equipmentTitle: 'PLANT INFRASTRUCTURE',
     equipmentName: 'Cherlapally Works Facility',
     equipmentSpecs: [
-      { label: 'Plant Area', value: '43,000+ sq. ft. secured' },
+      { label: 'Plant Area', value: '40,000 sq. ft. secured' },
       { label: 'Security', value: '24/7 CCTV cleanroom' },
       { label: 'Quality', value: 'ISO 9001:2015 & FSC®' },
     ],

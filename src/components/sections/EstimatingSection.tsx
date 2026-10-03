@@ -112,7 +112,7 @@ export const EstimatingSection: React.FC = () => {
     )
 
     const encodedMessage = encodeURIComponent(messageLines.join('\n'))
-    const url = `https://wa.me/91${COMPANY_INFO.phone}?text=${encodedMessage}`
+    const url = `https://wa.me/${COMPANY_INFO.phoneRaw}?text=${encodedMessage}`
     setWhatsAppUrl(url)
     setSubmitted(true)
 
@@ -701,7 +701,7 @@ export const EstimatingSection: React.FC = () => {
                 }}
               >
                 <strong>Estimate Summary Generated!</strong> WhatsApp chat opened with Ranga Reddy
-                Kolli (+91 {COMPANY_INFO.phone}).{' '}
+                Kolli ({COMPANY_INFO.phone}).{' '}
                 <a
                   href={whatsAppUrl}
                   target="_blank"
@@ -917,7 +917,7 @@ export const EstimatingSection: React.FC = () => {
                 (Founder)
                 <br />
                 Direct Hotline:{' '}
-                <strong style={{ color: '#dc2626' }}>+91 {COMPANY_INFO.phone}</strong>
+                <strong style={{ color: '#dc2626' }}>{COMPANY_INFO.phone}</strong>
               </div>
             </div>
           </div>

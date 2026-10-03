@@ -211,7 +211,7 @@ export const ProductsSection: React.FC = () => {
             badgeVariant="cyan"
             title="Engineered Structural"
             titleHighlight="Cartons & Packaging"
-            subtitle="Precision mono cartons, high-rigidity tray boxes, and micron-tolerance specialty packaging crafted at our 43,000 sq.ft. facility in Hyderabad."
+            subtitle="Precision mono cartons, high-rigidity tray boxes, and micron-tolerance specialty packaging crafted at our 40,000 sq.ft. facility in Hyderabad."
           />
         </ScrollReveal>
 

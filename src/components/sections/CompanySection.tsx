@@ -29,33 +29,33 @@ import imgBobstGluer from '../../assets/images/image copy 7.png'
 const ABOUT_IMAGES = [
   {
     src: imgPlantMain,
-    title: '43,000 Sq. Ft. Facility Floor',
+    title: '40,000 Sq. Ft. Facility Floor',
     subtitle: 'Integrated Offset & Flexo Production Facility in Hyderabad',
     tag: 'Main Works',
   },
   {
     src: imgPressDetail,
-    title: 'Offset Printing Press Unit',
-    subtitle: 'High-speed color-accurate Heidelberg lithographic press',
+    title: 'Omet Flexo printer',
+    subtitle: 'Narrow-web flexographic printing press',
+    tag: 'Flexo Printer',
+  },
+  {
+    src: imgKomoriLine,
+    title: 'Heidelberg Offset press',
+    subtitle: 'High-precision offset printing press unit',
     tag: 'Offset Press',
   },
   {
     src: imgOmetLabels,
-    title: 'OMET Flexo & Inspection Unit',
-    subtitle: 'Hygienic label printing with foil stamping & Tubescan optical QC',
-    tag: 'Label Division',
+    title: 'DGM folder Gluer with 100% online inspection',
+    subtitle: 'Automated folding & gluing with 100% vision QC',
+    tag: 'Folder Gluer',
   },
   {
     src: imgBobstCut,
     title: 'BOBST Automatic Die-Cutting',
     subtitle: 'Precision foil stamping and blanking line for folding cartons',
     tag: 'Finishing Equipment',
-  },
-  {
-    src: imgKomoriLine,
-    title: 'Komori Lithrone Press Line',
-    subtitle: 'Double coater and full UV printing press capability',
-    tag: 'UV Lithography',
   },
   {
     src: imgBobstGluer,
@@ -92,7 +92,7 @@ export const CompanySection: React.FC = () => {
   // Track active section on scroll
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['about-us', 'meet-our-team', 'career-opportunities']
+      const sections = ['about-us', 'leadership-team', 'career-opportunities']
       const scrollPos = window.scrollY + 200
 
       for (const sectionId of sections) {
@@ -198,7 +198,7 @@ export const CompanySection: React.FC = () => {
           >
             {[
               { id: 'about-us', label: 'About Us', icon: Building2 },
-              { id: 'meet-our-team', label: 'Meet Our Team', icon: Users },
+              { id: 'leadership-team', label: 'Leadership Team', icon: Users },
               { id: 'career-opportunities', label: 'Career Opportunities', icon: Briefcase },
             ].map(({ id, label, icon: Icon }) => {
               const isActive = activeTab === id
@@ -278,7 +278,7 @@ export const CompanySection: React.FC = () => {
                   FACILITY SIZE
                 </div>
                 <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#00aeef' }}>
-                  43,000 Sq.Ft
+                  40,000 Sq.Ft
                 </div>
               </div>
               <div style={{ width: 1, height: 26, backgroundColor: '#e5e7eb' }} />
@@ -402,7 +402,7 @@ export const CompanySection: React.FC = () => {
                       justifyContent: 'space-between',
                     }}
                   >
-                    <span>43,000 Sq. Ft. Manufacturing Plant</span>
+                    <span>40,000 Sq. Ft. Manufacturing Plant</span>
                     <Maximize2 size={16} style={{ marginLeft: 12 }} />
                   </h4>
                   <p style={{ fontSize: '0.8rem', color: '#cbd5e1', margin: '4px 0 0 0' }}>
@@ -486,21 +486,21 @@ export const CompanySection: React.FC = () => {
                   {[
                     {
                       src: imgPressDetail,
-                      title: 'Heidelberg Offset Press',
-                      tag: 'Offset Press',
-                      subtitle: 'Lithographic printing with online coaters',
+                      title: 'Omet Flexo printer',
+                      tag: 'Flexo Printer',
+                      subtitle: 'Narrow-web flexographic printing press',
                     },
                     {
                       src: imgKomoriLine,
-                      title: 'Komori Full UV Press',
-                      tag: 'Double Coater',
-                      subtitle: '6-color UV press line',
+                      title: 'Heidelberg Offset press',
+                      tag: 'Offset Press',
+                      subtitle: 'High-precision offset printing press unit',
                     },
                     {
                       src: imgOmetLabels,
-                      title: 'OMET Flexo & Foil Press',
-                      tag: 'Label Division',
-                      subtitle: 'Tubescan 100% optical inspection',
+                      title: 'DGM folder Gluer with 100% online inspection',
+                      tag: 'Folder Gluer',
+                      subtitle: 'Automated folding & gluing with 100% vision QC',
                     },
                     {
                       src: imgBobstCut,
@@ -698,7 +698,7 @@ export const CompanySection: React.FC = () => {
             </motion.div>
           </motion.div>
 
-          {/* ── ABOUT BLOCK 4: 43,000 Sq. Ft. Facility Feature (Split Layout: Text + Image) ── */}
+          {/* ── ABOUT BLOCK 4: 40,000 Sq. Ft. Facility Feature (Split Layout: Text + Image) ── */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -797,7 +797,7 @@ export const CompanySection: React.FC = () => {
               <P style={{ fontSize: '1.05rem', color: '#111827', fontWeight: 600 }}>
                 Recently we moved into a{' '}
                 <strong style={{ color: '#dc2626', fontWeight: 700 }}>
-                  43,000 square foot facility
+                  40,000 square foot facility
                 </strong>{' '}
                 which has allowed us to work more efficiently, give our employees a better work
                 environment and given us room for expansion.
@@ -806,8 +806,8 @@ export const CompanySection: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* ── Meet Our Team Section ────────────────────────────────────────── */}
-        <div id="meet-our-team" style={{ marginBottom: 80, scrollMarginTop: 130 }}>
+        {/* ── Leadership Team Section ────────────────────────────────────────── */}
+        <div id="leadership-team" style={{ marginBottom: 80, scrollMarginTop: 130 }}>
           <div style={{ textAlign: 'center', marginBottom: 36 }}>
             <div
               style={{
@@ -827,7 +827,7 @@ export const CompanySection: React.FC = () => {
             >
               <Users size={14} /> Leadership &amp; Workforce
             </div>
-            <h3 style={{ fontSize: '2rem', color: '#111827', marginBottom: 8 }}>MEET OUR TEAM</h3>
+            <h3 style={{ fontSize: '2rem', color: '#111827', marginBottom: 8 }}>LEADERSHIP TEAM</h3>
             <div
               style={{
                 width: 48,
@@ -1086,7 +1086,7 @@ export const CompanySection: React.FC = () => {
 
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
               <a
-                href={`https://wa.me/91${COMPANY_INFO.phone}?text=Hello%20Kolli%20Graphics%20Team,%20I%20am%20interested%20in%20Career%20Opportunities.`}
+                href={`https://wa.me/${COMPANY_INFO.phoneRaw}?text=Hello%20Kolli%20Graphics%20Team,%20I%20am%20interested%20in%20Career%20Opportunities.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="company-shimmer-btn"
@@ -1324,7 +1324,7 @@ export const CompanySection: React.FC = () => {
                   </span>
                   <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                     <a
-                      href={`https://wa.me/91${COMPANY_INFO.phone}?text=Hello%20${encodeURIComponent(
+                      href={`https://wa.me/${COMPANY_INFO.phoneRaw}?text=Hello%20${encodeURIComponent(
                         selectedExecutive.name,
                       )},%20I%20am%20interested%20in%20connecting%20with%20you.`}
                       target="_blank"

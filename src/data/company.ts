@@ -19,6 +19,7 @@ export interface CompanyInfo {
   securedSpaceSqFt: number
   location: string
   phone: string
+  phoneRaw: string
   email: string
   contactPerson: string
   corporateOffice: {
@@ -45,11 +46,12 @@ export const COMPANY_INFO: CompanyInfo = {
   culture: 'Service & Quality First — openness, responsiveness, integrity, and respect.',
   foundedYear: 2009,
   yearsOfExcellence: 15,
-  facilitySizeSqFt: 43000,
+  facilitySizeSqFt: 40000,
   securedSpaceSqFt: 40000,
   location: 'Hyderabad, Telangana, India',
-  phone: '9849646688',
-  email: 'rangarkolli@gmail.com',
+  phone: '+91 91001 99942',
+  phoneRaw: '919100199942',
+  email: 'info@kolligraphics.com',
   contactPerson: 'Ranga Reddy Kolli',
   corporateOffice: {
     address: '47 B, S R Nagar',

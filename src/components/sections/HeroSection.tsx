@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, MessageSquare, ChevronDown } from 'lucide-react'
 import { COMPANY_INFO } from '@data/company'
-import heroBg from '@/assets/images/image.png'
+import heroBg from '@/assets/images/facility-entrance.jpg'
 
 const stagger = {
   hidden: {},
@@ -151,7 +151,7 @@ function HeroImagePanel() {
             textTransform: 'uppercase',
           }}
         >
-          Hyderabad Facility · 43,000 sq.ft.
+          Hyderabad Facility · 40,000 sq.ft.
         </span>
       </div>
 
@@ -484,7 +484,7 @@ export const HeroSection: React.FC = () => {
               }}
             >
               Offset lithography · Folding cartons · Flexo labels · Luxury finishing. Operating from
-              our <strong style={{ color: '#374151' }}>43,000 sq.ft. Hyderabad facility</strong>,
+              our <strong style={{ color: '#374151' }}>40,000 sq.ft. Hyderabad facility</strong>,
               24/7.
             </motion.p>
 
@@ -515,7 +515,7 @@ export const HeroSection: React.FC = () => {
               </motion.a>
 
               <motion.a
-                href={`https://wa.me/91${COMPANY_INFO.phone}`}
+                href={`https://wa.me/${COMPANY_INFO.phoneRaw}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ y: -2 }}
@@ -570,8 +570,8 @@ export const HeroSection: React.FC = () => {
               }}
             >
               {[
-                { n: '43,000', unit: 'sq.ft.', label: 'Modern Hyderabad facility' },
-                { n: '40,000', unit: 'sq.ft.', label: '24/7 secured, CCTV' },
+                { n: '40,000', unit: 'sq.ft.', label: 'Modern Hyderabad facility' },
+                { n: '24/7', unit: 'CCTV', label: 'Secured access control' },
                 { n: '2009', unit: '', label: 'Year founded' },
                 { n: '< 0.5', unit: 'mm', label: 'Tubescan inspection' },
               ].map((s, i, arr) => (

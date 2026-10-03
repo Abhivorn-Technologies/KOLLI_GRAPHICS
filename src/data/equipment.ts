@@ -241,7 +241,7 @@ export const EQUIPMENT_LIST: EquipmentItem[] = [
     model: 'DGM Pasting, Guillotines, ATS Banding & Box Sealing',
     tagline: 'End-to-End Plant Floor Automation',
     description:
-      'Our 43,000 sq.ft. facility houses automated guillotine cutters, DGM pasting machines with online inspection, HandyPacks, ATS banding machinery, waste stripping machines, and automatic box sealing systems.',
+      'Our 40,000 sq.ft. facility houses automated guillotine cutters, DGM pasting machines with online inspection, HandyPacks, ATS banding machinery, waste stripping machines, and automatic box sealing systems.',
     highlights: [
       'Automated Guillotine Cutters for micro-accurate sheet squaring',
       'DGM Pasting machine with online high-speed vision inspection',
@@ -252,7 +252,7 @@ export const EQUIPMENT_LIST: EquipmentItem[] = [
     badge: 'Automated Line',
     specs: {
       speed: 'Continuous 24/7 Operations',
-      capacity: '43,000 sq.ft. Plant Throughput',
+      capacity: '40,000 sq.ft. Plant Throughput',
       coating: 'Vision Inspection & Bundle Strapping',
       automation: 'Fully Integrated Plant Automation',
       country: 'Hyderabad Works Facility',

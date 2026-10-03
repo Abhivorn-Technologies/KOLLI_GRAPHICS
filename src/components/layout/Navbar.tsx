@@ -70,14 +70,15 @@ export const Navbar: React.FC = () => {
             <img
               src="/assets/logo/kolli-logo.png"
               alt="Kolli Graphics Private Limited"
-              style={{ height: '46px', width: 'auto', objectFit: 'contain' }}
+              className="navbar-brand-logo"
+              style={{ height: '64px', width: 'auto', objectFit: 'contain' }}
             />
           </Link>
 
           {/* Desktop Navigation */}
           <nav
             className="desktop-nav"
-            style={{ display: 'none', alignItems: 'center', gap: '6px' }}
+            style={{ display: 'none', alignItems: 'center', gap: '8px' }}
           >
             {NAV_LINKS.map((link) => {
               const active = isActive(link.path)
@@ -87,10 +88,11 @@ export const Navbar: React.FC = () => {
                   to={link.path}
                   style={{
                     position: 'relative',
-                    padding: '8px 14px',
-                    fontSize: '0.88rem',
-                    fontWeight: active ? 700 : 500,
-                    color: active ? '#dc2626' : '#374151',
+                    padding: '8px 16px',
+                    fontSize: '1.05rem',
+                    fontWeight: active ? 700 : 600,
+                    letterSpacing: '0.01em',
+                    color: active ? '#dc2626' : '#1f2937',
                     borderRadius: '8px',
                     transition: 'color 0.2s ease',
                     textDecoration: 'none',
@@ -99,7 +101,7 @@ export const Navbar: React.FC = () => {
                     if (!active) e.currentTarget.style.color = '#dc2626'
                   }}
                   onMouseLeave={(e) => {
-                    if (!active) e.currentTarget.style.color = '#374151'
+                    if (!active) e.currentTarget.style.color = '#1f2937'
                   }}
                 >
                   {link.label}
@@ -108,9 +110,9 @@ export const Navbar: React.FC = () => {
                       style={{
                         position: 'absolute',
                         bottom: '2px',
-                        left: '14px',
-                        right: '14px',
-                        height: '2px',
+                        left: '16px',
+                        right: '16px',
+                        height: '2.5px',
                         backgroundColor: '#dc2626',
                         borderRadius: '2px',
                       }}
@@ -124,18 +126,18 @@ export const Navbar: React.FC = () => {
           {/* Quick Actions */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <a
-              href={`tel:${COMPANY_INFO.phone}`}
+              href={`tel:${COMPANY_INFO.phoneRaw}`}
               className="quick-call-btn"
               style={{
                 display: 'none',
                 alignItems: 'center',
                 gap: '8px',
-                padding: '9px 16px',
+                padding: '9px 18px',
                 borderRadius: 'var(--radius-full)',
                 backgroundColor: 'rgba(17,24,39,0.04)',
                 border: '1px solid rgba(17,24,39,0.08)',
                 color: '#111827',
-                fontSize: '0.85rem',
+                fontSize: '0.92rem',
                 fontWeight: 600,
                 textDecoration: 'none',
                 transition: 'all 0.2s ease',
@@ -151,13 +153,13 @@ export const Navbar: React.FC = () => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
-                padding: '10px 20px',
+                padding: '11px 22px',
                 borderRadius: 'var(--radius-full)',
                 background: 'linear-gradient(135deg,#dc2626 0%,#b91c1c 100%)',
                 color: '#ffffff',
-                fontSize: '0.875rem',
+                fontSize: '0.95rem',
                 fontWeight: 600,
-                boxShadow: '0 4px 14px rgba(21,128,61,0.35)',
+                boxShadow: '0 4px 14px rgba(220,38,38,0.28)',
                 transition: 'all 0.25s ease',
                 textDecoration: 'none',
               }}
@@ -224,12 +226,12 @@ export const Navbar: React.FC = () => {
                   key={link.path}
                   to={link.path}
                   style={{
-                    padding: '14px 18px',
+                    padding: '15px 20px',
                     borderRadius: '12px',
-                    fontSize: '1.05rem',
+                    fontSize: '1.15rem',
                     fontWeight: 600,
                     color: active ? '#dc2626' : '#111827',
-                    backgroundColor: active ? 'rgba(21,128,61,0.08)' : 'transparent',
+                    backgroundColor: active ? 'rgba(220,38,38,0.06)' : 'transparent',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
@@ -237,7 +239,7 @@ export const Navbar: React.FC = () => {
                   }}
                 >
                   <span>{link.label}</span>
-                  <ArrowRight size={16} color={active ? '#dc2626' : '#d1d5db'} />
+                  <ArrowRight size={18} color={active ? '#dc2626' : '#d1d5db'} />
                 </Link>
               )
             })}
@@ -254,7 +256,7 @@ export const Navbar: React.FC = () => {
             }}
           >
             <a
-              href={`https://wa.me/91${COMPANY_INFO.phone}`}
+              href={`https://wa.me/${COMPANY_INFO.phoneRaw}`}
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -271,10 +273,10 @@ export const Navbar: React.FC = () => {
               }}
             >
               <MessageSquare size={18} />
-              <span>WhatsApp: +91 {COMPANY_INFO.phone}</span>
+              <span>WhatsApp: {COMPANY_INFO.phone}</span>
             </a>
             <a
-              href={`tel:${COMPANY_INFO.phone}`}
+              href={`tel:${COMPANY_INFO.phoneRaw}`}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -289,7 +291,7 @@ export const Navbar: React.FC = () => {
               }}
             >
               <Phone size={18} />
-              <span>Call: +91 {COMPANY_INFO.phone}</span>
+              <span>Call: {COMPANY_INFO.phone}</span>
             </a>
           </div>
         </div>
@@ -300,6 +302,11 @@ export const Navbar: React.FC = () => {
           .desktop-nav { display: flex !important; }
           .mobile-toggle-btn { display: none !important; }
           .quick-call-btn { display: inline-flex !important; }
+        }
+        @media (max-width: 768px) {
+          .navbar-brand-logo {
+            height: 52px !important;
+          }
         }
       `}</style>
     </>

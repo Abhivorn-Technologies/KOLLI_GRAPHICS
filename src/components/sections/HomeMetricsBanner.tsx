@@ -8,7 +8,7 @@ export const HomeMetricsBanner: React.FC = () => {
     {
       icon: <Building2 size={24} style={{ color: '#dc2626' }} />,
       glowColor: 'rgba(220, 38, 38, 0.25)',
-      value: '43,000+',
+      value: '40,000',
       label: 'SQ. FT. FACILITY',
       sub: 'Cherlapally Works, Hyderabad',
     },

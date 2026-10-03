@@ -1,6 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import heroBg from "@/assets/images/image.png";
+import heroBg from "@/assets/images/facility-entrance.jpg";
 
 const stages = [
   {

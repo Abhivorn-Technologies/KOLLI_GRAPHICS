@@ -156,7 +156,7 @@ export const HomeTrustBanner: React.FC = () => {
               {[
                 { title: 'ISO 9001:2015 Quality System', desc: 'Strict multi-stage quality assurance protocol across all departments.' },
                 { title: 'FSC® Certified Paperboard', desc: 'Sustainable, eco-friendly virgin kraft and recycled board substrates.' },
-                { title: '24/7 CCTV Cleanroom Environment', desc: '43,000+ sq. ft. secured access-controlled plant in Cherlapally, Hyderabad.' },
+                { title: '24/7 CCTV Cleanroom Environment', desc: '40,000 sq. ft. secured access-controlled plant in Cherlapally, Hyderabad.' },
               ].map((item) => (
                 <motion.div
 

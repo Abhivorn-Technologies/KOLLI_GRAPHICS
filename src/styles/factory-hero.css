@@ -12,7 +12,7 @@
   overflow: hidden;
   background-color: #15191b;
   color: #ffffff;
-  padding-top: 72px; /* space for navbar */
+  padding-top: var(--nav-height, 84px); /* space for navbar */
 }
 
 .factory-hero-section {
