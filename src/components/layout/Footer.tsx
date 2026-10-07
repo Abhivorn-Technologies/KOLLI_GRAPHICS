@@ -545,15 +545,23 @@ export const Footer: React.FC = () => {
               </div>
               <div style={{ fontSize: '0.75rem', color: '#4b5563' }}>
                 Developed by{' '}
-                <span
-                  style={{
-                    color: '#dc2626',
-                    fontWeight: 800,
-                    letterSpacing: '0.02em',
-                  }}
+                <a
+                  href="https://www.abhivorn.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-dev-link"
                 >
-                  Abhivorn Technologies &amp; DigiLevelUp
-                </span>
+                  Abhivorn Technologies
+                </a>{' '}
+                &amp;{' '}
+                <a
+                  href="https://www.digilevelup.in/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-dev-link"
+                >
+                  DigiLevelUp
+                </a>
               </div>
             </div>
 
@@ -634,6 +642,17 @@ export const Footer: React.FC = () => {
           justify-content: space-between;
           flex-wrap: wrap;
           gap: 14px;
+        }
+        .footer-dev-link {
+          color: #dc2626;
+          font-weight: 800;
+          letter-spacing: 0.02em;
+          text-decoration: none;
+          transition: color 0.15s ease, text-decoration 0.15s ease;
+        }
+        .footer-dev-link:hover {
+          color: #b91c1c;
+          text-decoration: underline;
         }
 
         @media (max-width: 1024px) {
