@@ -74,7 +74,7 @@ export const HomeTrustBanner: React.FC = () => {
                 marginBottom: 20,
               }}
             >
-              "Quality & Customer Service <span style={{ color: '#dc2626' }}>First</span>"
+              "Customer Service & Quality <span style={{ color: '#dc2626' }}>First</span>"
             </h2>
 
             <p style={{ fontSize: '1rem', color: '#d1d5db', lineHeight: 1.7, marginBottom: 28 }}>
@@ -121,7 +121,7 @@ export const HomeTrustBanner: React.FC = () => {
                     textDecoration: 'none',
                   }}
                 >
-                  <span>Contact Corporate Office</span>
+                  <span>Contact</span>
                   <ArrowRight size={16} />
                 </Link>
               </motion.div>

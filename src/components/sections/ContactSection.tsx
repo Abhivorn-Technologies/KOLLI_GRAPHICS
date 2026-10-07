@@ -140,7 +140,7 @@ export const ContactSection: React.FC = () => {
                   </div>
                   <div>
                     <h3 style={{ fontSize: '1.25rem', color: '#111827' }}>
-                      Works: - with Google MAP
+                      Works Facility
                     </h3>
                     <span style={{ fontSize: '0.78rem', color: '#6b7280' }}>
                       Manufacturing &amp; Secured Storage Facility
@@ -157,11 +157,7 @@ export const ContactSection: React.FC = () => {
                     marginBottom: '20px',
                   }}
                 >
-                  {COMPANY_INFO.worksFacility.address}
-                  <br />
-                  {COMPANY_INFO.worksFacility.area}
-                  <br />
-                  Cheralapally
+                  {COMPANY_INFO.worksFacility.address}, {COMPANY_INFO.worksFacility.area}
                   <br />
                   {COMPANY_INFO.worksFacility.city} – {COMPANY_INFO.worksFacility.pincode}
                 </p>

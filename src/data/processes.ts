@@ -110,7 +110,7 @@ export const CARTON_FINISHING: FinishingMethod[] = [
     effect:
       'Deep glass-like gloss reflection or selective matte contrast that repels scratches and finger oils.',
     technicalDetails:
-      'Polymer resins cured instantly beneath intense UV ultraviolet radiationlamps.',
+      'Polymer resins cured instantly beneath intense UV radiationlamps executed in Heidelberg, Komori & Omet.',
     visualCue: 'gloss-sweep',
     features: [
       'Flood Coat (full sheet coverage)',

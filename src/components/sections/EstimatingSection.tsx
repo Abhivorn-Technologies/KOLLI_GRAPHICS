@@ -138,7 +138,7 @@ export const EstimatingSection: React.FC = () => {
             badge="Direct Estimating"
             badgeVariant="cyan"
             title="Request a Custom"
-            titleHighlight="Carton & Print Estimate"
+            titleHighlight="Custom Packaging Estimate"
             subtitle="Provide your packaging specifications below and our executive team will revert back to you within one business working day."
           />
         </ScrollReveal>

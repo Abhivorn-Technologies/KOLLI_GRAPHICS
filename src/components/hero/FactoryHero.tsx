@@ -6,44 +6,44 @@ const stages = [
   {
     label: "Welcome",
     title: "Welcome to Kolli Graphics",
-    machine: "Hyderabad · Since 2009",
+    machine: "Hyderabad - Since 2009",
     copy: "We are a fully committed, service-oriented premier finishing company providing high-quality craftsmanship and service in a timely manner. We work tirelessly to meet your deadlines & deliver products that exceed customers' expectations. Our motto is Quality & Customer Service First.",
   },
   {
     label: "Pre-press & feeding",
     title: "Quality begins with pre-press",
-    machine: "Experienced pre-press team · FBB, SCB & Greyback boards",
-    copy: "Our pre-press experts prepare colour-accurate plates while premium paperboard is fed into the line sheet by sheet.",
+    machine: "Experienced pre-press team - FBB, SCB & Greyback boards",
+    copy: "Our pre-press experts prepare meticulous colour separation and generate accurate plates for printing.",
   },
   {
     label: "Offset printing",
-    title: "Colour, printed perfectly",
-    machine: "Heidelberg CD 102 5 XL · Komori Lithrone 40 6-colour + UV",
-    copy: "Offset printing with automatic colour sensing means there is zero chance of uneven colour.",
+    title: "Colours printed perfectly",
+    machine: "Heidelberg CD 102 5 XL - Komori Lithrone 40 6-colour + UV",
+    copy: "Offset printing with colour clarity and consistency printing.",
   },
   {
     label: "Coating & varnish",
     title: "A premium finish",
-    machine: "Online aqueous coater · Full UV",
-    copy: "Aqua, matt, satin, UV and textured UV varnishes protect every carton and help it stand out on the shelf.",
+    machine: "Online aqueous coater - Full UV coating",
+    copy: "Aqua, matt, satin, UV and textured UV varnishes protect every carton and help to embellished",
   },
   {
     label: "Die cutting & foil",
-    title: "Cut, creased & embellished",
-    machine: "BOBST die cutters · BOBST foil stamping",
+    title: "Cut, creased & embossing",
+    machine: "BOBST die cutters - BOBST foil stamping",
     copy: "Precision die cutting shapes every sheet into accurate carton blanks, then foil and embossing add luxury.",
   },
   {
     label: "Folding & inspection",
     title: "Folded, glued, verified",
-    machine: "BOBST Media folder-gluer · Online inspection system",
-    copy: "High-speed folding and gluing with cold and hot melt, with every carton checked by an online inspection system.",
+    machine: "DGM Media folder-gluer with - Online inspection system · Focus FS – SHARK 500 - offline inspection",
+    copy: "High-speed folding and gluing with cold and hot melt, with every carton checked by an online / offline inspection systems before finishing.",
   },
   {
     label: "Packed & delivered",
     title: "Ready to exceed expectations",
-    machine: "Handypack · ATS banding · Automatic box sealing",
-    copy: "Finished Kolli cartons are collected, banded and sealed, then delivered on time.",
+    machine: "Handypack to collate cartons and ATS banding for paper banding and Automatic box sealing",
+    copy: "Finished cartons are collected, banded and sealed, then delivered on time.",
   },
 ];
 
@@ -97,14 +97,7 @@ export function FactoryHero() {
             <img
               src={heroBg}
               alt="Kolli Graphics Hyderabad facility"
-              style={{
-                position: "absolute",
-                inset: 0,
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                objectPosition: "center",
-              }}
+              className="factory-hero-img"
             />
           </div>
           <div className="factory-vignette" />
@@ -148,7 +141,7 @@ export function FactoryHero() {
                     Welcome to <span className="factory-title-highlight">Kolli</span> Graphics
                   </h1>
                   <p className="factory-hero-copy">{current.copy}</p>
-                  <p className="factory-founders">Ranga Reddy Kolli · Parasurami Reddy Kolli — Founders</p>
+                  <p className="factory-founders">Ranga Reddy Kolli - Parasurami Reddy Kolli — Founders</p>
                 </>
               ) : (
                 <>

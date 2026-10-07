@@ -196,16 +196,16 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     title: 'Cartons',
     subtitle: 'Specialty Mono & Folding Cartons',
     description:
-      'Engineered for high-speed automated packaging and hand packaging lines with micron-perfect die-cutting and folding.',
+      'Engineered with micron-perfect die-cutting high-speed automated packaging and handy pack packaging lines after folding',
     items: [
       'Standard Reverse Tuck',
-      'French Reverse Tuck',
       'Standard Straight Tuck',
+      'French Reverse Tuck',
       'Snap Lock Bottom, Top Hinged from Rear',
       'Snap Lock Bottom, Top Hinged from Front',
       'Auto Lock Bottom, Top Hinged from Rear',
       'Auto Lock Bottom, Top Hinged from Front',
-      'Video - Side Load and Bottom Load',
+      'Side Load and Bottom Load',
     ],
   },
   {
@@ -213,13 +213,13 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     title: 'Tray Boxes',
     subtitle: 'Structural & Rolled Wall Trays',
     description:
-      'Rigid, double-walled, and corner-glued tray configurations designed for confectionery, retail display, and luxury presentation.',
+      'Double-walled, and corner-glued tray configurations designed for confectionery, retail display, and luxury presentation.',
     items: [
       'Four Corner Glued Trays',
       'Six Corner Integrated Boxes',
       'Single Sidewall Trays',
       'Double End Wall Boxes',
-      'Double Sidewall Rigid Boxes',
+      'Double Sidewall Boxes',
       'Double Glued Sidewall Trays',
       'Roll Two Sides',
       'Roll Two Sides, Tuck Top',
@@ -299,7 +299,7 @@ export const PRODUCTION_JOURNEY = [
     phase: 'AUTOMATED FOLDING',
     title: 'High-Speed Pasting & Gluing',
     description:
-      'BOBST Domino, BOBST Media, and DGM folder-gluers run cold and hot-melt gluing with online inspection and HandyPack automated packing.',
+      'BOBST Domino, BOBST Media, and DGM folder-gluers run cold and hot-melt gluing with online inspection, Focus offline inspection and HandyPack automated packing.',
     icon: 'Box',
   },
   {

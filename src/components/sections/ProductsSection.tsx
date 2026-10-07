@@ -230,7 +230,7 @@ export const ProductsSection: React.FC = () => {
               { label: '32+ Configurations', highlight: 'Engineered Precision' },
               { label: '4 Categories', highlight: 'Turnkey Portfolio' },
               { label: '< 0.5mm', highlight: 'Strict Tolerance' },
-              { label: '100% In-House', highlight: 'Die Cutting & Gluing' },
+              { label: '100% In-House', highlight: 'Of any operations from printing to finishing' },
             ].map((stat) => (
               <div
                 key={stat.label}

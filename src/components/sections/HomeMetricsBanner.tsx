@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Building2, Award, Zap, ShieldCheck } from 'lucide-react'
+import { Building2, Award, ShieldCheck } from 'lucide-react'
 import { InteractiveTiltCard } from '../common/InteractiveTiltCard'
 
 export const HomeMetricsBanner: React.FC = () => {
@@ -17,21 +17,14 @@ export const HomeMetricsBanner: React.FC = () => {
       glowColor: 'rgba(0, 174, 239, 0.25)',
       value: '15+ Years',
       label: 'PACKAGING EXCELLENCE',
-      sub: 'Est. 2009 · Quality First',
-    },
-    {
-      icon: <Zap size={24} style={{ color: '#f59e0b' }} />,
-      glowColor: 'rgba(245, 158, 11, 0.25)',
-      value: '18,000',
-      label: 'SHEETS/HR CAPACITY',
-      sub: 'Heidelberg & Komori UV Presses',
+      sub: 'Est. 2009- Quality First',
     },
     {
       icon: <ShieldCheck size={24} style={{ color: '#ec008c' }} />,
       glowColor: 'rgba(236, 0, 140, 0.25)',
       value: '100%',
       label: 'ZERO-ERROR INSPECTION',
-      sub: 'TubeScan Automatic Vision System',
+      sub: 'Luster, Focus and TubeScan Automatic 100% Inspection Systems',
     },
   ]
 

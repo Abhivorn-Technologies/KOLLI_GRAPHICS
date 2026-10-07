@@ -41,8 +41,8 @@ export const COMPANY_INFO: CompanyInfo = {
   shortName: 'Kolli Graphics',
   tagline: 'Premier Printing, Packaging & Label Craftsmanship',
   mission:
-    'We are full committed service oriented premier finishing company to provide high quality craftsmanship and service in the timely manner. We stand by this and work tirelessly to stand above our competitors to ensure that we meet your deadlines & deliver products that exceed customers’ expectations.',
-  motto: 'Quality & Customer First',
+    'We are a full committed service oriented premier finishing company to provide high quality craftsmanship and service in the timely manner. We stand by this and work tirelessly to stand above our competitors to ensure that we meet your deadlines & deliver products that exceed customers’ expectations.',
+  motto: 'Customer Service & Quality First',
   culture: 'Service & Quality First — openness, responsiveness, integrity, and respect.',
   foundedYear: 2009,
   yearsOfExcellence: 15,
@@ -80,14 +80,14 @@ export const EXECUTIVE_TEAM: TeamMember[] = [
     role: 'CEO & Founder',
     department: 'executive',
     bio: 'Founder and visionary behind Kolli Graphics Private Limited since 2009, steering continuous investment in world-class printing and finishing technologies.',
-    focus: 'Strategic Leadership & Customer Partnerships',
+    focus: 'Strategic Leadership, Expansions & Plant Automation',
   },
   {
     name: 'Parasurami Reddy Kolli',
     role: 'COO & Co-Founder',
     department: 'executive',
     bio: 'Oversees operational excellence, plant management, automated production lines, and adherence to strict quality control standards.',
-    focus: 'Operations, Plant Automation & Production Delivery',
+    focus: 'Customer Partnerships Operations, & Product Delivery',
   },
 ]
 

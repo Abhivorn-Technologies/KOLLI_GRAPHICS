@@ -285,7 +285,7 @@ export const CompanySection: React.FC = () => {
               <div>
                 <div style={{ fontSize: '0.68rem', color: '#6b7280', fontWeight: 700 }}>MOTTO</div>
                 <div style={{ fontSize: '0.85rem', fontWeight: 800, color: '#111827' }}>
-                  Quality &amp; Customer First
+                  Customer Service &amp; Quality First
                 </div>
               </div>
             </div>
@@ -345,7 +345,7 @@ export const CompanySection: React.FC = () => {
                 Graphics is founded in{' '}
                 <strong style={{ color: '#111827', fontWeight: 700 }}>2009</strong> with a motive of{' '}
                 <strong style={{ color: '#dc2626', fontWeight: 700 }}>
-                  &ldquo;Quality &amp; Customer First&rdquo;
+                  &ldquo;Customer Service &amp; Quality First&rdquo;
                 </strong>
                 .
               </P>
