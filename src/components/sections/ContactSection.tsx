@@ -7,12 +7,13 @@ import {
   Building,
   Factory,
   ExternalLink,
-  Send,
   CheckCircle2,
+  Send,
 } from 'lucide-react'
 import { SectionHeader } from '../common/SectionHeader'
 import { ScrollReveal } from '../common/ScrollReveal'
 import { COMPANY_INFO } from '../../data/company'
+import { dispatchFormEmail } from '../../services/mailService'
 
 export const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -23,16 +24,64 @@ export const ContactSection: React.FC = () => {
     message: '',
   })
 
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
-  const [error, setError] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!formData.name.trim() || !formData.phone.trim() || !formData.email.trim()) {
-      setError('Please fill in your Name, Phone, and Email ID.')
-      return
+  const handleChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }))
+    if (errors[field]) {
+      setErrors((prev) => {
+        const next = { ...prev }
+        delete next[field]
+        return next
+      })
     }
-    setError('')
+  }
+
+  const validate = () => {
+    const errs: Record<string, string> = {}
+    if (!formData.name.trim()) {
+      errs.name = 'Please enter your name'
+    } else if (formData.name.trim().length < 2) {
+      errs.name = 'Name must be at least 2 characters'
+    }
+
+    if (!formData.companyName.trim()) {
+      errs.companyName = 'Company name is required'
+    } else if (formData.companyName.trim().length < 2) {
+      errs.companyName = 'Company name must be at least 2 characters'
+    }
+
+    const cleanedPhone = formData.phone.trim().replace(/\D/g, '')
+    if (!cleanedPhone) {
+      errs.phone = 'Mobile number is required'
+    } else if (cleanedPhone.length !== 10) {
+      errs.phone = 'Mobile number must be exactly 10 digits'
+    } else if (!/^[6-9]\d{9}$/.test(cleanedPhone)) {
+      errs.phone = 'Please enter a valid 10-digit mobile number (starts with 6, 7, 8, or 9)'
+    }
+
+    if (!formData.email.trim()) {
+      errs.email = 'Please enter your email address'
+    } else if (!/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(formData.email.trim())) {
+      errs.email = 'Please enter a valid email address (e.g. name@domain.com)'
+    }
+
+    if (!formData.message.trim()) {
+      errs.message = 'Please enter your message or project requirements'
+    } else if (formData.message.trim().length < 5) {
+      errs.message = 'Please enter at least 5 characters for your inquiry details'
+    }
+
+    setErrors(errs)
+    return Object.keys(errs).length === 0
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!validate()) return
+    setSubmitting(true)
 
     const messageLines = [
       `*New Contact Form Inquiry - Kolli Graphics*`,
@@ -46,10 +95,33 @@ export const ContactSection: React.FC = () => {
       `_Sent from Kolli Graphics Contact Form_`,
     ]
 
-    const encoded = encodeURIComponent(messageLines.join('\n'))
-    const url = `https://wa.me/${COMPANY_INFO.phoneRaw}?text=${encoded}`
+    const waUrl = `https://wa.me/${COMPANY_INFO.phoneRaw}?text=${encodeURIComponent(messageLines.join('\n'))}`
+
+    // Automatically open WhatsApp directly with pre-filled message
+    try {
+      window.open(waUrl, '_blank', 'noopener,noreferrer')
+    } catch {
+      // browser popup blocker fallback
+    }
+
+    // Automatically dispatch email (direct SMTP on production)
+    try {
+      await dispatchFormEmail(
+        `New Inquiry: ${formData.name} (${formData.companyName})`,
+        {
+          Name: formData.name,
+          Company: formData.companyName,
+          Phone: formData.phone,
+          Email: formData.email,
+          Message: formData.message,
+        }
+      )
+    } catch (err) {
+      console.warn('Auto-email notice:', err)
+    }
+
+    setSubmitting(false)
     setSubmitted(true)
-    window.open(url, '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -242,127 +314,217 @@ export const ContactSection: React.FC = () => {
                 boxShadow: 'var(--shadow-md)',
               }}
             >
-            <div style={{ marginBottom: '22px' }}>
-              <h3 style={{ fontSize: '1.6rem', color: '#111827' }}>Contact Form:</h3>
-              <p style={{ fontSize: '0.875rem', color: '#6b7280' }}>
-                Send your message, inquiries, or sample requests directly to Kolli Graphics.
-              </p>
-            </div>
-
-            <form onSubmit={handleSubmit}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div>
-                  <label className="modern-input-label">Name *</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Enter your name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="modern-input-field"
-                  />
-                </div>
-
-                <div>
-                  <label className="modern-input-label">Company name</label>
-                  <input
-                    type="text"
-                    placeholder="Enter your company name"
-                    value={formData.companyName}
-                    onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                    className="modern-input-field"
-                  />
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '14px' }}>
-                  <div>
-                    <label className="modern-input-label">Contact : Phone *</label>
-                    <input
-                      type="tel"
-                      required
-                      placeholder="Enter your phone number"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="modern-input-field"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="modern-input-label">Email ID *</label>
-                    <input
-                      type="email"
-                      required
-                      placeholder="Enter your email address"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="modern-input-field"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="modern-input-label">Message / Project Details</label>
-                  <textarea
-                    rows={4}
-                    placeholder="Tell us about your printing, packaging, cartons or labels requirement..."
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="modern-input-field"
-                    style={{ resize: 'vertical' }}
-                  />
-                </div>
-
-                {error && <div style={{ color: '#ef4444', fontSize: '0.8rem' }}>{error}</div>}
-
-                <motion.button
-                  type="submit"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
+            {submitted ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                  padding: '48px 20px',
+                  minHeight: '440px',
+                }}
+              >
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 0.1 }}
                   style={{
-                    width: '100%',
-                    padding: '14px',
-                    borderRadius: '12px',
-                    background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
-                    color: '#ffffff',
-                    fontSize: '0.95rem',
-                    fontWeight: 700,
+                    width: '84px',
+                    height: '84px',
+                    borderRadius: '50%',
+                    backgroundColor: '#dcfce7',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '8px',
-                    border: 'none',
+                    color: '#16a34a',
+                    marginBottom: '24px',
+                    boxShadow: '0 8px 24px rgba(22, 163, 74, 0.2)',
+                  }}
+                >
+                  <CheckCircle2 size={46} strokeWidth={2.5} />
+                </motion.div>
+
+                <h3
+                  style={{
+                    fontSize: '1.75rem',
+                    color: '#111827',
+                    fontWeight: 800,
+                    marginBottom: '12px',
+                  }}
+                >
+                  Thank You!
+                </h3>
+
+                <p
+                  style={{
+                    fontSize: '1.05rem',
+                    color: '#374151',
+                    lineHeight: 1.6,
+                    maxWidth: '420px',
+                    marginBottom: '28px',
+                    fontWeight: 500,
+                  }}
+                >
+                  Thank you for your interest and someone will get in touch with you within 24 hours.
+                </p>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFormData({ name: '', companyName: '', phone: '', email: '', message: '' })
+                    setSubmitted(false)
+                  }}
+                  style={{
+                    padding: '10px 24px',
+                    borderRadius: '10px',
+                    border: '1px solid #e2e8f0',
+                    backgroundColor: '#f8fafc',
+                    color: '#475569',
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
                     cursor: 'pointer',
-                    boxShadow: '0 4px 16px rgba(220, 38, 38, 0.35)',
                     transition: 'all 0.2s ease',
                   }}
                 >
-                  <Send size={16} />
-                  <span>Submit Contact Form</span>
-                </motion.button>
-              </div>
-            </form>
+                  Send another message
+                </button>
+              </motion.div>
+            ) : (
+              <>
+                <div style={{ marginBottom: '22px' }}>
+                  <h3 style={{ fontSize: '1.6rem', color: '#111827' }}>Contact Form:</h3>
+                  <p style={{ fontSize: '0.875rem', color: '#6b7280' }}>
+                    Send your message, inquiries, or sample requests directly to Kolli Graphics.
+                  </p>
+                </div>
 
-            {submitted && (
-              <div
-                style={{
-                  marginTop: '18px',
-                  padding: '14px',
-                  borderRadius: '10px',
-                  backgroundColor: '#f0fdf4',
-                  border: '1px solid #bbf7d0',
-                  color: '#dc2626',
-                  fontSize: '0.85rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                }}
-              >
-                <CheckCircle2 size={18} />
-                <span>
-                  Thank you! Your message has been prepared for Ranga Reddy Kolli (
-                  {COMPANY_INFO.phone}).
-                </span>
-              </div>
+                <form onSubmit={handleSubmit} noValidate>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                    <div>
+                      <label className="modern-input-label">Name *</label>
+                      <input
+                        type="text"
+                        placeholder="Enter your name"
+                        value={formData.name}
+                        spellCheck={false}
+                        onChange={(e) => handleChange('name', e.target.value)}
+                        className={`modern-input-field ${errors.name ? 'error' : ''}`}
+                      />
+                      {errors.name && (
+                        <span style={{ color: '#dc2626', fontSize: '0.75rem', marginTop: '4px', display: 'block', fontWeight: 600 }}>
+                          {errors.name}
+                        </span>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="modern-input-label">Company Name *</label>
+                      <input
+                        type="text"
+                        placeholder="Enter your company name"
+                        value={formData.companyName}
+                        spellCheck={false}
+                        onChange={(e) => handleChange('companyName', e.target.value)}
+                        className={`modern-input-field ${errors.companyName ? 'error' : ''}`}
+                      />
+                      {errors.companyName && (
+                        <span style={{ color: '#dc2626', fontSize: '0.75rem', marginTop: '4px', display: 'block', fontWeight: 600 }}>
+                          {errors.companyName}
+                        </span>
+                      )}
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '14px' }}>
+                      <div>
+                        <label className="modern-input-label">Contact : Phone *</label>
+                        <input
+                          type="tel"
+                          maxLength={10}
+                          placeholder="10-digit mobile number"
+                          value={formData.phone}
+                          onChange={(e) => {
+                            let val = e.target.value.replace(/\D/g, '')
+                            if (val.startsWith('0')) val = val.substring(1)
+                            handleChange('phone', val.slice(0, 10))
+                          }}
+                          className={`modern-input-field ${errors.phone ? 'error' : ''}`}
+                        />
+                        {errors.phone && (
+                          <span style={{ color: '#dc2626', fontSize: '0.75rem', marginTop: '4px', display: 'block', fontWeight: 600 }}>
+                            {errors.phone}
+                          </span>
+                        )}
+                      </div>
+
+                      <div>
+                        <label className="modern-input-label">Email ID *</label>
+                        <input
+                          type="email"
+                          placeholder="Enter your email address"
+                          value={formData.email}
+                          spellCheck={false}
+                          onChange={(e) => handleChange('email', e.target.value)}
+                          className={`modern-input-field ${errors.email ? 'error' : ''}`}
+                        />
+                        {errors.email && (
+                          <span style={{ color: '#dc2626', fontSize: '0.75rem', marginTop: '4px', display: 'block', fontWeight: 600 }}>
+                            {errors.email}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="modern-input-label">Message / Project Details *</label>
+                      <textarea
+                        rows={4}
+                        placeholder="Tell us about your printing, packaging, cartons or labels requirement..."
+                        value={formData.message}
+                        onChange={(e) => handleChange('message', e.target.value)}
+                        className={`modern-input-field ${errors.message ? 'error' : ''}`}
+                        style={{ resize: 'vertical' }}
+                      />
+                      {errors.message && (
+                        <span style={{ color: '#dc2626', fontSize: '0.75rem', marginTop: '4px', display: 'block', fontWeight: 600 }}>
+                          {errors.message}
+                        </span>
+                      )}
+                    </div>
+
+                    <motion.button
+                      type="submit"
+                      disabled={submitting}
+                      whileHover={{ scale: 1.01, y: -2 }}
+                      whileTap={{ scale: 0.99 }}
+                      style={{
+                        width: '100%',
+                        padding: '14px',
+                        borderRadius: '12px',
+                        background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
+                        color: '#ffffff',
+                        fontSize: '0.975rem',
+                        fontWeight: 700,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        border: 'none',
+                        cursor: submitting ? 'wait' : 'pointer',
+                        boxShadow: '0 4px 16px rgba(220, 38, 38, 0.35)',
+                        transition: 'all 0.2s ease',
+                      }}
+                    >
+                      <Send size={16} />
+                      <span>{submitting ? 'Submitting...' : 'Submit'}</span>
+                    </motion.button>
+                  </div>
+                </form>
+              </>
             )}
           </div>
         </ScrollReveal>

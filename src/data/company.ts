@@ -74,6 +74,9 @@ export const COMPANY_INFO: CompanyInfo = {
   ],
 }
 
+// Form dispatch recipient email (client production email)
+export const FORM_DISPATCH_EMAIL = 'info@kolligraphics.com'
+
 export const EXECUTIVE_TEAM: TeamMember[] = [
   {
     name: 'Ranga Reddy Kolli',

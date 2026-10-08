@@ -165,16 +165,22 @@
 }
 
 .modern-input-field:focus {
-  border-color: #dc2626 !important;
+  border-color: #2563eb !important;
   background-color: #ffffff !important;
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.08) !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12) !important;
   outline: none !important;
 }
 
 .modern-input-field.error {
   border-color: #ef4444 !important;
   background-color: #fef2f2 !important;
-  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.1) !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+}
+
+.modern-input-field.error:focus {
+  border-color: #ef4444 !important;
+  background-color: #fef2f2 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important;
 }
 
 /* Modern Input Label */

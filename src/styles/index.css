@@ -319,7 +319,7 @@ button {
 
 .animate-title-in {
   animation: title-in 0.7s cubic-bezier(.2,.8,.2,1) both;
-}
+} 
 
 .animate-progress {
   animation: progress 6.5s linear both;

@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { MessageSquare, Upload, FileText, Info } from 'lucide-react'
+import { Upload, FileText, Info, CheckCircle2, Send } from 'lucide-react'
 import { SectionHeader } from '../common/SectionHeader'
 import { ScrollReveal } from '../common/ScrollReveal'
 import { COMPANY_INFO } from '../../data/company'
+import { dispatchFormEmail } from '../../services/mailService'
 
 interface FormData {
   name: string
@@ -19,6 +20,9 @@ interface FormData {
   boardTypeOther: string
   gsm: string
   surfaceCoating: string
+  surfaceCoatingOther: string
+  quantity: string
+  deliveryPlace: string
   scannedImageName: string
   artworkFileName: string
 }
@@ -38,40 +42,89 @@ export const EstimatingSection: React.FC = () => {
     boardTypeOther: '',
     gsm: '300',
     surfaceCoating: 'UV Varnish',
+    surfaceCoatingOther: '',
+    quantity: '',
+    deliveryPlace: '',
     scannedImageName: '',
     artworkFileName: '',
   })
 
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
-  const [whatsAppUrl, setWhatsAppUrl] = useState('')
+  const [scannedFile, setScannedFile] = useState<File | null>(null)
+  const [artworkFile, setArtworkFile] = useState<File | null>(null)
+
+  const handleChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }))
+    if (errors[field]) {
+      setErrors((prev) => {
+        const next = { ...prev }
+        delete next[field]
+        return next
+      })
+    }
+  }
 
   const validate = () => {
     const errs: Record<string, string> = {}
-    if (!formData.name.trim()) errs.name = 'Full name is required'
-    if (!formData.companyName.trim()) errs.companyName = 'Company name is required'
-    if (!formData.phone.trim()) {
-      errs.phone = 'Phone number is required'
-    } else if (!/^[0-9+ -]{8,15}$/.test(formData.phone.trim())) {
-      errs.phone = 'Please enter a valid phone number'
+    if (!formData.name.trim()) {
+      errs.name = 'Full name is required'
+    } else if (formData.name.trim().length < 2) {
+      errs.name = 'Name must be at least 2 characters'
     }
+
+    if (!formData.companyName.trim()) {
+      errs.companyName = 'Company name is required'
+    }
+
+    const cleanedPhone = formData.phone.trim().replace(/\D/g, '')
+    if (!cleanedPhone) {
+      errs.phone = 'Mobile number is required'
+    } else if (cleanedPhone.length !== 10) {
+      errs.phone = 'Mobile number must be exactly 10 digits'
+    } else if (!/^[6-9]\d{9}$/.test(cleanedPhone)) {
+      errs.phone = 'Please enter a valid 10-digit mobile number (starts with 6, 7, 8, or 9)'
+    }
+
     if (!formData.email.trim()) {
       errs.email = 'Email address is required'
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
-      errs.email = 'Please enter a valid email address'
+    } else if (!/^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(formData.email.trim())) {
+      errs.email = 'Please enter a valid email address (e.g. name@domain.com)'
     }
 
     if (!formData.lengthMm || Number(formData.lengthMm) <= 0) errs.lengthMm = 'Enter length (mm)'
     if (!formData.widthMm || Number(formData.widthMm) <= 0) errs.widthMm = 'Enter width (mm)'
     if (!formData.heightMm || Number(formData.heightMm) <= 0) errs.heightMm = 'Enter height (mm)'
 
+    if (formData.cartonType === 'Other' && !formData.cartonTypeOther.trim()) {
+      errs.cartonTypeOther = 'Please specify custom carton style'
+    }
+
+    if (formData.boardType === 'Others' && !formData.boardTypeOther.trim()) {
+      errs.boardTypeOther = 'Please specify paperboard material'
+    }
+
+    if (formData.surfaceCoating === 'Others' && !formData.surfaceCoatingOther.trim()) {
+      errs.surfaceCoatingOther = 'Please specify custom coating or finish'
+    }
+
+    if (!formData.quantity.trim()) {
+      errs.quantity = 'Quantity required is required (e.g. 5,000 pcs)'
+    }
+
+    if (!formData.deliveryPlace.trim()) {
+      errs.deliveryPlace = 'Place of delivery is required (e.g. Hyderabad)'
+    }
+
     setErrors(errs)
     return Object.keys(errs).length === 0
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!validate()) return
+    setSubmitting(true)
 
     const actualCartonType =
       formData.cartonType === 'Other'
@@ -82,6 +135,11 @@ export const EstimatingSection: React.FC = () => {
       formData.boardType === 'Others'
         ? `Others (${formData.boardTypeOther || 'Not specified'})`
         : formData.boardType
+
+    const actualSurfaceCoating =
+      formData.surfaceCoating === 'Others'
+        ? `Others (${formData.surfaceCoatingOther || 'Not specified'})`
+        : formData.surfaceCoating
 
     const messageLines = [
       `*New Estimate Request - Kolli Graphics*`,
@@ -95,7 +153,9 @@ export const EstimatingSection: React.FC = () => {
       `*Dimensions:* ${formData.lengthMm} mm (L) x ${formData.widthMm} mm (W) x ${formData.heightMm} mm (H)`,
       `*Type of Board:* ${actualBoardType}`,
       `*GSM:* ${formData.gsm || 'Standard'}`,
-      `*Surface Coating:* ${formData.surfaceCoating}`,
+      `*Surface Coating:* ${actualSurfaceCoating}`,
+      `*Quantity:* ${formData.quantity || 'Not specified'}`,
+      `*Place of Delivery:* ${formData.deliveryPlace || 'Not specified'}`,
       `-----------------------------------------`,
     ]
 
@@ -112,11 +172,43 @@ export const EstimatingSection: React.FC = () => {
     )
 
     const encodedMessage = encodeURIComponent(messageLines.join('\n'))
-    const url = `https://wa.me/${COMPANY_INFO.phoneRaw}?text=${encodedMessage}`
-    setWhatsAppUrl(url)
-    setSubmitted(true)
+    const waUrl = `https://wa.me/${COMPANY_INFO.phoneRaw}?text=${encodedMessage}`
 
-    window.open(url, '_blank', 'noopener,noreferrer')
+    // 1. Automatically trigger WhatsApp in new tab for owner
+    try {
+      window.open(waUrl, '_blank', 'noopener,noreferrer')
+    } catch {
+      // browser popup blocker fallback
+    }
+
+    // 2. Automatically deliver complete estimate with attached images/files via direct SMTP
+    try {
+      await dispatchFormEmail(
+        `Packaging Estimate Request - ${formData.companyName} (${formData.name})`,
+        {
+          Name: formData.name,
+          Company: formData.companyName,
+          Phone: formData.phone,
+          Email: formData.email,
+          'Type of Carton': actualCartonType,
+          Dimensions: `${formData.lengthMm} mm (L) x ${formData.widthMm} mm (W) x ${formData.heightMm} mm (H)`,
+          'Paperboard Type': actualBoardType,
+          'GSM Weight': formData.gsm || 'Standard',
+          'Surface Coating / Finishes': actualSurfaceCoating,
+          'Quantity Required': formData.quantity || 'Not specified',
+          'Place of Delivery': formData.deliveryPlace || 'Not specified',
+        },
+        {
+          'Scanned Box Sample': scannedFile,
+          'Artwork File': artworkFile,
+        }
+      )
+    } catch (err) {
+      console.warn('Auto-email error:', err)
+    }
+
+    setSubmitting(false)
+    setSubmitted(true)
   }
 
   // Dimensional preview ratios
@@ -163,7 +255,109 @@ export const EstimatingSection: React.FC = () => {
                 boxShadow: '0 8px 30px rgba(0,0,0,0.04)',
               }}
             >
-              <form onSubmit={handleSubmit} noValidate>
+              {submitted ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.35, ease: 'easeOut' }}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    textAlign: 'center',
+                    padding: '54px 24px',
+                    minHeight: '480px',
+                  }}
+                >
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 0.1 }}
+                    style={{
+                      width: '84px',
+                      height: '84px',
+                      borderRadius: '50%',
+                      backgroundColor: '#dcfce7',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#16a34a',
+                      marginBottom: '24px',
+                      boxShadow: '0 8px 24px rgba(22, 163, 74, 0.2)',
+                    }}
+                  >
+                    <CheckCircle2 size={46} strokeWidth={2.5} />
+                  </motion.div>
+
+                  <h3
+                    style={{
+                      fontSize: '1.75rem',
+                      color: '#111827',
+                      fontWeight: 800,
+                      marginBottom: '12px',
+                    }}
+                  >
+                    Estimate Request Received!
+                  </h3>
+
+                  <p
+                    style={{
+                      fontSize: '1.05rem',
+                      color: '#374151',
+                      lineHeight: 1.6,
+                      maxWidth: '440px',
+                      marginBottom: '28px',
+                      fontWeight: 500,
+                    }}
+                  >
+                    Thank you for your interest and someone will get in touch with you within 24 hours.
+                  </p>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFormData({
+                        name: '',
+                        companyName: '',
+                        phone: '',
+                        email: '',
+                        cartonType: 'Reverse Tuck',
+                        cartonTypeOther: '',
+                        lengthMm: '120',
+                        widthMm: '80',
+                        heightMm: '180',
+                        boardType: 'FBB',
+                        boardTypeOther: '',
+                        gsm: '300',
+                        surfaceCoating: 'UV Varnish',
+                        surfaceCoatingOther: '',
+                        quantity: '',
+                        deliveryPlace: '',
+                        scannedImageName: '',
+                        artworkFileName: '',
+                      })
+                      setScannedFile(null)
+                      setArtworkFile(null)
+                      setSubmitted(false)
+                    }}
+                    style={{
+                      padding: '11px 24px',
+                      borderRadius: '10px',
+                      border: '1px solid #e2e8f0',
+                      backgroundColor: '#f8fafc',
+                      color: '#475569',
+                      fontSize: '0.875rem',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                    }}
+                  >
+                    Submit another estimate
+                  </button>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} noValidate>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                   {/* 1. Contact Information */}
                   <div>
@@ -196,7 +390,8 @@ export const EstimatingSection: React.FC = () => {
                           type="text"
                           placeholder="Enter your name"
                           value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          spellCheck={false}
+                          onChange={(e) => handleChange('name', e.target.value)}
                           className={`modern-input-field ${errors.name ? 'error' : ''}`}
                         />
                         {errors.name && (
@@ -220,7 +415,8 @@ export const EstimatingSection: React.FC = () => {
                         type="text"
                         placeholder="Enter company name"
                         value={formData.companyName}
-                        onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                        spellCheck={false}
+                        onChange={(e) => handleChange('companyName', e.target.value)}
                         className={`modern-input-field ${errors.companyName ? 'error' : ''}`}
                       />
                       {errors.companyName && (
@@ -251,9 +447,14 @@ export const EstimatingSection: React.FC = () => {
                       <label className="modern-input-label">Contact Phone *</label>
                       <input
                         type="tel"
-                        placeholder="Enter phone number"
+                        maxLength={10}
+                        placeholder="10-digit mobile number"
                         value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        onChange={(e) => {
+                          let val = e.target.value.replace(/\D/g, '')
+                          if (val.startsWith('0')) val = val.substring(1)
+                          handleChange('phone', val.slice(0, 10))
+                        }}
                         className={`modern-input-field ${errors.phone ? 'error' : ''}`}
                       />
                       {errors.phone && (
@@ -277,7 +478,8 @@ export const EstimatingSection: React.FC = () => {
                         type="email"
                         placeholder="Enter email address"
                         value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        spellCheck={false}
+                        onChange={(e) => handleChange('email', e.target.value)}
                         className={`modern-input-field ${errors.email ? 'error' : ''}`}
                       />
                       {errors.email && (
@@ -333,13 +535,16 @@ export const EstimatingSection: React.FC = () => {
                     <div style={{ marginTop: '12px' }}>
                       <input
                         type="text"
-                        placeholder="Describe custom carton style"
+                        placeholder="Describe custom carton style *"
                         value={formData.cartonTypeOther}
-                        onChange={(e) =>
-                          setFormData({ ...formData, cartonTypeOther: e.target.value })
-                        }
-                        className="modern-input-field"
+                        onChange={(e) => handleChange('cartonTypeOther', e.target.value)}
+                        className={`modern-input-field ${errors.cartonTypeOther ? 'error' : ''}`}
                       />
+                      {errors.cartonTypeOther && (
+                        <span style={{ color: '#dc2626', fontSize: '0.75rem', marginTop: '4px', display: 'block', fontWeight: 600 }}>
+                          {errors.cartonTypeOther}
+                        </span>
+                      )}
                     </div>
                   )}
                 </div>
@@ -430,13 +635,16 @@ export const EstimatingSection: React.FC = () => {
                     <div style={{ marginBottom: '14px' }}>
                       <input
                         type="text"
-                        placeholder="Specify board material"
+                        placeholder="Specify board material *"
                         value={formData.boardTypeOther}
-                        onChange={(e) =>
-                          setFormData({ ...formData, boardTypeOther: e.target.value })
-                        }
-                        className="modern-input-field"
+                        onChange={(e) => handleChange('boardTypeOther', e.target.value)}
+                        className={`modern-input-field ${errors.boardTypeOther ? 'error' : ''}`}
                       />
+                      {errors.boardTypeOther && (
+                        <span style={{ color: '#dc2626', fontSize: '0.75rem', marginTop: '4px', display: 'block', fontWeight: 600 }}>
+                          {errors.boardTypeOther}
+                        </span>
+                      )}
                     </div>
                   )}
 
@@ -446,7 +654,7 @@ export const EstimatingSection: React.FC = () => {
                       type="text"
                       placeholder="Enter GSM (e.g. 300)"
                       value={formData.gsm}
-                      onChange={(e) => setFormData({ ...formData, gsm: e.target.value })}
+                      onChange={(e) => handleChange('gsm', e.target.value)}
                       className="modern-input-field"
                     />
                   </div>
@@ -479,20 +687,100 @@ export const EstimatingSection: React.FC = () => {
                       'UV Varnish',
                       'Textured UV',
                       'Hot Foil Stamping',
+                      'Others',
                     ].map((coating) => (
                       <button
                         type="button"
                         key={coating}
-                        onClick={() => setFormData({ ...formData, surfaceCoating: coating })}
+                        onClick={() => {
+                          setFormData((prev) => ({ ...prev, surfaceCoating: coating }))
+                          if (coating !== 'Others') {
+                            setErrors((prev) => {
+                              const next = { ...prev }
+                              delete next.surfaceCoatingOther
+                              return next
+                            })
+                          }
+                        }}
                         className={`modern-pill-btn ${formData.surfaceCoating === coating ? 'active-amber' : ''}`}
                       >
                         {coating}
                       </button>
                     ))}
                   </div>
+
+                  {formData.surfaceCoating === 'Others' && (
+                    <div style={{ marginTop: '12px' }}>
+                      <input
+                        type="text"
+                        placeholder="Specify custom coating or finish *"
+                        value={formData.surfaceCoatingOther}
+                        onChange={(e) => handleChange('surfaceCoatingOther', e.target.value)}
+                        className={`modern-input-field ${errors.surfaceCoatingOther ? 'error' : ''}`}
+                      />
+                      {errors.surfaceCoatingOther && (
+                        <span style={{ color: '#dc2626', fontSize: '0.75rem', marginTop: '4px', display: 'block', fontWeight: 600 }}>
+                          {errors.surfaceCoatingOther}
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
 
-                {/* 6. Attachments */}
+                {/* 6. Quantity & Place of Delivery */}
+                <div style={{ paddingTop: '18px', borderTop: '1px solid #f1f5f9' }}>
+                  <label
+                    style={{
+                      display: 'block',
+                      fontSize: '0.85rem',
+                      fontWeight: 800,
+                      color: '#111827',
+                      marginBottom: '12px',
+                    }}
+                  >
+                    6. Quantity &amp; Place of Delivery:
+                  </label>
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))',
+                      gap: '14px',
+                    }}
+                  >
+                    <div>
+                      <label className="modern-input-label">Quantity Required *</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. 5,000 pcs / 25,000 units"
+                        value={formData.quantity}
+                        onChange={(e) => handleChange('quantity', e.target.value)}
+                        className={`modern-input-field ${errors.quantity ? 'error' : ''}`}
+                      />
+                      {errors.quantity && (
+                        <span style={{ color: '#dc2626', fontSize: '0.75rem', marginTop: '4px', display: 'block', fontWeight: 600 }}>
+                          {errors.quantity}
+                        </span>
+                      )}
+                    </div>
+                    <div>
+                      <label className="modern-input-label">Place of Delivery *</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Hyderabad / City / Area"
+                        value={formData.deliveryPlace}
+                        onChange={(e) => handleChange('deliveryPlace', e.target.value)}
+                        className={`modern-input-field ${errors.deliveryPlace ? 'error' : ''}`}
+                      />
+                      {errors.deliveryPlace && (
+                        <span style={{ color: '#dc2626', fontSize: '0.75rem', marginTop: '4px', display: 'block', fontWeight: 600 }}>
+                          {errors.deliveryPlace}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* 7. Attachments */}
                 <div style={{ paddingTop: '18px', borderTop: '1px solid #f1f5f9' }}>
                   <label
                     style={{
@@ -503,7 +791,7 @@ export const EstimatingSection: React.FC = () => {
                       marginBottom: '10px',
                     }}
                   >
-                    6. Attachments (Scanned Sample / Artwork File):
+                    7. Attachments (Scanned Sample / Artwork File):
                   </label>
 
                   <div
@@ -532,7 +820,10 @@ export const EstimatingSection: React.FC = () => {
                         accept="image/*"
                         onChange={(e) => {
                           const file = e.target.files?.[0]
-                          if (file) setFormData({ ...formData, scannedImageName: file.name })
+                          if (file) {
+                            setScannedFile(file)
+                            setFormData((prev) => ({ ...prev, scannedImageName: file.name }))
+                          }
                         }}
                         style={{ display: 'none' }}
                       />
@@ -553,20 +844,48 @@ export const EstimatingSection: React.FC = () => {
                         }}
                       >
                         <Upload size={14} />
-                        <span>{formData.scannedImageName ? 'File Ready' : 'Choose Sample'}</span>
+                        <span>{formData.scannedImageName ? 'Change Sample' : 'Choose Sample'}</span>
                       </label>
                       {formData.scannedImageName && (
-                        <span
+                        <div
                           style={{
-                            display: 'block',
-                            fontSize: '0.72rem',
-                            color: '#dc2626',
-                            marginTop: '4px',
-                            fontWeight: 600,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            marginTop: '6px',
                           }}
                         >
-                          {formData.scannedImageName}
-                        </span>
+                          <span
+                            style={{
+                              fontSize: '0.72rem',
+                              color: '#16a34a',
+                              fontWeight: 600,
+                              wordBreak: 'break-all',
+                            }}
+                          >
+                            ✓ {formData.scannedImageName}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setScannedFile(null)
+                              setFormData((prev) => ({ ...prev, scannedImageName: '' }))
+                            }}
+                            title="Remove attachment"
+                            style={{
+                              background: 'none',
+                              border: 'none',
+                              color: '#dc2626',
+                              fontSize: '0.8rem',
+                              cursor: 'pointer',
+                              padding: '0 4px',
+                              lineHeight: 1,
+                              fontWeight: 700,
+                            }}
+                          >
+                            ✕
+                          </button>
+                        </div>
                       )}
                     </div>
 
@@ -588,7 +907,10 @@ export const EstimatingSection: React.FC = () => {
                         accept=".ai,.pdf,.cdr,.eps,.psd,image/*"
                         onChange={(e) => {
                           const file = e.target.files?.[0]
-                          if (file) setFormData({ ...formData, artworkFileName: file.name })
+                          if (file) {
+                            setArtworkFile(file)
+                            setFormData((prev) => ({ ...prev, artworkFileName: file.name }))
+                          }
                         }}
                         style={{ display: 'none' }}
                       />
@@ -609,20 +931,48 @@ export const EstimatingSection: React.FC = () => {
                         }}
                       >
                         <FileText size={14} />
-                        <span>{formData.artworkFileName ? 'File Ready' : 'Choose Artwork'}</span>
+                        <span>{formData.artworkFileName ? 'Change Artwork' : 'Choose Artwork'}</span>
                       </label>
                       {formData.artworkFileName && (
-                        <span
+                        <div
                           style={{
-                            display: 'block',
-                            fontSize: '0.72rem',
-                            color: '#dc2626',
-                            marginTop: '4px',
-                            fontWeight: 600,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            marginTop: '6px',
                           }}
                         >
-                          {formData.artworkFileName}
-                        </span>
+                          <span
+                            style={{
+                              fontSize: '0.72rem',
+                              color: '#16a34a',
+                              fontWeight: 600,
+                              wordBreak: 'break-all',
+                            }}
+                          >
+                            ✓ {formData.artworkFileName}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setArtworkFile(null)
+                              setFormData((prev) => ({ ...prev, artworkFileName: '' }))
+                            }}
+                            title="Remove attachment"
+                            style={{
+                              background: 'none',
+                              border: 'none',
+                              color: '#dc2626',
+                              fontSize: '0.8rem',
+                              cursor: 'pointer',
+                              padding: '0 4px',
+                              lineHeight: 1,
+                              fontWeight: 700,
+                            }}
+                          >
+                            ✕
+                          </button>
+                        </div>
                       )}
                     </div>
                   </div>
@@ -639,8 +989,7 @@ export const EstimatingSection: React.FC = () => {
                   >
                     <Info size={14} style={{ marginTop: '2px', flexShrink: 0 }} />
                     <span>
-                      Selected file details will be generated into the WhatsApp estimate request.
-                      You can attach raw artwork files directly in WhatsApp with our executive team.
+                      Selected box sample images and artwork files will be automatically attached and delivered with your estimate request directly to our team.
                     </span>
                   </div>
                 </div>
@@ -648,13 +997,14 @@ export const EstimatingSection: React.FC = () => {
                 {/* Submit Action */}
                 <motion.button
                   type="submit"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
+                  disabled={submitting}
+                  whileHover={{ scale: 1.01, y: -2 }}
+                  whileTap={{ scale: 0.99 }}
                   style={{
                     width: '100%',
                     padding: '16px',
-                    borderRadius: '999px',
-                    background: 'linear-gradient(135deg, #25D366 0%, #128C7E 100%)',
+                    borderRadius: '12px',
+                    background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
                     color: '#ffffff',
                     fontSize: '1rem',
                     fontWeight: 800,
@@ -663,14 +1013,14 @@ export const EstimatingSection: React.FC = () => {
                     justifyContent: 'center',
                     gap: '10px',
                     border: 'none',
-                    boxShadow: '0 6px 20px rgba(37, 211, 102, 0.35)',
-                    cursor: 'pointer',
+                    boxShadow: '0 6px 20px rgba(220, 38, 38, 0.35)',
+                    cursor: submitting ? 'wait' : 'pointer',
                     transition: 'all 0.25s ease',
                     marginTop: '8px',
                   }}
                 >
-                  <MessageSquare size={20} />
-                  <span>Send Estimate Request via WhatsApp</span>
+                  <Send size={18} />
+                  <span>{submitting ? 'Submitting...' : 'Submit'}</span>
                 </motion.button>
 
                 <p
@@ -682,39 +1032,13 @@ export const EstimatingSection: React.FC = () => {
                     margin: 0,
                   }}
                 >
-                  “Thank you for your interest in Kolli Graphics. We will revert back to you within
-                  one business working day.”
+                  “Thank you for your interest and someone will get in touch with you within 24 hours.”
                 </p>
-              </div>
-            </form>
-
-            {submitted && (
-              <div
-                style={{
-                  marginTop: '20px',
-                  padding: '16px',
-                  borderRadius: '12px',
-                  backgroundColor: '#fee2e2',
-                  border: '1px solid #fecaca',
-                  color: '#dc2626',
-                  fontSize: '0.85rem',
-                }}
-              >
-                <strong>Estimate Summary Generated!</strong> WhatsApp chat opened with Ranga Reddy
-                Kolli ({COMPANY_INFO.phone}).{' '}
-                <a
-                  href={whatsAppUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ textDecoration: 'underline', fontWeight: 700 }}
-                >
-                  Click here if WhatsApp did not open automatically
-                </a>
-                .
-              </div>
-            )}
-          </div>
-        </ScrollReveal>
+                </div>
+                </form>
+              )}
+            </div>
+          </ScrollReveal>
 
             {/* Right Column: Live 3D Proportion Box Preview */}
             <ScrollReveal direction="up" delay={0.2}>
@@ -892,10 +1216,38 @@ export const EstimatingSection: React.FC = () => {
                     {formData.gsm || 'Standard'}
                   </span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    paddingBottom: '8px',
+                    borderBottom: '1px solid #f1f5f9',
+                  }}
+                >
                   <span style={{ color: '#64748b', fontWeight: 500 }}>Surface Finish:</span>
                   <span style={{ color: '#f59e0b', fontWeight: 700 }}>
-                    {formData.surfaceCoating}
+                    {formData.surfaceCoating === 'Others'
+                      ? formData.surfaceCoatingOther || 'Others'
+                      : formData.surfaceCoating}
+                  </span>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    paddingBottom: '8px',
+                    borderBottom: '1px solid #f1f5f9',
+                  }}
+                >
+                  <span style={{ color: '#64748b', fontWeight: 500 }}>Quantity:</span>
+                  <span style={{ color: '#111827', fontWeight: 700 }}>
+                    {formData.quantity || 'To be specified'}
+                  </span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: '#64748b', fontWeight: 500 }}>Place of Delivery:</span>
+                  <span style={{ color: '#111827', fontWeight: 700 }}>
+                    {formData.deliveryPlace || 'To be specified'}
                   </span>
                 </div>
               </div>
