@@ -19,7 +19,7 @@ const NAV_LINKS = [
   { label: 'Company', path: '/company' },
   { label: 'Capabilities', path: '/capabilities' },
   { label: 'Equipment', path: '/equipment' },
-  { label: 'Estimating', path: '/estimating' },
+  { label: 'Estimate', path: '/estimating' },
   { label: 'Contact', path: '/contact' },
 ]
 

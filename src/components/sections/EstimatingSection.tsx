@@ -168,7 +168,7 @@ export const EstimatingSection: React.FC = () => {
 
     messageLines.push(
       `-----------------------------------------`,
-      `_Submitted via Kolli Graphics Web Estimating Portal_`
+      `_Submitted via Kolli Graphics Web Estimate Portal_`
     )
 
     const encodedMessage = encodeURIComponent(messageLines.join('\n'))
@@ -227,7 +227,7 @@ export const EstimatingSection: React.FC = () => {
         {/* Section Header */}
         <ScrollReveal direction="up" delay={0.05}>
           <SectionHeader
-            badge="Direct Estimating"
+            badge="Direct Estimate"
             badgeVariant="cyan"
             title="Request a Custom"
             titleHighlight="Custom Packaging Estimate"

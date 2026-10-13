@@ -23,7 +23,7 @@ export const HomeMetricsBanner: React.FC = () => {
       icon: <ShieldCheck size={24} style={{ color: '#ec008c' }} />,
       glowColor: 'rgba(236, 0, 140, 0.25)',
       value: '100%',
-      label: 'ZERO-ERROR INSPECTION',
+      label: '100% INSPECTION',
       sub: 'Luster, Focus and TubeScan Automatic 100% Inspection Systems',
     },
   ]

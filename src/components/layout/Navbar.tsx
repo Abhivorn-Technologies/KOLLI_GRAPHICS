@@ -8,7 +8,7 @@ const NAV_LINKS = [
   { label: 'Company', path: '/company' },
   { label: 'Capabilities', path: '/capabilities' },
   { label: 'Equipment', path: '/equipment' },
-  { label: 'Estimating', path: '/estimating' },
+  { label: 'Estimate', path: '/estimating' },
   { label: 'Contact', path: '/contact' },
 ]
 
@@ -170,7 +170,7 @@ export const Navbar: React.FC = () => {
                 e.currentTarget.style.transform = 'translateY(0)'
               }}
             >
-              <span>Estimating</span>
+              <span>Estimate</span>
               <ArrowRight size={15} />
             </Link>
 

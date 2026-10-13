@@ -2,7 +2,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 
 interface SectionHeaderProps {
-  badge: string
+  badge?: string
   badgeVariant?: 'cyan' | 'magenta' | 'yellow' | 'dark'
   title: string
   titleHighlight?: string
@@ -41,37 +41,39 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
       }}
     >
       {/* Badge */}
-      <motion.div
-        initial={{ opacity: 0, y: 12, scale: 0.95 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        style={{ marginBottom: '14px' }}
-      >
-        <span
-          className={`section-badge${dark ? ' dark' : badgeVariant === 'magenta' ? ' magenta' : ''}`}
+      {badge && (
+        <motion.div
+          initial={{ opacity: 0, y: 12, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          style={{ marginBottom: '14px' }}
         >
-          {/* CMYK dots — animated pulse */}
-          <span style={{ display: 'inline-flex', gap: 4 }}>
-            {['#dc2626', '#dc2626', '#b45309'].map((c, idx) => (
-              <motion.span
-                key={c}
-                animate={{ scale: [1, 1.3, 1] }}
-                transition={{ duration: 1.8, repeat: Infinity, delay: idx * 0.2 }}
-                style={{
-                  display: 'inline-block',
-                  width: 5,
-                  height: 5,
-                  borderRadius: '50%',
-                  backgroundColor: c,
-                  opacity: dark ? 0.7 : 1,
-                }}
-              />
-            ))}
+          <span
+            className={`section-badge${dark ? ' dark' : badgeVariant === 'magenta' ? ' magenta' : ''}`}
+          >
+            {/* CMYK dots — animated pulse */}
+            <span style={{ display: 'inline-flex', gap: 4 }}>
+              {['#dc2626', '#dc2626', '#b45309'].map((c, idx) => (
+                <motion.span
+                  key={c}
+                  animate={{ scale: [1, 1.3, 1] }}
+                  transition={{ duration: 1.8, repeat: Infinity, delay: idx * 0.2 }}
+                  style={{
+                    display: 'inline-block',
+                    width: 5,
+                    height: 5,
+                    borderRadius: '50%',
+                    backgroundColor: c,
+                    opacity: dark ? 0.7 : 1,
+                  }}
+                />
+              ))}
+            </span>
+            {badge}
           </span>
-          {badge}
-        </span>
-      </motion.div>
+        </motion.div>
+      )}
 
       {/* Heading with Masked & Blur-to-Sharp Reveal */}
       <div style={{ overflow: 'hidden', paddingBottom: '4px' }}>

@@ -1,13 +1,10 @@
 import React, { useState, useRef, useCallback } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import {
-  Package,
   Layers,
   Sparkles,
   ShieldCheck,
   ChevronRight,
-  ArrowRight,
   Box,
   CheckCircle2,
 } from 'lucide-react'
@@ -159,7 +156,7 @@ export const ProductsSection: React.FC = () => {
     { id: 'cartons', label: 'Cartons', count: 8 },
     { id: 'tray-boxes', label: 'Tray Boxes', count: 12 },
     { id: 'cigarette', label: 'Cigarette Packaging', count: 6 },
-    { id: 'specialty-packaging', label: 'Specialty Packaging', count: 6 },
+    { id: 'specialty-packaging', label: 'Finishing Solutions', count: 6 },
   ]
 
   const displayedCategories =
@@ -207,54 +204,10 @@ export const ProductsSection: React.FC = () => {
         {/* Section Header with Scroll Arrival */}
         <ScrollReveal direction="up" distance={36}>
           <SectionHeader
-            badge="Product Portfolio"
-            badgeVariant="cyan"
             title="Engineered Structural"
             titleHighlight="Cartons & Packaging"
             subtitle="Precision mono cartons, high-rigidity tray boxes, and micron-tolerance specialty packaging crafted at our 40,000 sq.ft. facility in Hyderabad."
           />
-        </ScrollReveal>
-
-        {/* Quick Highlights Strip with Scroll Arrival */}
-        <ScrollReveal direction="up" delay={0.1} distance={28}>
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-              gap: '12px',
-              marginBottom: '36px',
-            }}
-          >
-            {[
-              { label: '32+ Configurations', highlight: 'Engineered Precision' },
-              { label: '4 Categories', highlight: 'Turnkey Portfolio' },
-              { label: '< 0.5mm', highlight: 'Strict Tolerance' },
-              { label: '100% In-House', highlight: 'Of any operations from printing to finishing' },
-            ].map((stat) => (
-              <div
-                key={stat.label}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '7px 16px',
-                  borderRadius: '999px',
-                  background: '#ffffff',
-                  border: '1px solid #e2e8f0',
-                  boxShadow: '0 2px 6px rgba(0, 0, 0, 0.02)',
-                }}
-              >
-                <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#dc2626' }}>
-                  {stat.label}
-                </span>
-                <span style={{ width: 4, height: 4, borderRadius: '50%', background: '#cbd5e1' }} />
-                <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#64748b' }}>
-                  {stat.highlight}
-                </span>
-              </div>
-            ))}
-          </div>
         </ScrollReveal>
 
         {/* Category Filter Tabs with Scroll Arrival */}
@@ -519,151 +472,12 @@ export const ProductsSection: React.FC = () => {
                         </ScrollReveal>
                       ))}
                     </div>
-
-                    {/* Footer Bar per Category with Link to Technical Specs in Capabilities */}
-                    <div
-                      style={{
-                        padding: '14px 32px',
-                        backgroundColor: '#fafbfc',
-                        borderTop: '1px solid #f1f5f9',
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        gap: '12px',
-                      }}
-                    >
-                      <span style={{ fontSize: '0.78rem', color: '#64748b', fontStyle: 'italic' }}>
-                        Keyline profile: {meta.keyline}
-                      </span>
-                      <Link
-                        to="/capabilities"
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          fontSize: '0.78rem',
-                          fontWeight: 700,
-                          color: meta.color,
-                          textDecoration: 'none',
-                          transition: 'opacity 0.2s ease',
-                        }}
-                      >
-                        <span>Explore Technical Specs in Capabilities</span>
-                        <ArrowRight size={13} />
-                      </Link>
-                    </div>
                   </div>
                 </ScrollReveal>
               )
             })}
           </AnimatePresence>
         </div>
-
-        {/* Bottom CTA Card leading to Capabilities & Estimating with Scroll Arrival */}
-        <ScrollReveal direction="up" delay={0.15} distance={32}>
-          <div
-            style={{
-              marginTop: '56px',
-              padding: '36px 40px',
-              borderRadius: '24px',
-              background: 'linear-gradient(135deg, #111827 0%, #1f2937 100%)',
-              color: '#ffffff',
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '24px',
-              boxShadow: '0 12px 36px rgba(0, 0, 0, 0.12)',
-            }}
-          >
-            <div>
-              <div
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '4px 12px',
-                  borderRadius: '999px',
-                  backgroundColor: 'rgba(220, 38, 38, 0.2)',
-                  color: '#f87171',
-                  fontSize: '0.72rem',
-                  fontWeight: 700,
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                  marginBottom: '10px',
-                }}
-              >
-                <Package size={12} />
-                Need Custom Structural Drawings?
-              </div>
-              <h4
-                style={{
-                  fontSize: '1.25rem',
-                  color: '#ffffff',
-                  margin: '0 0 6px 0',
-                  fontWeight: 700,
-                }}
-              >
-                View Structural Folding Concepts &amp; Diagram Guides
-              </h4>
-              <p
-                style={{
-                  fontSize: '0.875rem',
-                  color: '#9ca3af',
-                  margin: 0,
-                  maxWidth: '560px',
-                  lineHeight: 1.5,
-                }}
-              >
-                Inspect detailed panel fold physics, Tuck-Top structures, lock-bottom bases, and
-                die-cutting layouts in our dedicated Capabilities section.
-              </p>
-            </div>
-
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px' }}>
-              <Link
-                to="/capabilities"
-                style={{
-                  padding: '12px 24px',
-                  borderRadius: '12px',
-                  backgroundColor: '#dc2626',
-                  color: '#ffffff',
-                  fontSize: '0.875rem',
-                  fontWeight: 700,
-                  textDecoration: 'none',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  boxShadow: '0 4px 14px rgba(220, 38, 38, 0.4)',
-                  transition: 'background-color 0.2s',
-                }}
-              >
-                <span>View Capabilities</span>
-                <ArrowRight size={15} />
-              </Link>
-              <Link
-                to="/estimating"
-                style={{
-                  padding: '12px 24px',
-                  borderRadius: '12px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                  color: '#ffffff',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  fontSize: '0.875rem',
-                  fontWeight: 600,
-                  textDecoration: 'none',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  transition: 'background-color 0.2s',
-                }}
-              >
-                <span>Get an Estimate</span>
-              </Link>
-            </div>
-          </div>
-        </ScrollReveal>
       </div>
 
       <style>{`

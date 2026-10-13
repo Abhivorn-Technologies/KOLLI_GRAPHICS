@@ -246,7 +246,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
   },
   {
     id: 'specialty-packaging',
-    title: 'Specialty Packaging Solutions',
+    title: 'Finishing Solutions',
     subtitle: 'Custom Engineered Configurations',
     description:
       'Tailored packaging products engineered from design to storage for complex industrial, medical, and FMCG requirements.',
