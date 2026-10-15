@@ -23,14 +23,25 @@ import { InteractiveTiltCard } from '../common/InteractiveTiltCard'
 import { PRODUCTION_JOURNEY } from '../../data/products'
 
 // Import project images for step journey & capability showcases
-import imgPackaging from '../../assets/images/image copy 2.png'
-import imgMaterials from '../../assets/images/image copy 3.png'
-import imgLabels from '../../assets/images/image copy 5.png'
-import imgDieCut from '../../assets/images/image copy 4.png'
-import imgGluer from '../../assets/images/image copy 7.png'
-import imgStorage from '../../assets/images/image copy 9.png'
+import imgPackaging from '../../assets/images/capability-packaging.png'
+import imgMaterials from '../../assets/images/capability-materials.png'
+import imgLabels from '../../assets/images/capability-labels.png'
+// Import authentic workflow step images
+import imgWorkflowPrepress from '../../assets/images/workflow-prepress.png'
+import imgWorkflowPrint from '/assets/images/equipment/heidelberg-cd102.png'
+import imgWorkflowDieCut from '/assets/images/equipment/bobst-evoline.png'
+import imgWorkflowFoil from '/assets/images/equipment/bobst-bma.png'
+import imgWorkflowGluer from '/assets/images/equipment/bobst-domino.png'
+import imgWorkflowStorage from '../../assets/images/workflow-storage.png'
 
-const JOURNEY_IMAGES = [imgPackaging, imgMaterials, imgDieCut, imgGluer, imgLabels, imgStorage]
+const JOURNEY_IMAGES = [
+  imgWorkflowPrepress,
+  imgWorkflowPrint,
+  imgWorkflowDieCut,
+  imgWorkflowFoil,
+  imgWorkflowGluer,
+  imgWorkflowStorage,
+]
 
 export const CapabilitiesSection: React.FC = () => {
   const [activeStep, setActiveStep] = useState(0)

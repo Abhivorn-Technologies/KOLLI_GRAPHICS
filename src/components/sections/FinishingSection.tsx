@@ -223,7 +223,7 @@ export const FinishingSection: React.FC = () => {
                       letterSpacing: '0.06em',
                     }}
                   >
-                    {currentFinish.name} Machine
+                    {currentFinish.name} Surface Finish
                   </span>
 
                   {/* Foil Sheen Switcher for Foil finishes */}
@@ -273,18 +273,23 @@ export const FinishingSection: React.FC = () => {
                     height: '240px',
                     borderRadius: '16px',
                     overflow: 'hidden',
-                    backgroundColor: '#f1f5f9',
+                    backgroundColor: '#0f172a',
                     border: '1px solid #e2e8f0',
                   }}
                 >
                   <ImageWithFallback
                     src={
-                      currentFinish.id === 'die-cutting'
-                        ? '/assets/images/equipment/bobst-evoline.png'
-                        : currentFinish.id === 'foil-stamping' ||
-                            currentFinish.id === 'foil-embossing'
-                          ? '/assets/images/equipment/bobst-bma.png'
-                          : '/assets/images/equipment/heidelberg-cd102.png'
+                      currentFinish.id === 'uv-coating'
+                        ? '/assets/images/finishing/finish-uv-coating.png'
+                        : currentFinish.id === 'die-cutting'
+                          ? '/assets/images/finishing/finish-die-cutting.png'
+                          : currentFinish.id === 'embossing'
+                            ? '/assets/images/finishing/finish-embossing.png'
+                            : currentFinish.id === 'micro-embossing'
+                              ? '/assets/images/finishing/finish-micro-embossing.png'
+                              : currentFinish.id === 'foil-stamping'
+                                ? '/assets/images/finishing/finish-foil-stamping.png'
+                                : '/assets/images/finishing/finish-foil-embossing.png'
                     }
                     alt={currentFinish.name}
                     style={{
@@ -312,28 +317,33 @@ export const FinishingSection: React.FC = () => {
                     }}
                   />
 
-                  {/* Equipment Model Tag */}
+                  {/* Finish Effect Detail Tag */}
                   <div
                     style={{
                       position: 'absolute',
                       bottom: '10px',
                       left: '10px',
-                      padding: '4px 10px',
+                      padding: '5px 12px',
                       borderRadius: '8px',
                       backgroundColor: 'rgba(255,255,255,0.95)',
                       border: '1px solid #e2e8f0',
-                      fontSize: '0.68rem',
-                      fontWeight: 700,
+                      fontSize: '0.72rem',
+                      fontWeight: 800,
                       color: '#0f172a',
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
                     }}
                   >
-                    {currentFinish.id === 'die-cutting'
-                      ? 'BOBST SP Evoline 102 E'
-                      : currentFinish.id === 'foil-stamping' ||
-                          currentFinish.id === 'foil-embossing'
-                        ? 'BOBST 102 BMA Foil Stamper'
-                        : 'Heidelberg CD 102 5 XL'}
+                    {currentFinish.id === 'uv-coating'
+                      ? 'Spot UV High-Gloss Varnish'
+                      : currentFinish.id === 'die-cutting'
+                        ? 'Precision Carton Dieline & Crease'
+                        : currentFinish.id === 'embossing'
+                          ? '3D Sculpted Blind Emboss'
+                          : currentFinish.id === 'micro-embossing'
+                            ? 'Prismatic Micro-Diffraction Texture'
+                            : currentFinish.id === 'foil-stamping'
+                              ? 'Mirrored Hot Foil Stamping'
+                              : 'Combination 3D Foil & Embossing'}
                   </div>
                 </div>
 
