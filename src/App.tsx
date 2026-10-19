@@ -8,6 +8,9 @@ import { CapabilitiesPage } from './pages/CapabilitiesPage'
 import { EquipmentPage } from './pages/EquipmentPage'
 import { EstimatingPage } from './pages/EstimatingPage'
 import { ContactPage } from './pages/ContactPage'
+import { PrivacyPage } from './pages/PrivacyPage'
+import { TermsPage } from './pages/TermsPage'
+import { CookieBanner } from './components/common/CookieBanner'
 
 /* ─── Scroll Progress Bar ──────────────────────────────────────── */
 const ScrollProgressBar: React.FC = () => {
@@ -48,6 +51,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
     <Navbar />
     <main style={{ flex: 1 }}>{children}</main>
     <Footer />
+    <CookieBanner />
   </div>
 )
 
@@ -121,6 +125,24 @@ export const App: React.FC = () => {
           element={
             <Layout>
               <ContactPage />
+            </Layout>
+          }
+        />
+
+        {/* Legal & Compliance: DPDPA 2023 */}
+        <Route
+          path="/privacy"
+          element={
+            <Layout>
+              <PrivacyPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/terms"
+          element={
+            <Layout>
+              <TermsPage />
             </Layout>
           }
         />

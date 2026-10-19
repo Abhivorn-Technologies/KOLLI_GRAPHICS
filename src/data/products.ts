@@ -252,11 +252,12 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
       'Tailored packaging products engineered from design to storage for complex industrial, medical, and FMCG requirements.',
     items: [
       'Mono Cartons with UV & Specialty Varnishes',
-      'Auto-Lock Quick Erect Cartons',
-      'Tuck-Top Mailer & Dispatch Cartons',
-      'Four Corner & Six Corner Trays',
-      'Inner Partition & Divider Boxes',
-      'Custom Paperboard Sleeves',
+      'Matt UV Varnishing',
+      'Spot UV Varnishing',
+      'Drip-Off UV Varnishing',
+      'Aqueous Varnishing',
+      'Micro Embossing',
+      'Braille Embossing',
     ],
   },
 ]

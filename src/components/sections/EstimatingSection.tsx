@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Upload, FileText, Info, CheckCircle2, Send } from 'lucide-react'
 import { SectionHeader } from '../common/SectionHeader'
@@ -994,6 +995,38 @@ export const EstimatingSection: React.FC = () => {
                   </div>
                 </div>
 
+                {/* DPDPA 2023 Consent Notice */}
+                <p
+                  style={{
+                    fontSize: '0.78rem',
+                    color: '#64748b',
+                    lineHeight: 1.5,
+                    margin: '6px 0 12px 0',
+                    textAlign: 'left',
+                  }}
+                >
+                  By submitting this estimate request, you consent to the processing of your details by{' '}
+                  {COMPANY_INFO.name} for technical packaging valuation in accordance with our{' '}
+                  <Link
+                    to="/privacy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: '#dc2626', fontWeight: 600, textDecoration: 'underline' }}
+                  >
+                    Privacy Policy (DPDPA 2023)
+                  </Link>{' '}
+                  and{' '}
+                  <Link
+                    to="/terms"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: '#dc2626', fontWeight: 600, textDecoration: 'underline' }}
+                  >
+                    Terms
+                  </Link>
+                  .
+                </p>
+
                 {/* Submit Action */}
                 <motion.button
                   type="submit"
@@ -1252,25 +1285,7 @@ export const EstimatingSection: React.FC = () => {
                 </div>
               </div>
 
-              {/* Contact direct card */}
-              <div
-                style={{
-                  marginTop: '24px',
-                  padding: '16px',
-                  borderRadius: '12px',
-                  backgroundColor: '#f8fafc',
-                  border: '1px solid #e2e8f0',
-                  fontSize: '0.8rem',
-                  color: '#475569',
-                  lineHeight: 1.6,
-                }}
-              >
-                Executive Contact: <strong style={{ color: '#111827' }}>Ranga Reddy Kolli</strong>{' '}
-                (Founder)
-                <br />
-                Direct Hotline:{' '}
-                <strong style={{ color: '#dc2626' }}>{COMPANY_INFO.phone}</strong>
-              </div>
+
             </div>
           </div>
         </ScrollReveal>

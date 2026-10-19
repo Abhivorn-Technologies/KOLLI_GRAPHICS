@@ -5,7 +5,6 @@ import {
   Phone,
   Mail,
   MessageSquare,
-  ArrowUp,
   ArrowRight,
   MapPin,
   Building2,
@@ -24,7 +23,6 @@ const NAV_LINKS = [
 ]
 
 export const Footer: React.FC = () => {
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
   const year = new Date().getFullYear()
 
   return (
@@ -565,33 +563,36 @@ export const Footer: React.FC = () => {
               </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <span style={{ fontSize: '0.78rem', color: '#64748b' }}>
-                Hyderabad, Telangana, India
-              </span>
-              <motion.button
-                whileHover={{ scale: 1.06, y: -3 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={scrollToTop}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
+              <Link
+                to="/privacy"
                 style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  padding: '8px 16px',
-                  borderRadius: '999px',
-                  backgroundColor: '#fee2e2',
-                  border: '1px solid #fecaca',
-                  color: '#dc2626',
-                  fontSize: '0.76rem',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  boxShadow: '0 2px 6px rgba(220,38,38,0.1)',
+                  color: '#64748b',
+                  textDecoration: 'none',
+                  fontSize: '0.8rem',
+                  fontWeight: 500,
+                  transition: 'color 0.2s ease',
                 }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = '#dc2626')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = '#64748b')}
               >
-                <span>Back to Top</span>
-                <ArrowUp size={13} />
-              </motion.button>
+                Privacy Policy
+              </Link>
+              <span style={{ color: '#cbd5e1' }}>•</span>
+              <Link
+                to="/terms"
+                style={{
+                  color: '#64748b',
+                  textDecoration: 'none',
+                  fontSize: '0.8rem',
+                  fontWeight: 500,
+                  transition: 'color 0.2s ease',
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = '#dc2626')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = '#64748b')}
+              >
+                Terms &amp; Conditions
+              </Link>
             </div>
           </div>
         </ScrollReveal>

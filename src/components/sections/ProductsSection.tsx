@@ -120,7 +120,7 @@ const CATEGORY_META: Record<
     borderLight: 'rgba(220, 38, 38, 0.18)',
     icon: Box,
     keyline: 'High-Speed Automated & Hand Packaging Line Optimization',
-    highlightTags: ['100% In-House Die Cutting', 'Crash Lock & Tuck Options', '<0.5mm Accuracy'],
+    highlightTags: [],
   },
   'tray-boxes': {
     color: '#00aeef',
@@ -152,11 +152,11 @@ export const ProductsSection: React.FC = () => {
   const [activeCategoryId, setActiveCategoryId] = useState<string>('all')
 
   const filterTabs = [
-    { id: 'all', label: 'All Products', count: 32 },
-    { id: 'cartons', label: 'Cartons', count: 8 },
-    { id: 'tray-boxes', label: 'Tray Boxes', count: 12 },
-    { id: 'cigarette', label: 'Cigarette Packaging', count: 6 },
-    { id: 'specialty-packaging', label: 'Finishing Solutions', count: 6 },
+    { id: 'all', label: 'All Products' },
+    { id: 'cartons', label: 'Cartons' },
+    { id: 'tray-boxes', label: 'Tray Boxes' },
+    { id: 'cigarette', label: 'Cigarette Packaging' },
+    { id: 'specialty-packaging', label: 'Finishing Solutions' },
   ]
 
   const displayedCategories =
@@ -248,18 +248,6 @@ export const ProductsSection: React.FC = () => {
                   }}
                 >
                   <span>{tab.label}</span>
-                  <span
-                    style={{
-                      fontSize: '0.72rem',
-                      fontWeight: 700,
-                      padding: '2px 8px',
-                      borderRadius: '999px',
-                      backgroundColor: isActive ? 'rgba(255, 255, 255, 0.25)' : '#f1f5f9',
-                      color: isActive ? '#ffffff' : '#64748b',
-                    }}
-                  >
-                    {tab.count}
-                  </span>
                 </motion.button>
               )
             })}
@@ -323,33 +311,16 @@ export const ProductsSection: React.FC = () => {
                           <IconComponent size={24} color={meta.color} />
                         </div>
                         <div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                            <h3
-                              style={{
-                                fontSize: '1.25rem',
-                                fontWeight: 700,
-                                color: '#111827',
-                                margin: 0,
-                              }}
-                            >
-                              {category.title}
-                            </h3>
-                            <span
-                              style={{
-                                fontSize: '0.7rem',
-                                fontWeight: 700,
-                                padding: '3px 10px',
-                                borderRadius: '999px',
-                                backgroundColor: meta.bgLight,
-                                color: meta.color,
-                                border: `1px solid ${meta.borderLight}`,
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.05em',
-                              }}
-                            >
-                              {category.items.length} Options
-                            </span>
-                          </div>
+                          <h3
+                            style={{
+                              fontSize: '1.25rem',
+                              fontWeight: 700,
+                              color: '#111827',
+                              margin: 0,
+                            }}
+                          >
+                            {category.title}
+                          </h3>
                           <p
                             style={{
                               fontSize: '0.875rem',
@@ -365,28 +336,30 @@ export const ProductsSection: React.FC = () => {
                       </div>
 
                       {/* Tags / Engineering Badges */}
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                        {meta.highlightTags.map((tag) => (
-                          <span
-                            key={tag}
-                            style={{
-                              fontSize: '0.72rem',
-                              fontWeight: 600,
-                              padding: '4px 12px',
-                              borderRadius: '6px',
-                              backgroundColor: '#f8fafc',
-                              color: '#475569',
-                              border: '1px solid #e2e8f0',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '4px',
-                            }}
-                          >
-                            <CheckCircle2 size={11} color={meta.color} />
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
+                      {meta.highlightTags && meta.highlightTags.length > 0 && (
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                          {meta.highlightTags.map((tag) => (
+                            <span
+                              key={tag}
+                              style={{
+                                fontSize: '0.72rem',
+                                fontWeight: 600,
+                                padding: '4px 12px',
+                                borderRadius: '6px',
+                                backgroundColor: '#f8fafc',
+                                color: '#475569',
+                                border: '1px solid #e2e8f0',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '4px',
+                              }}
+                            >
+                              <CheckCircle2 size={11} color={meta.color} />
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                     </div>
 
                     {/* Items Specification Grid with Staggered Cascading Scroll Arrivals */}

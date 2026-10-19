@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
   Phone,
@@ -277,15 +278,15 @@ export const ContactSection: React.FC = () => {
                   }}
                 >
                   <div>
-                    <strong>{COMPANY_INFO.contactPerson}</strong> (CEO)
+                    <strong>Parasurami Reddy Kolli</strong> (COO)
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <Phone size={16} color="#dc2626" />
                     <a
-                      href={`tel:${COMPANY_INFO.phoneRaw}`}
+                      href="tel:+919849246688"
                       style={{ color: '#dc2626', fontWeight: 600 }}
                     >
-                      {COMPANY_INFO.phone}
+                      +91 98492 46688
                     </a>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -495,6 +496,28 @@ export const ContactSection: React.FC = () => {
                         </span>
                       )}
                     </div>
+
+                    {/* DPDP Act 2023 Consent Notice */}
+                    <p
+                      style={{
+                        fontSize: '0.78rem',
+                        color: '#64748b',
+                        lineHeight: 1.5,
+                        margin: '4px 0 16px 0',
+                      }}
+                    >
+                      By submitting this form, you consent to the processing of your details by{' '}
+                      {COMPANY_INFO.name} to respond to your packaging inquiry in accordance with our{' '}
+                      <Link
+                        to="/privacy"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: '#dc2626', fontWeight: 600, textDecoration: 'underline' }}
+                      >
+                        Privacy Policy (DPDPA 2023)
+                      </Link>
+                      .
+                    </p>
 
                     <motion.button
                       type="submit"
