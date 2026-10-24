@@ -84,28 +84,7 @@ export const ContactSection: React.FC = () => {
     if (!validate()) return
     setSubmitting(true)
 
-    const messageLines = [
-      `*New Contact Form Inquiry - Kolli Graphics*`,
-      `-----------------------------------------`,
-      `*Name:* ${formData.name}`,
-      `*Company Name:* ${formData.companyName || 'N/A'}`,
-      `*Phone:* ${formData.phone}`,
-      `*Email ID:* ${formData.email}`,
-      `*Message:* ${formData.message || 'General Inquiry'}`,
-      `-----------------------------------------`,
-      `_Sent from Kolli Graphics Contact Form_`,
-    ]
-
-    const waUrl = `https://wa.me/${COMPANY_INFO.phoneRaw}?text=${encodeURIComponent(messageLines.join('\n'))}`
-
-    // Automatically open WhatsApp directly with pre-filled message
-    try {
-      window.open(waUrl, '_blank', 'noopener,noreferrer')
-    } catch {
-      // browser popup blocker fallback
-    }
-
-    // Automatically dispatch email (direct SMTP on production)
+    // Automatically dispatch email directly to official info email (info@kolligraphics.com)
     try {
       await dispatchFormEmail(
         `New Inquiry: ${formData.name} (${formData.companyName})`,
@@ -118,7 +97,7 @@ export const ContactSection: React.FC = () => {
         }
       )
     } catch (err) {
-      console.warn('Auto-email notice:', err)
+      console.warn('Contact email dispatch notice:', err)
     }
 
     setSubmitting(false)

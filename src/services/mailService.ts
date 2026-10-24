@@ -17,6 +17,12 @@ export async function dispatchFormEmail(
     formData.append(key, String(val ?? ''))
   })
 
+  // Autoresponder message sent to the customer
+  formData.append(
+    '_autoresponse',
+    'Thank you for your interest and someone will get in touch with you within 24 hours. - Kolli Graphics Private Limited (info@kolligraphics.com)'
+  )
+
   // Append files if provided
   if (files) {
     Object.entries(files).forEach(([fieldName, file]) => {
@@ -26,7 +32,24 @@ export async function dispatchFormEmail(
     })
   }
 
-  // 1. Try Direct SMTP endpoint (/send-mail.php)
+  // 1. Try Nodemailer API endpoint (/api/send-mail)
+  try {
+    const response = await fetch('/api/send-mail', {
+      method: 'POST',
+      body: formData,
+    })
+
+    if (response.ok) {
+      const result = await response.json().catch(() => null)
+      if (result && result.success) {
+        return true
+      }
+    }
+  } catch {
+    // Nodemailer endpoint offline, try next fallback
+  }
+
+  // 2. Try PHP SMTP endpoint (/send-mail.php) if available
   try {
     const response = await fetch('/send-mail.php', {
       method: 'POST',
@@ -40,12 +63,17 @@ export async function dispatchFormEmail(
       }
     }
   } catch {
-    // send-mail.php not running (e.g. local Vite dev server without PHP)
+    // send-mail.php not running
   }
 
-  // 2. Fallback for local Vite dev testing: FormSubmit to client email
+  // 2. Direct fallback to FormSubmit service delivering directly to info email
   try {
+    formData.append('_captcha', 'false')
     formData.append('_template', 'table')
+    if (fields.Email) {
+      formData.append('_replyto', String(fields.Email))
+    }
+
     const fallbackResponse = await fetch(`https://formsubmit.co/ajax/${FORM_DISPATCH_EMAIL}`, {
       method: 'POST',
       headers: {

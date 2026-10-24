@@ -142,47 +142,7 @@ export const EstimatingSection: React.FC = () => {
         ? `Others (${formData.surfaceCoatingOther || 'Not specified'})`
         : formData.surfaceCoating
 
-    const messageLines = [
-      `*New Estimate Request - Kolli Graphics*`,
-      `-----------------------------------------`,
-      `*Name:* ${formData.name}`,
-      `*Company:* ${formData.companyName}`,
-      `*Contact Phone:* ${formData.phone}`,
-      `*Email ID:* ${formData.email}`,
-      `-----------------------------------------`,
-      `*Type of Carton:* ${actualCartonType}`,
-      `*Dimensions:* ${formData.lengthMm} mm (L) x ${formData.widthMm} mm (W) x ${formData.heightMm} mm (H)`,
-      `*Type of Board:* ${actualBoardType}`,
-      `*GSM:* ${formData.gsm || 'Standard'}`,
-      `*Surface Coating:* ${actualSurfaceCoating}`,
-      `*Quantity:* ${formData.quantity || 'Not specified'}`,
-      `*Place of Delivery:* ${formData.deliveryPlace || 'Not specified'}`,
-      `-----------------------------------------`,
-    ]
-
-    if (formData.scannedImageName) {
-      messageLines.push(`*Scanned Image:* ${formData.scannedImageName} (Attaching in WhatsApp)`)
-    }
-    if (formData.artworkFileName) {
-      messageLines.push(`*Artwork File:* ${formData.artworkFileName} (Attaching in WhatsApp)`)
-    }
-
-    messageLines.push(
-      `-----------------------------------------`,
-      `_Submitted via Kolli Graphics Web Estimate Portal_`
-    )
-
-    const encodedMessage = encodeURIComponent(messageLines.join('\n'))
-    const waUrl = `https://wa.me/${COMPANY_INFO.phoneRaw}?text=${encodedMessage}`
-
-    // 1. Automatically trigger WhatsApp in new tab for owner
-    try {
-      window.open(waUrl, '_blank', 'noopener,noreferrer')
-    } catch {
-      // browser popup blocker fallback
-    }
-
-    // 2. Automatically deliver complete estimate with attached images/files via direct SMTP
+    // Automatically deliver complete estimate with attached images/files directly to official info email
     try {
       await dispatchFormEmail(
         `Packaging Estimate Request - ${formData.companyName} (${formData.name})`,
@@ -205,7 +165,7 @@ export const EstimatingSection: React.FC = () => {
         }
       )
     } catch (err) {
-      console.warn('Auto-email error:', err)
+      console.warn('Estimate email dispatch error:', err)
     }
 
     setSubmitting(false)

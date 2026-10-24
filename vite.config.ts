@@ -2,8 +2,30 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
+function nodemailerPlugin() {
+  return {
+    name: 'nodemailer-api',
+    configureServer(server: any) {
+      server.middlewares.use('/api/send-mail', async (req: any, res: any) => {
+        if (req.method === 'POST') {
+          try {
+            const { handleSendMail } = await import('./server/mailHandler.js')
+            await handleSendMail(req, res)
+          } catch (err: any) {
+            res.statusCode = 500
+            res.end(JSON.stringify({ success: false, error: err.message }))
+          }
+        } else {
+          res.statusCode = 405
+          res.end(JSON.stringify({ error: 'Method not allowed' }))
+        }
+      })
+    },
+  }
+}
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), nodemailerPlugin()],
 
   // ── Path aliases (mirrors tsconfig paths) ─────────────────────
   resolve: {
