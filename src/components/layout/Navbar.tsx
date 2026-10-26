@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, Phone, MessageSquare, ArrowRight } from 'lucide-react'
+import { Menu, X, Phone, ArrowRight } from 'lucide-react'
 import { COMPANY_INFO } from '../../data/company'
 
 const NAV_LINKS = [
@@ -255,26 +255,7 @@ export const Navbar: React.FC = () => {
               gap: '12px',
             }}
           >
-            <a
-              href={`https://wa.me/${COMPANY_INFO.phoneRaw}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '10px',
-                padding: '14px',
-                borderRadius: '12px',
-                backgroundColor: '#25D366',
-                color: '#ffffff',
-                fontWeight: 600,
-                textDecoration: 'none',
-              }}
-            >
-              <MessageSquare size={18} />
-              <span>WhatsApp: {COMPANY_INFO.phone}</span>
-            </a>
+
             <a
               href={`tel:${COMPANY_INFO.phoneRaw}`}
               style={{

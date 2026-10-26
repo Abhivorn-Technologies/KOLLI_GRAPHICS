@@ -1086,9 +1086,7 @@ export const CompanySection: React.FC = () => {
 
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
               <a
-                href={`https://wa.me/${COMPANY_INFO.phoneRaw}?text=Hello%20Kolli%20Graphics%20Team,%20I%20am%20interested%20in%20Career%20Opportunities.`}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`tel:${COMPANY_INFO.phoneRaw}`}
                 className="company-shimmer-btn"
                 style={{
                   display: 'inline-flex',
@@ -1107,7 +1105,7 @@ export const CompanySection: React.FC = () => {
                 }}
               >
                 <Phone size={16} />
-                <span>Inquire via WhatsApp</span>
+                <span>Call For Inquiries</span>
               </a>
 
               <a
@@ -1324,11 +1322,7 @@ export const CompanySection: React.FC = () => {
                   </span>
                   <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                     <a
-                      href={`https://wa.me/${COMPANY_INFO.phoneRaw}?text=Hello%20${encodeURIComponent(
-                        selectedExecutive.name,
-                      )},%20I%20am%20interested%20in%20connecting%20with%20you.`}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      href={`tel:${COMPANY_INFO.phoneRaw}`}
                       style={{
                         flex: 1,
                         minWidth: 160,
@@ -1347,7 +1341,7 @@ export const CompanySection: React.FC = () => {
                       }}
                     >
                       <Phone size={15} />
-                      <span>WhatsApp Direct</span>
+                      <span>Direct Call</span>
                     </a>
 
                     <a

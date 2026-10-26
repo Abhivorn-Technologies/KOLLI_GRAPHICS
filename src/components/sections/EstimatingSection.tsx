@@ -170,6 +170,12 @@ export const EstimatingSection: React.FC = () => {
 
     setSubmitting(false)
     setSubmitted(true)
+    setTimeout(() => {
+      const section = document.getElementById('estimating')
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }, 50)
   }
 
   // Dimensional preview ratios
@@ -259,7 +265,7 @@ export const EstimatingSection: React.FC = () => {
                       marginBottom: '12px',
                     }}
                   >
-                    Estimate Request Received!
+                    Thank You!
                   </h3>
 
                   <p

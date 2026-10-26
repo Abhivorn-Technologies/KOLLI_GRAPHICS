@@ -130,7 +130,7 @@ export const PrivacyPage: React.FC = () => {
             <p>We collect only the minimum necessary personal data required to respond to business inquiries and provide precise packaging manufacturing estimates:</p>
             <ul style={{ paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <li>
-                <strong>Contact &amp; Identification Data:</strong> Full Name, Business Name / Company, Work Email Address, and Phone/WhatsApp Number when submitted through our Contact Form or Estimating Portal.
+                <strong>Contact &amp; Identification Data:</strong> Full Name, Business Name / Company, Work Email Address, and Phone Number when submitted through our Contact Form or Estimating Portal.
               </li>
               <li>
                 <strong>Packaging &amp; Technical Requirements:</strong> Carton dimensions, paperboard substrates (FBB, SCB, Greyback), surface finishes, print quantities, and delivery locations submitted for project feasibility and pricing.
@@ -150,7 +150,7 @@ export const PrivacyPage: React.FC = () => {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '14px', marginTop: '14px' }}>
               {[
                 { title: 'Quotation & Feasibility', desc: 'Calculating structural packaging prices, tooling feasibility, and material consumption.' },
-                { title: 'Customer Communication', desc: 'Direct technical follow-ups via phone, email, or WhatsApp regarding your orders.' },
+                { title: 'Customer Communication', desc: 'Direct technical follow-ups via phone or email regarding your orders.' },
                 { title: 'Site Security & Integrity', desc: 'Protecting our web portals against automated bots, DDoS attacks, and unauthorized access.' },
                 { title: 'Statutory Compliance', desc: 'Maintaining requisite commercial records as mandated under Indian tax and commercial statutes.' },
               ].map((item, idx) => (
@@ -206,7 +206,7 @@ export const PrivacyPage: React.FC = () => {
             </p>
             <ul style={{ paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <li>Cloud hosting and network infrastructure providers (e.g., Vercel / AWS / Google Cloud).</li>
-              <li>Communication gateways (e.g., WhatsApp Web API and standard email transport protocols).</li>
+              <li>Communication gateways (e.g., SMS and standard email transport protocols).</li>
               <li>Authorized law enforcement agencies solely when mandated by a valid statutory order under Indian law.</li>
             </ul>
           </section>

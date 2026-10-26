@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, MessageSquare, ChevronDown } from 'lucide-react'
-import { COMPANY_INFO } from '@data/company'
+import { ArrowRight, ChevronDown } from 'lucide-react'
 import heroBg from '@/assets/images/facility-entrance.jpg'
 
 const stagger = {
@@ -514,29 +513,6 @@ export const HeroSection: React.FC = () => {
                 Request Estimate <ArrowRight size={14} />
               </motion.a>
 
-              <motion.a
-                href={`https://wa.me/${COMPANY_INFO.phoneRaw}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 7,
-                  padding: '10px 20px',
-                  borderRadius: 999,
-                  backgroundColor: '#fff',
-                  border: '1px solid #e5e7eb',
-                  color: '#111827',
-                  fontWeight: 500,
-                  fontSize: '0.85rem',
-                  textDecoration: 'none',
-                }}
-              >
-                <MessageSquare size={13} color="#25D366" />
-                WhatsApp Us
-              </motion.a>
 
               <motion.a
                 href="#company"

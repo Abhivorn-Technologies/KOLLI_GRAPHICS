@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import {
   Phone,
   Mail,
-  MessageSquare,
   ArrowRight,
   MapPin,
   Building2,
@@ -129,28 +128,27 @@ export const Footer: React.FC = () => {
                 </motion.div>
 
                 <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.98 }}>
-                  <a
-                    href={`https://wa.me/${COMPANY_INFO.phoneRaw}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to="/contact"
                     style={{
                       display: 'inline-flex',
                       alignItems: 'center',
                       gap: '8px',
                       padding: '14px 24px',
                       borderRadius: '999px',
-                      backgroundColor: '#25D366',
-                      color: '#ffffff',
+                      backgroundColor: '#ffffff',
+                      color: '#111827',
+                      border: '1px solid #e5e7eb',
                       fontWeight: 700,
                       fontSize: '0.95rem',
-                      boxShadow: '0 4px 14px rgba(37,211,102,0.25)',
+                      boxShadow: '0 4px 14px rgba(0,0,0,0.06)',
                       transition: 'all 0.2s ease',
                       textDecoration: 'none',
                     }}
                   >
-                    <MessageSquare size={17} />
-                    <span>Direct WhatsApp</span>
-                  </a>
+                    <Phone size={17} />
+                    <span>Contact Us</span>
+                  </Link>
                 </motion.div>
               </div>
             </motion.div>
@@ -459,40 +457,6 @@ export const Footer: React.FC = () => {
                   </a>
                 </motion.div>
 
-                <motion.div
-                  whileHover={{ x: 4 }}
-                  transition={{ duration: 0.2 }}
-                  style={{ display: 'flex', alignItems: 'center', gap: '10px' }}
-                >
-                  <div
-                    style={{
-                      width: 32,
-                      height: 32,
-                      borderRadius: '8px',
-                      backgroundColor: '#dcfce7',
-                      border: '1px solid #bbf7d0',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      flexShrink: 0,
-                    }}
-                  >
-                    <MessageSquare size={14} color="#16a34a" />
-                  </div>
-                  <a
-                    href={`https://wa.me/${COMPANY_INFO.phoneRaw}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      fontSize: '0.875rem',
-                      color: '#111827',
-                      fontWeight: 600,
-                      textDecoration: 'none',
-                    }}
-                  >
-                    WhatsApp Us
-                  </a>
-                </motion.div>
 
                 {/* Facility stats card */}
                 <motion.div
