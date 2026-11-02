@@ -3,8 +3,7 @@ import { motion, AnimatePresence, useInView, useReducedMotion } from 'framer-mot
 import { CheckCircle2, Search, X, ShieldCheck, ArrowRight, Zap } from 'lucide-react'
 import { SectionHeader } from '../common/SectionHeader'
 import { ImageWithFallback } from '../common/ImageWithFallback'
-import { EQUIPMENT_LIST } from '../../data/equipment'
-import type { EquipmentItem } from '../../data/equipment'
+import { EQUIPMENT_LIST, type EquipmentItem } from '../../data/equipment'
 import { Link } from 'react-router-dom'
 
 /* ─── Sequential reveal container ──────────────────────────────────── */

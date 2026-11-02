@@ -60,7 +60,6 @@ export default defineConfig({
         // Split vendor chunks for better caching and smaller main bundle
         manualChunks: {
           'vendor-react':  ['react', 'react-dom', 'react-router-dom'],
-          'vendor-three':  ['three', '@react-three/fiber', '@react-three/drei'],
           'vendor-motion': ['framer-motion'],
           'vendor-icons':  ['lucide-react'],
         },

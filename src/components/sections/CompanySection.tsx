@@ -16,7 +16,7 @@ import {
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SectionHeader } from '../common/SectionHeader'
-import { COMPANY_INFO, EXECUTIVE_TEAM, MANUFACTURING_ROLES, TeamMember } from '../../data/company'
+import { COMPANY_INFO, EXECUTIVE_TEAM, MANUFACTURING_ROLES, type TeamMember } from '../../data/company'
 
 // Import existing project images provided by user
 import imgPlantMain from '../../assets/images/image.png'

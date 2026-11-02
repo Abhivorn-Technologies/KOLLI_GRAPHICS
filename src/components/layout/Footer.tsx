@@ -458,41 +458,6 @@ export const Footer: React.FC = () => {
                 </motion.div>
 
 
-                {/* Facility stats card */}
-                <motion.div
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  transition={{ duration: 0.2 }}
-                  style={{
-                    marginTop: '6px',
-                    padding: '14px 16px',
-                    borderRadius: '14px',
-                    backgroundColor: '#ffffff',
-                    border: '1px solid #e2e8f0',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: '0.72rem',
-                      color: '#dc2626',
-                      marginBottom: '4px',
-                      letterSpacing: '0.06em',
-                      textTransform: 'uppercase',
-                      fontWeight: 700,
-                    }}
-                  >
-                    Facility Infrastructure
-                  </div>
-                  <div
-                    style={{ fontSize: '0.8rem', color: '#111827', fontWeight: 600, lineHeight: 1.6 }}
-                  >
-                    40,000 sq.ft.{' '}
-                    <span style={{ color: '#64748b', fontWeight: 400 }}>Total Facility</span>
-                    <br />
-                    40,000 sq.ft.{' '}
-                    <span style={{ color: '#64748b', fontWeight: 400 }}>Secured, 24/7 CCTV</span>
-                  </div>
-                </motion.div>
               </div>
             </div>
           </ScrollReveal>

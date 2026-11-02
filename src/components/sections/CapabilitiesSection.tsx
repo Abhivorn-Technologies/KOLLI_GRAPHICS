@@ -11,9 +11,7 @@ import {
   Layers,
   Package,
   X,
-  Maximize2,
   CheckCircle2,
-  ChevronRight,
   ArrowRight,
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -22,10 +20,6 @@ import { ScrollReveal } from '../common/ScrollReveal'
 import { InteractiveTiltCard } from '../common/InteractiveTiltCard'
 import { PRODUCTION_JOURNEY } from '../../data/products'
 
-// Import project images for step journey & capability showcases
-import imgPackaging from '../../assets/images/capability-packaging.png'
-import imgMaterials from '../../assets/images/capability-materials.png'
-import imgLabels from '../../assets/images/capability-labels.png'
 // Import authentic workflow step images
 import imgWorkflowPrepress from '../../assets/images/workflow-prepress.png'
 import imgWorkflowPrint from '/assets/images/equipment/heidelberg-cd102.png'
@@ -47,12 +41,14 @@ export const CapabilitiesSection: React.FC = () => {
   const [activeStep, setActiveStep] = useState(0)
   const [selectedPillar, setSelectedPillar] = useState<{
     title: string
+    num: string
+    badge: string
+    subtitle: string
+    color: string
+    icon: React.ReactNode
+    metric: string
     description: string
     items: string[]
-    icon: React.ReactNode
-    imgSrc: string
-    badge: string
-    color: string
   } | null>(null)
   const [showSecurityModal, setShowSecurityModal] = useState<boolean>(false)
 
@@ -78,10 +74,12 @@ export const CapabilitiesSection: React.FC = () => {
   const PILLARS = [
     {
       title: 'Packaging',
-      badge: 'Mono Cartons & Specialty Boxes',
+      num: '01',
+      badge: 'Mono Cartons & Trays',
+      subtitle: 'Structural Precision & Custom Folding',
       color: '#dc2626',
-      icon: <Box size={24} />,
-      imgSrc: imgPackaging,
+      icon: <Box size={24} strokeWidth={2.2} />,
+      metric: 'Automated Folding & Gluing',
       description:
         'When we refer to “packaging”, we’re conveying our ability to produce specialty products such as Mono Cartons, Auto-Lock and Tuck-Top boxes, Four Corner trays, Six corner integrated Box, Inner Partition Boxes, and Sleeves.',
       items: [
@@ -93,10 +91,12 @@ export const CapabilitiesSection: React.FC = () => {
     },
     {
       title: 'Materials',
+      num: '02',
       badge: 'Board & Cardstock Range',
+      subtitle: 'Certified Paperboard & High-Substance Boards',
       color: '#00aeef',
-      icon: <Layers size={24} />,
-      imgSrc: imgMaterials,
+      icon: <Layers size={24} strokeWidth={2.2} />,
+      metric: 'FSC & Food Grade Boards',
       description:
         'Paperboard (cardstock) is a heavy or thick paper-based material including metallic paperboard, plus various other boards. All paperboard (including kraft) can be cut and formed easily while remaining stable to protect contents.',
       items: [
@@ -108,10 +108,12 @@ export const CapabilitiesSection: React.FC = () => {
     },
     {
       title: 'Labels',
+      num: '03',
       badge: 'Zero-Error Optical Labels',
-      color: '#b45309',
-      icon: <Sparkles size={24} />,
-      imgSrc: imgLabels,
+      subtitle: 'Pharma & FMCG High-Speed Rolls',
+      color: '#f59e0b',
+      icon: <Sparkles size={24} strokeWidth={2.2} />,
+      metric: 'Tubescan <0.5mm Inspection',
       description:
         'Manufactured in a hygienic, clean and centrally air-conditioned environment for pharmaceutical and FMCG sectors. Zero Error Printing with Tubescan 100% inspection detecting < 0.5 mm defects.',
       items: [
@@ -149,9 +151,10 @@ export const CapabilitiesSection: React.FC = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
             gap: '24px',
             marginBottom: '32px',
+            alignItems: 'stretch',
           }}
         >
           {PILLARS.map((pillar, idx) => (
@@ -161,116 +164,161 @@ export const CapabilitiesSection: React.FC = () => {
                 glowColor={`${pillar.color}25`}
                 onClick={() => setSelectedPillar(pillar)}
                 style={{
-                  padding: '32px',
+                  padding: '34px 28px 28px 28px',
                   height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
                   backgroundColor: '#ffffff',
-                  borderRadius: 20,
-                  border: '1px solid #e5e7eb',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
+                  borderRadius: 22,
+                  border: '1px solid #e2e8f0',
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.03)',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
                 }}
               >
-                {/* Image preview thumbnail header */}
+                {/* Top Colored Accent Bar */}
                 <div
                   style={{
-                    height: 140,
-                    borderRadius: 14,
-                    overflow: 'hidden',
-                    marginBottom: 20,
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: '4px',
+                    background: `linear-gradient(90deg, ${pillar.color} 0%, ${pillar.color}40 100%)`,
+                  }}
+                />
+
+                {/* Subtle Ambient Corner Glow */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: -24,
+                    right: -24,
+                    width: 120,
+                    height: 120,
+                    borderRadius: '50%',
+                    background: `radial-gradient(circle, ${pillar.color}15 0%, transparent 70%)`,
+                    pointerEvents: 'none',
+                  }}
+                />
+
+                {/* Card Top: Icon + Number + Badge */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginBottom: '20px',
                     position: 'relative',
-                    backgroundColor: '#1e293b',
+                    zIndex: 1,
                   }}
                 >
-                  <img
-                    src={pillar.imgSrc}
-                    alt={pillar.title}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
                   <div
                     style={{
-                      position: 'absolute',
-                      top: 10,
-                      left: 10,
-                      padding: '4px 10px',
-                      borderRadius: 999,
-                      backgroundColor: 'rgba(255,255,255,0.92)',
+                      width: '52px',
+                      height: '52px',
+                      borderRadius: '16px',
+                      backgroundColor: `${pillar.color}12`,
                       color: pillar.color,
-                      fontSize: '0.7rem',
-                      fontWeight: 800,
-                    }}
-                  >
-                    {pillar.badge}
-                  </div>
-                  <div
-                    style={{
-                      position: 'absolute',
-                      bottom: 10,
-                      right: 10,
-                      width: 28,
-                      height: 28,
-                      borderRadius: '50%',
-                      backgroundColor: 'rgba(0,0,0,0.6)',
-                      color: '#fff',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      border: `1px solid ${pillar.color}25`,
+                      boxShadow: `0 4px 12px ${pillar.color}15`,
                     }}
                   >
-                    <Maximize2 size={13} />
+                    {pillar.icon}
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span
+                      style={{
+                        padding: '4px 12px',
+                        borderRadius: 999,
+                        backgroundColor: `${pillar.color}10`,
+                        color: pillar.color,
+                        fontSize: '0.72rem',
+                        fontWeight: 800,
+                        letterSpacing: '0.02em',
+                      }}
+                    >
+                      {pillar.badge}
+                    </span>
+                    <span
+                      style={{
+                        fontSize: '0.85rem',
+                        fontWeight: 900,
+                        color: '#cbd5e1',
+                        letterSpacing: '0.05em',
+                      }}
+                    >
+                      {pillar.num}
+                    </span>
                   </div>
                 </div>
 
-                <div
-                  style={{
-                    width: '44px',
-                    height: '44px',
-                    borderRadius: '12px',
-                    backgroundColor: `${pillar.color}15`,
-                    color: pillar.color,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginBottom: '16px',
-                  }}
-                >
-                  {pillar.icon}
+                {/* Title & Subtitle */}
+                <div style={{ marginBottom: '12px', position: 'relative', zIndex: 1 }}>
+                  <div
+                    style={{
+                      fontSize: '0.72rem',
+                      fontWeight: 800,
+                      color: pillar.color,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.08em',
+                      marginBottom: '4px',
+                    }}
+                  >
+                    {pillar.subtitle}
+                  </div>
+                  <h3
+                    style={{
+                      fontSize: '1.5rem',
+                      fontWeight: 800,
+                      color: '#111827',
+                      margin: 0,
+                    }}
+                  >
+                    {pillar.title}
+                  </h3>
                 </div>
 
-                <h3 style={{ fontSize: '1.4rem', marginBottom: '10px', color: '#111827' }}>
-                  {pillar.title}
-                </h3>
-
+                {/* Description */}
                 <p
                   style={{
-                    fontSize: '0.9rem',
+                    fontSize: '0.88rem',
                     color: '#4b5563',
                     lineHeight: 1.7,
                     marginBottom: '20px',
+                    position: 'relative',
+                    zIndex: 1,
                   }}
                 >
                   {pillar.description}
                 </p>
 
-                <ul
+                {/* Capability Bullet Specifications */}
+                <div
                   style={{
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: 'auto 0 16px 0',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '8px',
+                    marginBottom: '20px',
+                    position: 'relative',
+                    zIndex: 1,
                   }}
                 >
                   {pillar.items.map((item) => (
-                    <li
+                    <div
                       key={item}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '8px',
-                        fontSize: '0.85rem',
-                        color: '#111827',
+                        gap: '10px',
+                        fontSize: '0.82rem',
+                        color: '#1e293b',
                         fontWeight: 600,
                       }}
                     >
@@ -280,26 +328,54 @@ export const CapabilitiesSection: React.FC = () => {
                           height: '6px',
                           borderRadius: '50%',
                           backgroundColor: pillar.color,
+                          flexShrink: 0,
                         }}
                       />
-                      {item}
-                    </li>
+                      <span>{item}</span>
+                    </div>
                   ))}
-                </ul>
+                </div>
 
+                {/* Technical Metric Highlight Banner */}
+                <div
+                  style={{
+                    padding: '8px 12px',
+                    borderRadius: '10px',
+                    backgroundColor: '#f8fafc',
+                    border: '1px solid #f1f5f9',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    marginTop: 'auto',
+                    marginBottom: '16px',
+                    fontSize: '0.78rem',
+                    fontWeight: 700,
+                    color: '#334155',
+                    position: 'relative',
+                    zIndex: 1,
+                  }}
+                >
+                  <CheckCircle2 size={14} color={pillar.color} style={{ flexShrink: 0 }} />
+                  <span>{pillar.metric}</span>
+                </div>
+
+                {/* Action Link */}
                 <div
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 6,
-                    fontSize: '0.8rem',
+                    justifyContent: 'space-between',
+                    paddingTop: '14px',
+                    borderTop: '1px solid #f1f5f9',
+                    fontSize: '0.82rem',
                     fontWeight: 700,
                     color: pillar.color,
-                    marginTop: 8,
+                    position: 'relative',
+                    zIndex: 1,
                   }}
                 >
-                  <span>Click to view full specs &amp; gallery</span>
-                  <ChevronRight size={14} />
+                  <span>Explore full specifications</span>
+                  <ArrowRight size={15} />
                 </div>
               </InteractiveTiltCard>
             </ScrollReveal>
@@ -691,62 +767,120 @@ export const CapabilitiesSection: React.FC = () => {
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
               className="company-modal-content"
-              style={{ overflow: 'hidden', padding: 0 }}
+              style={{ overflow: 'hidden', padding: 0, position: 'relative' }}
             >
-              <div style={{ height: 260, position: 'relative', backgroundColor: '#0f172a' }}>
-                <img
-                  src={selectedPillar.imgSrc}
-                  alt={selectedPillar.title}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-                <button
-                  onClick={() => setSelectedPillar(null)}
+              {/* Header Top Accent Bar */}
+              <div
+                style={{
+                  height: 6,
+                  background: `linear-gradient(90deg, ${selectedPillar.color} 0%, ${selectedPillar.color}40 100%)`,
+                }}
+              />
+
+              <div style={{ padding: '36px 36px 32px 36px' }}>
+                {/* Header row with close button */}
+                <div
                   style={{
-                    position: 'absolute',
-                    top: 16,
-                    right: 16,
-                    width: 36,
-                    height: 36,
-                    borderRadius: '50%',
-                    backgroundColor: 'rgba(0,0,0,0.6)',
-                    color: '#ffffff',
-                    border: 'none',
                     display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
+                    alignItems: 'flex-start',
+                    justifyContent: 'space-between',
+                    marginBottom: 20,
                   }}
                 >
-                  <X size={18} />
-                </button>
-              </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                    <div
+                      style={{
+                        width: 52,
+                        height: 52,
+                        borderRadius: 16,
+                        backgroundColor: `${selectedPillar.color}15`,
+                        color: selectedPillar.color,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        border: `1px solid ${selectedPillar.color}30`,
+                      }}
+                    >
+                      {selectedPillar.icon}
+                    </div>
+                    <div>
+                      <div
+                        style={{
+                          fontSize: '0.72rem',
+                          fontWeight: 800,
+                          color: selectedPillar.color,
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.08em',
+                        }}
+                      >
+                        {selectedPillar.subtitle}
+                      </div>
+                      <h3
+                        style={{
+                          fontSize: '1.75rem',
+                          color: '#111827',
+                          fontWeight: 800,
+                          margin: '2px 0 0 0',
+                        }}
+                      >
+                        {selectedPillar.title} Capabilities
+                      </h3>
+                    </div>
+                  </div>
 
-              <div style={{ padding: '28px 32px' }}>
-                <span
-                  style={{
-                    padding: '4px 12px',
-                    borderRadius: 999,
-                    backgroundColor: `${selectedPillar.color}15`,
-                    color: selectedPillar.color,
-                    fontSize: '0.75rem',
-                    fontWeight: 800,
-                  }}
-                >
-                  {selectedPillar.badge}
-                </span>
+                  <button
+                    onClick={() => setSelectedPillar(null)}
+                    style={{
+                      width: 36,
+                      height: 36,
+                      borderRadius: '50%',
+                      backgroundColor: '#f1f5f9',
+                      color: '#475569',
+                      border: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      transition: 'background 0.2s',
+                    }}
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
 
-                <h3
-                  style={{ fontSize: '1.6rem', color: '#111827', marginTop: 10, marginBottom: 12 }}
-                >
-                  {selectedPillar.title} Capabilities
-                </h3>
+                <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+                  <span
+                    style={{
+                      padding: '4px 12px',
+                      borderRadius: 999,
+                      backgroundColor: `${selectedPillar.color}12`,
+                      color: selectedPillar.color,
+                      fontSize: '0.75rem',
+                      fontWeight: 700,
+                    }}
+                  >
+                    {selectedPillar.badge}
+                  </span>
+                  <span
+                    style={{
+                      padding: '4px 12px',
+                      borderRadius: 999,
+                      backgroundColor: '#f1f5f9',
+                      color: '#475569',
+                      fontSize: '0.75rem',
+                      fontWeight: 600,
+                    }}
+                  >
+                    ✓ {selectedPillar.metric}
+                  </span>
+                </div>
 
                 <p
                   style={{
                     fontSize: '0.95rem',
                     color: '#4b5563',
-                    lineHeight: 1.75,
-                    marginBottom: 20,
+                    lineHeight: 1.8,
+                    marginBottom: 24,
                   }}
                 >
                   {selectedPillar.description}
@@ -754,10 +888,12 @@ export const CapabilitiesSection: React.FC = () => {
 
                 <h5
                   style={{
-                    fontSize: '0.8rem',
+                    fontSize: '0.75rem',
                     color: '#64748b',
+                    fontWeight: 800,
                     textTransform: 'uppercase',
-                    marginBottom: 10,
+                    letterSpacing: '0.08em',
+                    marginBottom: 12,
                   }}
                 >
                   KEY PRODUCT SPECIFICATIONS
@@ -769,7 +905,7 @@ export const CapabilitiesSection: React.FC = () => {
                     padding: 0,
                     margin: 0,
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 180px), 1fr))',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))',
                     gap: 12,
                   }}
                 >
@@ -779,13 +915,17 @@ export const CapabilitiesSection: React.FC = () => {
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: 8,
-                        fontSize: '0.875rem',
+                        gap: 10,
+                        padding: '10px 14px',
+                        borderRadius: 12,
+                        backgroundColor: '#f8fafc',
+                        border: '1px solid #e2e8f0',
+                        fontSize: '0.85rem',
                         color: '#1e293b',
                         fontWeight: 600,
                       }}
                     >
-                      <CheckCircle2 size={16} color={selectedPillar.color} />
+                      <CheckCircle2 size={16} color={selectedPillar.color} style={{ flexShrink: 0 }} />
                       <span>{item}</span>
                     </li>
                   ))}

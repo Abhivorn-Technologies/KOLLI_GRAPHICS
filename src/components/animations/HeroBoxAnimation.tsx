@@ -595,9 +595,9 @@ export const HeroBoxAnimation: React.FC = () => {
         { x: '93%', y: '7%', c: '#ec008c' },
         { x: '3%', y: '87%', c: '#f59e0b' },
         { x: '93%', y: '87%', c: '#dc2626' },
-      ].map((d, i) => (
+      ].map((d) => (
         <div
-          key={i}
+          key={d.c}
           style={{
             position: 'absolute',
             left: d.x,

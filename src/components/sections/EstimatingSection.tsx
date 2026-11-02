@@ -178,15 +178,6 @@ export const EstimatingSection: React.FC = () => {
     }, 50)
   }
 
-  // Dimensional preview ratios
-  const l = Number(formData.lengthMm) || 100
-  const w = Number(formData.widthMm) || 100
-  const h = Number(formData.heightMm) || 100
-  const maxDim = Math.max(l, w, h, 1)
-  const scaleRatio = 140 / maxDim
-  const previewL = Math.max(40, Math.min(180, l * scaleRatio))
-  const previewW = Math.max(30, Math.min(140, w * scaleRatio))
-  const previewH = Math.max(50, Math.min(200, h * scaleRatio))
 
   return (
     <section id="estimating" style={{ padding: '135px 0 70px 0', backgroundColor: '#f8fafc' }}>
@@ -202,24 +193,65 @@ export const EstimatingSection: React.FC = () => {
           />
         </ScrollReveal>
 
+        <style>{`
+          .estimate-col {
+            height: 100%;
+          }
+          .estimate-form-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 #f8fafc;
+          }
+          .estimate-form-scroll::-webkit-scrollbar {
+            width: 6px;
+          }
+          .estimate-form-scroll::-webkit-scrollbar-track {
+            background: #f8fafc;
+            border-radius: 8px;
+          }
+          .estimate-form-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 8px;
+          }
+          .estimate-form-scroll::-webkit-scrollbar-thumb:hover {
+            background: #dc2626;
+          }
+          @media (min-width: 901px) {
+            .estimate-card-matched {
+              height: 550px !important;
+            }
+          }
+          @media (max-width: 900px) {
+            .estimate-card-matched.left-card {
+              height: 550px !important;
+            }
+            .estimate-card-matched.right-card {
+              height: auto !important;
+            }
+          }
+        `}</style>
+
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 360px), 1fr))',
             gap: '36px',
-            alignItems: 'start',
+            alignItems: 'stretch',
           }}
         >
           {/* Left Column: Comprehensive Estimating Form */}
-          <ScrollReveal direction="up" delay={0.1}>
+          <ScrollReveal direction="up" delay={0.1} className="estimate-col">
             <div
-              className="smoke-hover-card"
+              className="smoke-hover-card estimate-card-matched left-card"
               style={{
-                padding: '36px',
+                padding: '32px 20px 32px 32px',
                 borderRadius: '24px',
                 backgroundColor: '#ffffff',
                 border: '1px solid #e2e8f0',
                 boxShadow: '0 8px 30px rgba(0,0,0,0.04)',
+                height: '550px',
+                display: 'flex',
+                flexDirection: 'column',
+                overflow: 'hidden',
               }}
             >
               {submitted ? (
@@ -233,8 +265,8 @@ export const EstimatingSection: React.FC = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     textAlign: 'center',
-                    padding: '54px 24px',
-                    minHeight: '480px',
+                    padding: '36px 20px',
+                    height: '100%',
                   }}
                 >
                   <motion.div
@@ -324,7 +356,16 @@ export const EstimatingSection: React.FC = () => {
                   </button>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} noValidate>
+                <form
+                  onSubmit={handleSubmit}
+                  noValidate
+                  className="estimate-form-scroll"
+                  style={{
+                    overflowY: 'auto',
+                    paddingRight: '14px',
+                    height: '100%',
+                  }}
+                >
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                   {/* 1. Contact Information */}
                   <div>
@@ -1040,20 +1081,24 @@ export const EstimatingSection: React.FC = () => {
           </ScrollReveal>
 
             {/* Right Column: Live 3D Proportion Box Preview */}
-            <ScrollReveal direction="up" delay={0.2}>
-              <div style={{ position: 'sticky', top: '100px' }}>
+            <ScrollReveal direction="up" delay={0.2} className="estimate-col">
+              <div style={{ height: '100%' }}>
                 <div
-                  className="smoke-hover-card"
+                  className="smoke-hover-card estimate-card-matched right-card"
                   style={{
-                    padding: '36px',
+                    padding: '32px',
                     borderRadius: '24px',
                     backgroundColor: '#ffffff',
                     border: '1px solid #e2e8f0',
                     color: '#111827',
                     boxShadow: '0 8px 30px rgba(0,0,0,0.04)',
+                    height: '550px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
                   }}
                 >
-              <div style={{ marginBottom: '20px' }}>
+              <div style={{ marginBottom: '16px' }}>
                 <span
                   style={{
                     fontSize: '0.75rem',
@@ -1077,85 +1122,33 @@ export const EstimatingSection: React.FC = () => {
                 </h3>
               </div>
 
-              {/* 3D Box Wireframe Preview */}
+              {/* Carton Dimensions Diagram */}
               <div
                 style={{
-                  height: '240px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  perspective: '800px',
-                  backgroundColor: '#f8fafc',
+                  backgroundColor: '#ffffff',
                   borderRadius: '16px',
                   border: '1px solid #e2e8f0',
-                  marginBottom: '24px',
+                  padding: '16px',
+                  flex: 1,
+                  minHeight: '200px',
+                  marginBottom: '16px',
+                  overflow: 'hidden',
                 }}
               >
-                <div
+                <img
+                  src="/assets/images/cartons/carton-dimensions.png"
+                  alt="Carton Dimensions Diagram"
                   style={{
-                    width: `${previewL}px`,
-                    height: `${previewH}px`,
-                    position: 'relative',
-                    transformStyle: 'preserve-3d',
-                    transform: 'rotateX(-20deg) rotateY(35deg)',
-                    transition: 'all 0.3s ease',
+                    maxHeight: '250px',
+                    width: 'auto',
+                    maxWidth: '100%',
+                    objectFit: 'contain',
+                    display: 'block',
                   }}
-                >
-                  {/* Front Face */}
-                  <div
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      backgroundColor: 'rgba(220, 38, 38, 0.12)',
-                      border: '2px solid #dc2626',
-                      borderRadius: '4px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: '#dc2626',
-                      fontSize: '0.75rem',
-                      fontWeight: 800,
-                    }}
-                  >
-                    <span>
-                      {formData.lengthMm} × {formData.heightMm} mm
-                    </span>
-                    <span style={{ fontSize: '0.65rem', color: '#64748b' }}>FRONT</span>
-                  </div>
-
-                  {/* Top Face */}
-                  <div
-                    style={{
-                      position: 'absolute',
-                      width: `${previewL}px`,
-                      height: `${previewW}px`,
-                      top: 0,
-                      left: 0,
-                      backgroundColor: 'rgba(0, 174, 239, 0.12)',
-                      border: '2px solid #00aeef',
-                      borderRadius: '4px',
-                      transformOrigin: 'top center',
-                      transform: 'rotateX(90deg)',
-                    }}
-                  />
-
-                  {/* Side Face */}
-                  <div
-                    style={{
-                      position: 'absolute',
-                      width: `${previewW}px`,
-                      height: `${previewH}px`,
-                      top: 0,
-                      right: 0,
-                      backgroundColor: 'rgba(245, 158, 11, 0.15)',
-                      border: '2px solid #f59e0b',
-                      borderRadius: '4px',
-                      transformOrigin: 'right center',
-                      transform: 'rotateY(90deg)',
-                    }}
-                  />
-                </div>
+                />
               </div>
 
               {/* Live Spec Summary Table */}
@@ -1182,71 +1175,11 @@ export const EstimatingSection: React.FC = () => {
                   style={{
                     display: 'flex',
                     justifyContent: 'space-between',
-                    paddingBottom: '8px',
-                    borderBottom: '1px solid #f1f5f9',
                   }}
                 >
                   <span style={{ color: '#64748b', fontWeight: 500 }}>Dimensions (L×W×H):</span>
                   <span style={{ color: '#dc2626', fontWeight: 800 }}>
                     {formData.lengthMm} × {formData.widthMm} × {formData.heightMm} mm
-                  </span>
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    paddingBottom: '8px',
-                    borderBottom: '1px solid #f1f5f9',
-                  }}
-                >
-                  <span style={{ color: '#64748b', fontWeight: 500 }}>Board Type:</span>
-                  <span style={{ color: '#00aeef', fontWeight: 700 }}>{formData.boardType}</span>
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    paddingBottom: '8px',
-                    borderBottom: '1px solid #f1f5f9',
-                  }}
-                >
-                  <span style={{ color: '#64748b', fontWeight: 500 }}>GSM:</span>
-                  <span style={{ color: '#111827', fontWeight: 700 }}>
-                    {formData.gsm || 'Standard'}
-                  </span>
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    paddingBottom: '8px',
-                    borderBottom: '1px solid #f1f5f9',
-                  }}
-                >
-                  <span style={{ color: '#64748b', fontWeight: 500 }}>Surface Finish:</span>
-                  <span style={{ color: '#f59e0b', fontWeight: 700 }}>
-                    {formData.surfaceCoating === 'Others'
-                      ? formData.surfaceCoatingOther || 'Others'
-                      : formData.surfaceCoating}
-                  </span>
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    paddingBottom: '8px',
-                    borderBottom: '1px solid #f1f5f9',
-                  }}
-                >
-                  <span style={{ color: '#64748b', fontWeight: 500 }}>Quantity:</span>
-                  <span style={{ color: '#111827', fontWeight: 700 }}>
-                    {formData.quantity || 'To be specified'}
-                  </span>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: '#64748b', fontWeight: 500 }}>Place of Delivery:</span>
-                  <span style={{ color: '#111827', fontWeight: 700 }}>
-                    {formData.deliveryPlace || 'To be specified'}
                   </span>
                 </div>
               </div>

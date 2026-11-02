@@ -1,4 +1,3 @@
-import { ChevronDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import heroBg from "@/assets/images/facility-entrance.jpg";
 
@@ -54,15 +53,6 @@ export function FactoryHero() {
   const [visible, setVisible] = useState(true);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const goToStage = (idx: number) => {
-    if (idx === stage) return;
-    // fade out → change → fade in
-    setVisible(false);
-    setTimeout(() => {
-      setStage(idx);
-      setVisible(true);
-    }, 380);
-  };
 
   const startTimer = () => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -85,7 +75,7 @@ export function FactoryHero() {
     };
   }, []);
 
-  const current = stages[stage]!;
+  const current = stages[stage] ?? stages[0];
 
   return (
     <div className="factory-hero-scroll-wrapper" style={{ height: "100vh" }}>
@@ -102,23 +92,6 @@ export function FactoryHero() {
           </div>
           <div className="factory-vignette" />
 
-          {/* ── Stage nav (right side) ── */}
-          <nav className="factory-stage-nav" aria-label="Manufacturing stages">
-            {stages.map((s, i) => (
-              <button
-                key={s.label}
-                onClick={() => {
-                  goToStage(i);
-                  // restart the auto-timer from this point
-                  startTimer();
-                }}
-                className={`factory-stage-btn ${i === stage ? "active" : ""}`}
-              >
-                <span className="factory-stage-label">{s.label}</span>
-                <span className="factory-stage-line" />
-              </button>
-            ))}
-          </nav>
 
           {/* ── Text content ── */}
           <div className="factory-hero-content">
@@ -157,38 +130,7 @@ export function FactoryHero() {
               )}
             </div>
 
-            {/* ── Progress pills + scroll hint ── */}
-            <div className="factory-footer-controls">
-              <div className="factory-progress-bar-container">
-                {stages.map((s, i) => (
-                  <button
-                    key={s.label}
-                    aria-label={s.label}
-                    onClick={() => {
-                      goToStage(i);
-                      startTimer();
-                    }}
-                    className={`factory-progress-step ${i === stage ? "active" : i < stage ? "completed" : ""}`}
-                  >
-                    <span className="factory-progress-track">
-                      <span
-                        className="factory-progress-fill"
-                        style={{ width: i < stage ? "100%" : i === stage ? "100%" : "0%" }}
-                      />
-                    </span>
-                  </button>
-                ))}
-              </div>
 
-              <button
-                className="factory-scroll-btn"
-                aria-label="Scroll to explore"
-                onClick={() => window.scrollBy({ top: window.innerHeight, behavior: "smooth" })}
-              >
-                <ChevronDown size={16} className="factory-scroll-arrow" />
-                <span>Explore Website</span>
-              </button>
-            </div>
           </div>
 
         </section>

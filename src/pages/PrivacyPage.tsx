@@ -153,9 +153,9 @@ export const PrivacyPage: React.FC = () => {
                 { title: 'Customer Communication', desc: 'Direct technical follow-ups via phone or email regarding your orders.' },
                 { title: 'Site Security & Integrity', desc: 'Protecting our web portals against automated bots, DDoS attacks, and unauthorized access.' },
                 { title: 'Statutory Compliance', desc: 'Maintaining requisite commercial records as mandated under Indian tax and commercial statutes.' },
-              ].map((item, idx) => (
+              ].map((item) => (
                 <div
-                  key={idx}
+                  key={item.title}
                   style={{
                     padding: '16px',
                     borderRadius: '12px',
@@ -226,9 +226,9 @@ export const PrivacyPage: React.FC = () => {
                 { title: 'Right to Withdraw Consent', desc: 'You may withdraw your previously given consent at any time with ease by contacting us.' },
                 { title: 'Right to Grievance Redressal', desc: 'You have the right to accessible grievance redressal provided by our Data Protection / Grievance Officer.' },
                 { title: 'Right to Nominate', desc: 'You may nominate an individual to exercise your data rights in the event of death or incapacity.' },
-              ].map((right, idx) => (
+              ].map((right) => (
                 <div
-                  key={idx}
+                  key={right.title}
                   style={{
                     display: 'flex',
                     alignItems: 'flex-start',

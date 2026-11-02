@@ -18,8 +18,7 @@ import {
 import { SectionHeader } from '../common/SectionHeader'
 import { ScrollReveal } from '../common/ScrollReveal'
 import { ImageWithFallback } from '../common/ImageWithFallback'
-import { CARTON_FINISHING, LABEL_FINISHING } from '../../data/processes'
-import type { FinishingMethod } from '../../data/processes'
+import { CARTON_FINISHING, LABEL_FINISHING, type FinishingMethod } from '../../data/processes'
 
 export const FinishingSection: React.FC = () => {
   const [activeFinishingId, setActiveFinishingId] = useState<string>(CARTON_FINISHING[0].id)
