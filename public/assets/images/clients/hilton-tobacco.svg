@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 50" width="160" height="50">
-  <rect width="100%" height="100%" fill="transparent"/>
-  <polygon points="24,9 38,17 38,33 24,41 10,33 10,17" fill="#1e293b"/>
-  <path d="M17 18h4v5h4v-5h4v14h-4v-5h-4v5h-4z" fill="#d4af37"/>
-  <text x="46" y="27" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="900" fill="#1e293b" letter-spacing="1">HILTON</text>
-  <text x="47" y="38" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="7" font-weight="700" fill="#b45309" letter-spacing="1.2">TOBACCO PVT LTD</text>
-</svg>
-

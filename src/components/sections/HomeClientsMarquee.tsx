@@ -148,21 +148,39 @@ const ClientItem: React.FC<ClientItemProps> = ({ client, src, isImageFailed, onI
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          gap: '10px',
           flexShrink: 0,
         }}
       >
         {!isImageFailed ? (
-          <img
-            src={src}
-            alt={client.name}
-            onError={onImageError}
-            style={{
-              height: '36px',
-              maxWidth: '130px',
-              objectFit: 'contain',
-              display: 'block',
-            }}
-          />
+          <>
+            <img
+              src={src}
+              alt={client.name}
+              onError={onImageError}
+              style={{
+                height: '36px',
+                maxWidth: client.secondaryLogo ? '100px' : '130px',
+                objectFit: 'contain',
+                display: 'block',
+              }}
+            />
+            {client.secondaryLogo && (
+              <>
+                <span style={{ color: '#cbd5e1', fontSize: '1rem', fontWeight: 300 }}>|</span>
+                <img
+                  src={client.secondaryLogo}
+                  alt={`${client.name} - Cream Stone`}
+                  style={{
+                    height: '32px',
+                    maxWidth: '110px',
+                    objectFit: 'contain',
+                    display: 'block',
+                  }}
+                />
+              </>
+            )}
+          </>
         ) : (
           <div
             style={{

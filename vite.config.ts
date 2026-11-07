@@ -47,6 +47,9 @@ export default defineConfig({
     port: 5173,
     host: true,
     open: false,
+    watch: {
+      ignored: ['**/public/assets/**', '**/*.pdf'],
+    },
   },
 
   // ── Build optimizations ───────────────────────────────────────

@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 50" width="160" height="50">
-  <rect width="100%" height="100%" fill="transparent"/>
-  <path d="M12 13h7v10h9V13h7v24h-7V29h-9v8h-7z" fill="#d71920"/>
-  <circle cx="35" cy="14" r="3.5" fill="#003366"/>
-  <text x="47" y="27" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="14.5" font-weight="800" fill="#003366" letter-spacing="0.5">HETERO</text>
-  <text x="48" y="38" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="7" font-weight="700" fill="#d71920" letter-spacing="1">PHARMACEUTICALS</text>
-</svg>
-
