@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { FactoryHero } from '../components/hero/FactoryHero'
 import { HomeMetricsBanner } from '../components/sections/HomeMetricsBanner'
+import { HomeClientsMarquee } from '../components/sections/HomeClientsMarquee'
 import { ProductsSection } from '../components/sections/ProductsSection'
 import { HomeEquipmentTeaser } from '../components/sections/HomeEquipmentTeaser'
 import { HomeTrustBanner } from '../components/sections/HomeTrustBanner'
@@ -28,6 +29,7 @@ export const HomePage: React.FC = () => {
     <>
       <FactoryHero />
       <HomeMetricsBanner />
+      <HomeClientsMarquee />
       <ProductsSection />
       <SectionDivider />
       <HomeEquipmentTeaser />

@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    KOLLI GRAPHICS — Global Animation & Interaction System
    Premium scroll-driven animation utilities
    ============================================================ */
@@ -349,5 +349,35 @@ html {
   }
   .img-zoom-container:hover img {
     transform: none;
+  }
+}
+
+
+/* ── Infinite Client Logo Marquee ────────────────────────────── */
+@keyframes marqueeScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.clients-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: max-content;
+  animation: marqueeScroll 45s linear infinite;
+  will-change: transform;
+}
+
+.clients-marquee-container:hover .clients-marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clients-marquee-track {
+    animation: none;
   }
 }

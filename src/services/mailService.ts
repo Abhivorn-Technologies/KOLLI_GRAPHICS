@@ -1,8 +1,8 @@
 import { FORM_DISPATCH_EMAIL } from '../data/company'
 
 /**
- * Dispatches form data via direct production SMTP (send-mail.php)
- * with graceful fallback to FormSubmit for local Vite development.
+ * Dispatches form data via Node.js SMTP endpoint (/api/send-mail)
+ * with graceful fallback to FormSubmit if Node server is offline.
  */
 export async function dispatchFormEmail(
   subject: string,
@@ -32,7 +32,7 @@ export async function dispatchFormEmail(
     })
   }
 
-  // 1. Try Nodemailer API endpoint (/api/send-mail)
+  // 1. Try Node.js / Nodemailer API endpoint (/api/send-mail)
   try {
     const response = await fetch('/api/send-mail', {
       method: 'POST',
@@ -46,24 +46,7 @@ export async function dispatchFormEmail(
       }
     }
   } catch {
-    // Nodemailer endpoint offline, try next fallback
-  }
-
-  // 2. Try PHP SMTP endpoint (/send-mail.php) if available
-  try {
-    const response = await fetch('/send-mail.php', {
-      method: 'POST',
-      body: formData,
-    })
-
-    if (response.ok) {
-      const result = await response.json().catch(() => null)
-      if (result && result.success) {
-        return true
-      }
-    }
-  } catch {
-    // send-mail.php not running
+    // Node.js server endpoint offline or error, try fallback
   }
 
   // 2. Direct fallback to FormSubmit service delivering directly to info email

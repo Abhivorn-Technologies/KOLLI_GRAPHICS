@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 50" width="160" height="50">
+  <rect width="100%" height="100%" fill="transparent"/>
+  <circle cx="23" cy="25" r="16" fill="#16a34a"/>
+  <path d="M23 15c4 5 7 9 7 12 0 4-3 7-7 7s-7-3-7-7c0-3 3-7 7-12z" fill="#ffffff"/>
+  <circle cx="23" cy="27" r="3" fill="#0284c7"/>
+  <text x="45" y="26" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="900" fill="#16a34a">VENGAMAMBA</text>
+  <text x="46" y="37" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="7.5" font-weight="700" fill="#0284c7" letter-spacing="0.5">DAIRY PRODUCTS</text>
+</svg>
+

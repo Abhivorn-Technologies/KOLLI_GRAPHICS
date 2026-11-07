@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 50" width="160" height="50">
+  <rect width="100%" height="100%" fill="transparent"/>
+  <circle cx="23" cy="20" r="12" fill="#be185d"/>
+  <path d="M14 25l9 17 9-17z" fill="#f59e0b"/>
+  <circle cx="19" cy="17" r="2.5" fill="#ffffff"/>
+  <text x="43" y="24" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="900" fill="#be185d">CREAM STONE</text>
+  <text x="44" y="36" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="7.5" font-weight="700" fill="#ea580c">&amp; SCOOPS DAIRY</text>
+</svg>
+

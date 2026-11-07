@@ -8,9 +8,9 @@ dotenv.config()
  * Creates the Nodemailer transporter using Google Workspace / SMTP credentials
  */
 function createTransporter() {
-  const host = process.env.SMTP_HOST || 'smtp.gmail.com'
+  const host = (process.env.SMTP_HOST || 'smtp.gmail.com').trim()
   const port = Number(process.env.SMTP_PORT || 465)
-  const user = process.env.SMTP_USER || 'info@kolligraphics.com'
+  const user = (process.env.SMTP_USER || 'info@kolligraphics.com').trim()
   const pass = (process.env.SMTP_PASS || '').replace(/\s+/g, '')
 
   return nodemailer.createTransport({
@@ -91,8 +91,8 @@ export async function handleSendMail(req, res) {
     const subject = fields._subject || 'New Website Inquiry - Kolli Graphics'
     const senderName = fields.Name || fields.name || 'Website Visitor'
     const senderEmail = fields.Email || fields.email || ''
-    const toEmail = process.env.TO_EMAIL || 'info@kolligraphics.com'
-    const fromAddress = process.env.SMTP_USER || 'info@kolligraphics.com'
+    const toEmail = (process.env.TO_EMAIL || 'info@kolligraphics.com').trim()
+    const fromAddress = (process.env.SMTP_USER || 'info@kolligraphics.com').trim()
 
     // Build lead table for company email
     let rowsHtml = ''
