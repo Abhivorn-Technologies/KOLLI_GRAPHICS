@@ -17,12 +17,6 @@ export async function dispatchFormEmail(
     formData.append(key, String(val ?? ''))
   })
 
-  // Autoresponder message sent to the customer
-  formData.append(
-    '_autoresponse',
-    'Thank you for your interest and someone will get in touch with you within 24 hours. - Kolli Graphics Private Limited (info@kolligraphics.com)'
-  )
-
   // Append files if provided
   if (files) {
     Object.entries(files).forEach(([fieldName, file]) => {
@@ -34,10 +28,15 @@ export async function dispatchFormEmail(
 
   // 1. Try Node.js / Nodemailer API endpoint (/api/send-mail)
   try {
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 12000)
+
     const response = await fetch('/api/send-mail', {
       method: 'POST',
       body: formData,
+      signal: controller.signal,
     })
+    clearTimeout(timeoutId)
 
     if (response.ok) {
       const result = await response.json().catch(() => null)
@@ -45,14 +44,15 @@ export async function dispatchFormEmail(
         return true
       }
     }
-  } catch {
-    // Node.js server endpoint offline or error, try fallback
+  } catch (err) {
+    console.warn('API /api/send-mail error or timeout:', err)
   }
 
   // 2. Direct fallback to FormSubmit service delivering directly to info email
   try {
     formData.append('_captcha', 'false')
     formData.append('_template', 'table')
+    formData.append('_autoresponse', '')
     if (fields.Email) {
       formData.append('_replyto', String(fields.Email))
     }

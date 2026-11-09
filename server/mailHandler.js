@@ -1,27 +1,50 @@
 import nodemailer from 'nodemailer'
 import Busboy from 'busboy'
 import dotenv from 'dotenv'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-dotenv.config()
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const envPath = path.resolve(__dirname, '../.env')
 
 /**
- * Creates the Nodemailer transporter using Google Workspace / SMTP credentials
+ * Reads SMTP credentials dynamically from .env on every request
  */
-function createTransporter() {
-  const host = (process.env.SMTP_HOST || 'smtp.gmail.com').trim()
-  const port = Number(process.env.SMTP_PORT || 465)
-  const user = (process.env.SMTP_USER || 'info@kolligraphics.com').trim()
-  const pass = (process.env.SMTP_PASS || '').replace(/\s+/g, '')
+function getEnvConfig() {
+  dotenv.config({ path: envPath, override: true })
+  return {
+    host: (process.env.SMTP_HOST || 'smtp.gmail.com').trim(),
+    port: Number(process.env.SMTP_PORT || 465),
+    secure: (process.env.SMTP_SECURE || 'true').trim().toLowerCase() === 'true' || Number(process.env.SMTP_PORT) === 465,
+    user: (process.env.SMTP_USER || 'info@kolligraphics.com').trim(),
+    pass: (process.env.SMTP_PASS || '').replace(/\s+/g, ''),
+    toEmail: (process.env.TO_EMAIL || 'info@kolligraphics.com').trim(),
+  }
+}
 
-  return nodemailer.createTransport({
-    host,
-    port,
-    secure: port === 465,
+let cachedTransporter = null
+let lastConfigHash = ''
+
+function getTransporter(config) {
+  const configHash = `${config.host}:${config.port}:${config.user}:${config.pass}:${config.secure}`
+  if (cachedTransporter && lastConfigHash === configHash) {
+    return cachedTransporter
+  }
+
+  cachedTransporter = nodemailer.createTransport({
+    host: config.host,
+    port: config.port,
+    secure: config.secure,
+    pool: true,
+    maxConnections: 5,
+    maxMessages: 100,
     auth: {
-      user,
-      pass,
+      user: config.user,
+      pass: config.pass,
     },
   })
+  lastConfigHash = configHash
+  return cachedTransporter
 }
 
 /**
@@ -91,8 +114,9 @@ export async function handleSendMail(req, res) {
     const subject = fields._subject || 'New Website Inquiry - Kolli Graphics'
     const senderName = fields.Name || fields.name || 'Website Visitor'
     const senderEmail = fields.Email || fields.email || ''
-    const toEmail = (process.env.TO_EMAIL || 'info@kolligraphics.com').trim()
-    const fromAddress = (process.env.SMTP_USER || 'info@kolligraphics.com').trim()
+    const config = getEnvConfig()
+    const toEmail = config.toEmail
+    const fromAddress = config.user
 
     // Build lead table for company email
     let rowsHtml = ''
@@ -131,9 +155,9 @@ export async function handleSendMail(req, res) {
 </body>
 </html>`
 
-    const transporter = createTransporter()
+    const transporter = getTransporter(config)
 
-    // 1. Send Lead to Kolli Graphics (info@kolligraphics.com)
+    // 1. Send Lead with customer details to Kolli Graphics (info@kolligraphics.com)
     await transporter.sendMail({
       from: `"Kolli Graphics Web Portal" <${fromAddress}>`,
       to: toEmail,
@@ -143,7 +167,7 @@ export async function handleSendMail(req, res) {
       attachments: files,
     })
 
-    // 2. Send Auto-Response Thank You Mail to Customer
+    // 2. Send Acknowledgement / Thank You Email to the Customer
     if (senderEmail && /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(senderEmail)) {
       const isEstimate = subject.toLowerCase().includes('estimate')
       const customerSubject = isEstimate
@@ -193,18 +217,22 @@ export async function handleSendMail(req, res) {
 </body>
 </html>`
 
-      await transporter.sendMail({
-        from: `"Kolli Graphics" <${fromAddress}>`,
-        to: senderEmail,
-        replyTo: toEmail,
-        subject: customerSubject,
-        html: customerHtml,
-      })
+      try {
+        await transporter.sendMail({
+          from: `"Kolli Graphics" <${fromAddress}>`,
+          to: senderEmail,
+          replyTo: toEmail,
+          subject: customerSubject,
+          html: customerHtml,
+        })
+      } catch (ackError) {
+        console.warn('Customer acknowledgement mail error:', ackError)
+      }
     }
 
     res.statusCode = 200
     res.setHeader('Content-Type', 'application/json')
-    res.end(JSON.stringify({ success: true, message: 'Emails delivered successfully via Nodemailer' }))
+    res.end(JSON.stringify({ success: true, message: 'Details and acknowledgement delivered successfully' }))
   } catch (error) {
     console.error('Nodemailer dispatch error:', error)
     res.statusCode = 500
