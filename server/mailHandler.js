@@ -2,16 +2,37 @@ import nodemailer from 'nodemailer'
 import Busboy from 'busboy'
 import dotenv from 'dotenv'
 import path from 'path'
+import fs from 'fs'
 import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const envPath = path.resolve(__dirname, '../.env')
 
+// Use official website logo from src/assets/logo/kolli-logo.png or public/assets/logo/kolli-logo.png
+function getLogoBuffer() {
+  const possiblePaths = [
+    path.resolve(__dirname, '../src/assets/logo/kolli-logo.png'),
+    path.resolve(__dirname, '../public/assets/logo/kolli-logo.png'),
+  ]
+  for (const p of possiblePaths) {
+    if (fs.existsSync(p)) {
+      try {
+        return fs.readFileSync(p)
+      } catch (e) {
+        // continue
+      }
+    }
+  }
+  return null
+}
+
 /**
- * Reads SMTP credentials dynamically from .env on every request
+ * Reads SMTP credentials dynamically from process.env (Vercel) or .env file (Local)
  */
 function getEnvConfig() {
-  dotenv.config({ path: envPath, override: true })
+  if (fs.existsSync(envPath)) {
+    dotenv.config({ path: envPath, override: true })
+  }
   return {
     host: (process.env.SMTP_HOST || 'smtp.gmail.com').trim(),
     port: Number(process.env.SMTP_PORT || 465),
@@ -136,9 +157,11 @@ export async function handleSendMail(req, res) {
 <head><meta charset="utf-8"></head>
 <body style="margin: 0; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; color: #1e293b;">
   <div style="max-width: 640px; margin: 0 auto; background-color: #ffffff; border-radius: 14px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 18px rgba(0,0,0,0.04);">
-    <div style="background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); padding: 26px 32px; color: #ffffff;">
-      <h1 style="margin: 0; font-size: 20px; font-weight: 800;">KOLLI GRAPHICS PRIVATE LIMITED</h1>
-      <p style="margin: 4px 0 0 0; font-size: 13px; color: #fecaca;">Web Portal Lead Notification</p>
+    <!-- White Header with Real Logo & Company Branding -->
+    <div style="background-color: #ffffff; padding: 26px 32px 20px 32px; border-bottom: 2px solid #fee2e2; text-align: center;">
+      <img src="cid:kollilogo" alt="Kolli Graphics Logo" style="height: 64px; max-width: 240px; object-fit: contain; display: inline-block; margin-bottom: 10px;" />
+      <h1 style="margin: 0; font-size: 19px; font-weight: 800; color: #dc2626; letter-spacing: -0.2px;">KOLLI GRAPHICS PRIVATE LIMITED</h1>
+      <p style="margin: 4px 0 0 0; font-size: 13px; font-weight: 700; color: #475569;">Premier Printing, Packaging &amp; Label Craftsmanship</p>
     </div>
     <div style="padding: 30px;">
       <h2 style="margin: 0 0 16px 0; font-size: 17px; color: #0f172a; border-bottom: 2px solid #fee2e2; padding-bottom: 8px;">
@@ -151,11 +174,26 @@ export async function handleSendMail(req, res) {
         <strong>Received via:</strong> Kolli Graphics Web Portal &bull; Reply-to: ${senderEmail || 'N/A'}
       </div>
     </div>
+    <div style="background-color: #0f172a; color: #94a3b8; padding: 16px 32px; font-size: 11px; text-align: center;">
+      Kolli Graphics Private Limited &bull; Email: <a href="mailto:${toEmail}" style="color: #f87171; text-decoration: none; font-weight: 600;">${toEmail}</a> &bull; Corporate Office: 47 B, S R Nagar, Hyderabad &bull; Works: Cherlapally
+    </div>
   </div>
 </body>
 </html>`
 
     const transporter = getTransporter(config)
+    const logoBuffer = getLogoBuffer()
+
+    // Prepare embedded CID logo attachment
+    const logoAttachment = logoBuffer
+      ? [
+          {
+            filename: 'kolli-logo.png',
+            content: logoBuffer,
+            cid: 'kollilogo', // Content-ID referenced via <img src="cid:kollilogo" />
+          },
+        ]
+      : []
 
     // 1. Send Lead with customer details to Kolli Graphics (info@kolligraphics.com)
     await transporter.sendMail({
@@ -164,11 +202,12 @@ export async function handleSendMail(req, res) {
       replyTo: senderEmail || undefined,
       subject: subject,
       html: companyHtml,
-      attachments: files,
+      attachments: [...files, ...logoAttachment],
     })
 
     // 2. Send Acknowledgement / Thank You Email to the Customer
-    if (senderEmail && /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(senderEmail)) {
+    const normalizedSenderEmail = senderEmail.trim()
+    if (normalizedSenderEmail && /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(normalizedSenderEmail)) {
       const isEstimate = subject.toLowerCase().includes('estimate')
       const customerSubject = isEstimate
         ? 'Thank You for Your Packaging Estimate Request - Kolli Graphics Private Limited'
@@ -180,9 +219,11 @@ export async function handleSendMail(req, res) {
 <head><meta charset="utf-8"></head>
 <body style="margin: 0; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; color: #1e293b;">
   <div style="max-width: 620px; margin: 0 auto; background-color: #ffffff; border-radius: 14px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 18px rgba(0,0,0,0.04);">
-    <div style="background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); padding: 26px 32px; color: #ffffff;">
-      <h1 style="margin: 0; font-size: 20px; font-weight: 800;">KOLLI GRAPHICS PRIVATE LIMITED</h1>
-      <p style="margin: 4px 0 0 0; font-size: 13px; color: #fecaca;">Premier Printing, Packaging &amp; Label Craftsmanship</p>
+    <!-- White Header with Real Logo & Company Branding -->
+    <div style="background-color: #ffffff; padding: 26px 32px 20px 32px; border-bottom: 2px solid #fee2e2; text-align: center;">
+      <img src="cid:kollilogo" alt="Kolli Graphics Logo" style="height: 64px; max-width: 240px; object-fit: contain; display: inline-block; margin-bottom: 10px;" />
+      <h1 style="margin: 0; font-size: 19px; font-weight: 800; color: #dc2626; letter-spacing: -0.2px;">KOLLI GRAPHICS PRIVATE LIMITED</h1>
+      <p style="margin: 4px 0 0 0; font-size: 13px; font-weight: 700; color: #475569;">Premier Printing, Packaging &amp; Label Craftsmanship</p>
     </div>
     <div style="padding: 30px;">
       <p style="font-size: 15px; margin: 0 0 16px 0; color: #0f172a;">
@@ -205,29 +246,28 @@ export async function handleSendMail(req, res) {
         </table>
       </div>
       <div style="margin-top: 24px; padding-top: 18px; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569; line-height: 1.6;">
-        <p style="margin: 0 0 4px 0; font-weight: 700; color: #0f172a;">Direct Contact Details:</p>
+        <p style="margin: 0 0 6px 0; font-weight: 700; color: #0f172a;">Direct Contact Details:</p>
         <p style="margin: 0;">Phone: <a href="tel:+919100199942" style="color: #dc2626; font-weight: 600; text-decoration: none;">+91 91001 99942</a> / <a href="tel:+919849246688" style="color: #dc2626; font-weight: 600; text-decoration: none;">+91 98492 46688</a></p>
-        <p style="margin: 3px 0 0 0;">Email: <a href="mailto:info@kolligraphics.com" style="color: #dc2626; font-weight: 600; text-decoration: none;">info@kolligraphics.com</a></p>
+        <p style="margin: 4px 0 0 0;">Email: <a href="mailto:${toEmail}" style="color: #dc2626; font-weight: 600; text-decoration: none;">${toEmail}</a></p>
       </div>
     </div>
     <div style="background-color: #0f172a; color: #94a3b8; padding: 16px 32px; font-size: 11px; text-align: center;">
-      Kolli Graphics Private Limited &bull; Corporate Office: 47 B, S R Nagar, Hyderabad &bull; Works: Cherlapally
+      Kolli Graphics Private Limited &bull; Email: <a href="mailto:${toEmail}" style="color: #f87171; text-decoration: none; font-weight: 600;">${toEmail}</a> &bull; Corporate Office: 47 B, S R Nagar, Hyderabad &bull; Works: Cherlapally
     </div>
   </div>
 </body>
 </html>`
 
-      try {
-        await transporter.sendMail({
-          from: `"Kolli Graphics" <${fromAddress}>`,
-          to: senderEmail,
-          replyTo: toEmail,
-          subject: customerSubject,
-          html: customerHtml,
-        })
-      } catch (ackError) {
-        console.warn('Customer acknowledgement mail error:', ackError)
-      }
+      await transporter.sendMail({
+        from: `"Kolli Graphics" <${fromAddress}>`,
+        to: normalizedSenderEmail,
+        replyTo: toEmail,
+        subject: customerSubject,
+        html: customerHtml,
+        attachments: logoAttachment,
+      })
+    } else {
+      console.warn('Skipping acknowledgement: sender email is missing or invalid:', senderEmail)
     }
 
     res.statusCode = 200
