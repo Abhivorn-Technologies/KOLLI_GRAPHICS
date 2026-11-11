@@ -235,7 +235,7 @@ export async function handleSendMail(req, res) {
         </p>
       </div>
       <p style="font-size: 13.5px; color: #475569; line-height: 1.6; margin: 0 0 18px 0;">
-        We have successfully received your inquiry through our web portal. Our packaging estimation and technical team are reviewing your requirements and will follow up with you promptly.
+        We have received your inquiry through our web portal. Our packaging estimation and technical team are reviewing your requirements and will follow up with you promptly.
       </p>
       <div style="border-top: 1px solid #f1f5f9; padding-top: 16px; margin-top: 16px;">
         <h3 style="margin: 0 0 12px 0; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">
